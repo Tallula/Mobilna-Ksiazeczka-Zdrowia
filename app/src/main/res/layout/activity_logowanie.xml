@@ -7,7 +7,7 @@
     tools:context=".Logowanie">
 
     <EditText
-        android:id="@+id/emailLogowanieEditText"
+        android:id="@+id/eMailLogowanieEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Hasło"
+        android:hint="Haslo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -35,10 +35,10 @@
         app:layout_constraintVertical_bias="0.24" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/zalogujButton"
         android:layout_width="209dp"
         android:layout_height="51dp"
-        android:text="Button"
+        android:hint="Zaloguj sie"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

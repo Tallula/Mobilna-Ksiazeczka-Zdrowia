@@ -25,7 +25,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-
 public class Rejestracja extends AppCompatActivity {
 
     String ciagJSON="";
