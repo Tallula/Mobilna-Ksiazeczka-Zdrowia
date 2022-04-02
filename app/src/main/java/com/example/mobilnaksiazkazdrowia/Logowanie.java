@@ -3,6 +3,7 @@ package com.example.mobilnaksiazkazdrowia;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,16 +25,15 @@ public class Logowanie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logowanie);
 
-        EditText hasloLogowanieEditText = (EditText)findViewById(R.id.hasloLogowanieEditText);
-        EditText eMailLogowanieEditText = (EditText) findViewById(R.id.eMailLogowanieEditText);
-        Button zalogujButton = (Button)findViewById(R.id.zalogujButton);
+        EditText hasloLogowanieEditText = findViewById(R.id.hasloLogowanieEditText);
+        EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
+        Button zalogujButton = findViewById(R.id.zalogujButton);
 
         zalogujButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             String eMail = eMailLogowanieEditText.getText().toString();
             String haslo = hasloLogowanieEditText.getText().toString();
-
 
 
                 OkHttpClient client = new OkHttpClient();
@@ -51,13 +51,24 @@ public class Logowanie extends AppCompatActivity {
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         final String myResponse = response.body().string();
 
+                        Logowanie.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(myResponse.equals("False")){
+                                    Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
 
-                        if(myResponse.equals("True")){
-                            Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Blad", Toast.LENGTH_LONG).show();
-                        }
+                                    Intent intent = new Intent(getApplicationContext(),OknoUzytkownika.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Blad", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+
+
+
 
                     }
                 });
