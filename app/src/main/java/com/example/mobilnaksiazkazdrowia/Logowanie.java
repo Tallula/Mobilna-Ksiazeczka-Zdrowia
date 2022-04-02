@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,6 +30,7 @@ public class Logowanie extends AppCompatActivity {
         EditText hasloLogowanieEditText = findViewById(R.id.hasloLogowanieEditText);
         EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
         Button zalogujButton = findViewById(R.id.zalogujButton);
+        TextView test = findViewById(R.id.test);
 
         zalogujButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,12 +52,13 @@ public class Logowanie extends AppCompatActivity {
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        final String myResponse = response.body().string();
+                         String myResponse = response.body().string();
+
 
                         Logowanie.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(myResponse.equals("False")){
+                                if(myResponse.contains("True")){
                                     Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
 
                                     Intent intent = new Intent(getApplicationContext(),OknoUzytkownika.class);
@@ -65,9 +69,6 @@ public class Logowanie extends AppCompatActivity {
                                 }
                             }
                         });
-
-
-
 
 
                     }
