@@ -30,7 +30,7 @@ public class Logowanie extends AppCompatActivity {
         EditText hasloLogowanieEditText = findViewById(R.id.hasloLogowanieEditText);
         EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
         Button zalogujButton = findViewById(R.id.zalogujButton);
-        TextView test = findViewById(R.id.test);
+
 
         zalogujButton.setOnClickListener(new View.OnClickListener() {
             @Override

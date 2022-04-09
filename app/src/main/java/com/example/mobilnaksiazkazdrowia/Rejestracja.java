@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -43,10 +44,17 @@ public class Rejestracja extends AppCompatActivity {
         EditText hasloEditText =(EditText)findViewById(R.id.hasloEditText);
         Spinner miastaSpinner =(Spinner) findViewById(R.id.miastoSpinner);
         Spinner uliceSpinner =(Spinner) findViewById(R.id.ulicaSpinner);
+        Spinner czyWeterynarzSpinner = (Spinner) findViewById(R.id.czyWeterynarzSpinner);
 
         EditText imieEditText = (EditText)findViewById(R.id.imieEditText);
         EditText nazwiskoEditText = (EditText)findViewById(R.id.nazwiskoEditText);
 
+        String[] czyWeterynarz = new String[2];
+        czyWeterynarz[0] = "TAK";
+        czyWeterynarz[1]="NIE";
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
+        czyWeterynarzSpinner.setAdapter(adapter);
 
         BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaSpinner, SpinnerContent.MIASTA, 1);
         bdKomunikacjaNaSpinnery.start();
