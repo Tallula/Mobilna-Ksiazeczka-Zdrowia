@@ -50,8 +50,8 @@ public class Rejestracja extends AppCompatActivity {
         EditText nazwiskoEditText = (EditText)findViewById(R.id.nazwiskoEditText);
 
         String[] czyWeterynarz = new String[2];
-        czyWeterynarz[0] = "TAK";
-        czyWeterynarz[1]="NIE";
+        czyWeterynarz[0] = "NIE";
+        czyWeterynarz[1]="TAK";
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
         czyWeterynarzSpinner.setAdapter(adapter);
@@ -102,10 +102,10 @@ public class Rejestracja extends AppCompatActivity {
                                     int wybranaUlicaIndex=uliceSpinner.getSelectedItemPosition();
                                     String idMiasta = SpinnerWypelnij.idMiastZczytane[wybraneMiastoIndex];
                                     String idUlicy = SpinnerWypelnij.idUlicZczytane[wybranaUlicaIndex];
-
+                                    String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
                                     WebView web = new WebView(getApplicationContext());
                                     web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
-                                            "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy);
+                                            "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
 
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
