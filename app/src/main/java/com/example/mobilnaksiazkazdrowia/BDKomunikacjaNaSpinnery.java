@@ -1,6 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
@@ -23,20 +24,32 @@ public class BDKomunikacjaNaSpinnery extends Thread{
     int idUlicy;
     static String nazwaWybranegoMiasta;
 
-    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content){
+    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content, String nazwaWybranegoMiasta){
         this.activity = aktywnosc;
         this.autoCompleteTextView = autoCompleteTextView;
         this.spinnerContent=content;
+        this.nazwaWybranegoMiasta = nazwaWybranegoMiasta;
     }
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
 
         if(spinnerContent == SpinnerContent.MIASTA){
+
              url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajMiasta.php";
         }
         else if(spinnerContent == SpinnerContent.ULICE){
-            url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1=2";
+
+            int index=0;
+            for(int i=0; i<SpinnerWypelnij.nazwyMiastZczytane.length; i++)
+            {
+                if(SpinnerWypelnij.nazwyMiastZczytane[i].equals(nazwaWybranegoMiasta)){
+                    index=i;
+                }
+            }
+            String idMiasta = SpinnerWypelnij.idMiastZczytane[index].toString();
+
+            url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1=" + idMiasta ;
         }
         Request request = new Request.Builder().url(url).build();
        client.newCall(request).enqueue(new Callback() {

@@ -61,14 +61,14 @@ public class Rejestracja extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
 
-        BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaACTextView, SpinnerContent.MIASTA);
+        BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaACTextView, SpinnerContent.MIASTA, null);
         bdKomunikacjaNaSpinnery.start();
 
     miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceACTextView, SpinnerContent.ULICE);
+            BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceACTextView, SpinnerContent.ULICE, miastaACTextView.getText().toString());
             bdKomunikacjaNaSpinnery.start();
         }
     });
