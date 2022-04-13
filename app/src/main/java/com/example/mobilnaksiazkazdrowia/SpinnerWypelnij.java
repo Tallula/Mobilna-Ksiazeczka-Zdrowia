@@ -15,8 +15,8 @@ public class SpinnerWypelnij implements Runnable {
     String ciagJSON="";
     public static String[] idMiastZczytane;
     public static String[] idUlicZczytane;
-    String[] nazwyMiastZczytane;
-    String[] nazwyUlicZczytane;
+    public static String[] nazwyMiastZczytane;
+    public static String[] nazwyUlicZczytane;
     AutoCompleteTextView autoCompleteTextView;
     SpinnerContent content;
 

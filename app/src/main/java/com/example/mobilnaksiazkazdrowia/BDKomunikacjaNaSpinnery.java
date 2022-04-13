@@ -21,21 +21,22 @@ public class BDKomunikacjaNaSpinnery extends Thread{
     SpinnerContent spinnerContent;
     String url ="";
     int idUlicy;
-    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content, int idUlicy){
+    static String nazwaWybranegoMiasta;
+
+    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content){
         this.activity = aktywnosc;
         this.autoCompleteTextView = autoCompleteTextView;
         this.spinnerContent=content;
-        this.idUlicy = idUlicy;
     }
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
+
         if(spinnerContent == SpinnerContent.MIASTA){
              url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajMiasta.php";
-
         }
         else if(spinnerContent == SpinnerContent.ULICE){
-            url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1="+SpinnerWypelnij.idMiastZczytane[idUlicy];
+            url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1=2";
         }
         Request request = new Request.Builder().url(url).build();
        client.newCall(request).enqueue(new Callback() {
