@@ -2,6 +2,7 @@ package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -16,13 +17,13 @@ public class SpinnerWypelnij implements Runnable {
     public static String[] idUlicZczytane;
     String[] nazwyMiastZczytane;
     String[] nazwyUlicZczytane;
-    Spinner spinner;
+    AutoCompleteTextView autoCompleteTextView;
     SpinnerContent content;
 
-    public SpinnerWypelnij(Activity activity, String response, Spinner spinnerZewn, SpinnerContent spinnerContent){
+    public SpinnerWypelnij(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, SpinnerContent spinnerContent){
         this.activity=activity;
         this.myResponse = response;
-        this.spinner = spinnerZewn;
+        this.autoCompleteTextView = autoCompleteTextView;
         this.content=spinnerContent;
     }
     @Override
@@ -42,7 +43,7 @@ public class SpinnerWypelnij implements Runnable {
                                 idMiastZczytane[i] = jsonObject.getString("idMiasta");
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
-                            spinner.setAdapter(adapter);
+                            autoCompleteTextView.setAdapter(adapter);
                         }
                         else if(content==SpinnerContent.ULICE){
                             nazwyUlicZczytane = new String[jsonArray.length()];
@@ -53,7 +54,7 @@ public class SpinnerWypelnij implements Runnable {
                                 idUlicZczytane[i] = jsonObject.getString("idUlicy");
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
-                            spinner.setAdapter(adapter);
+                            autoCompleteTextView.setAdapter(adapter);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

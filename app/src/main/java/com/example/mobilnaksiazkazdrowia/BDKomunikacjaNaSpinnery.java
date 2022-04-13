@@ -1,6 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -16,13 +17,13 @@ import okhttp3.Response;
 public class BDKomunikacjaNaSpinnery extends Thread{
 
     Activity activity;
-    Spinner spinner;
+    AutoCompleteTextView autoCompleteTextView;
     SpinnerContent spinnerContent;
     String url ="";
     int idUlicy;
-    BDKomunikacjaNaSpinnery(Activity aktywnosc, Spinner spinnerZewn, SpinnerContent content,int idUlicy){
+    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content, int idUlicy){
         this.activity = aktywnosc;
-        this.spinner = spinnerZewn;
+        this.autoCompleteTextView = autoCompleteTextView;
         this.spinnerContent=content;
         this.idUlicy = idUlicy;
     }
@@ -44,7 +45,7 @@ public class BDKomunikacjaNaSpinnery extends Thread{
            @Override
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                final String myResponse = response.body().string();
-               SpinnerWypelnij spinnerWypelnij = new SpinnerWypelnij(activity, myResponse, spinner, spinnerContent);
+               SpinnerWypelnij spinnerWypelnij = new SpinnerWypelnij(activity, myResponse, autoCompleteTextView, spinnerContent);
                spinnerWypelnij.run();
            }
        });

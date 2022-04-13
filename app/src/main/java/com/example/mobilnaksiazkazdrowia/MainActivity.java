@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Button rejestracjaButton = (Button) findViewById(R.id.rejestracjaButton);
         Button oProgramieButton = (Button)findViewById(R.id.oProgramieButton);
 
-        Spinner miastaSpinner =(Spinner) findViewById(R.id.miastoSpinner);
+       // Spinner miastaSpinner =(Spinner) findViewById(R.id.miastoSpinner);
         EditText test = (EditText) findViewById(R.id.testEditText);
 
 

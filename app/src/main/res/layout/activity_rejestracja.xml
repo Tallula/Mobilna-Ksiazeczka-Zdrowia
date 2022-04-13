@@ -69,18 +69,19 @@
             android:inputType="textPersonName"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-        <Spinner
-            android:id="@+id/miastoSpinner"
+        <AutoCompleteTextView
+            android:id="@+id/miastaACTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Miasto" />
 
-        <Spinner
-            android:id="@+id/ulicaSpinner"
+        <AutoCompleteTextView
+            android:id="@+id/uliceACTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp" />
+            android:hint="Ulica" />
 
         <TextView
             android:id="@+id/czyWeterynarzTextView"

@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -42,8 +43,9 @@ public class Rejestracja extends AppCompatActivity {
         EditText testEditText = (EditText)findViewById(R.id.testEditText);
         EditText eMailEditText = (EditText) findViewById(R.id.eMailEditText);
         EditText hasloEditText =(EditText)findViewById(R.id.hasloEditText);
-        Spinner miastaSpinner =(Spinner) findViewById(R.id.miastoSpinner);
-        Spinner uliceSpinner =(Spinner) findViewById(R.id.ulicaSpinner);
+        AutoCompleteTextView miastaACTextView=(AutoCompleteTextView) findViewById(R.id.miastaACTextView);
+        AutoCompleteTextView uliceACTextView=(AutoCompleteTextView) findViewById(R.id.uliceACTextView);
+
         Spinner czyWeterynarzSpinner = (Spinner) findViewById(R.id.czyWeterynarzSpinner);
 
         EditText imieEditText = (EditText)findViewById(R.id.imieEditText);
@@ -53,17 +55,27 @@ public class Rejestracja extends AppCompatActivity {
         czyWeterynarz[0] = "NIE";
         czyWeterynarz[1]="TAK";
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
-        czyWeterynarzSpinner.setAdapter(adapter);
+        ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
+        czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
-        BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaSpinner, SpinnerContent.MIASTA, 1);
+        OkHttpClient client = new OkHttpClient();
+
+
+        BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaACTextView, SpinnerContent.MIASTA, 1);
         bdKomunikacjaNaSpinnery.start();
 
-        miastaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    miastaACTextView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        uliceACTextView.setText(miastaACTextView.getText().toString());
+        }
+    });
+/*
+        miastaACTextView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery =
-                            new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceSpinner, SpinnerContent.ULICE,position);
+                            new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceACTextView, SpinnerContent.ULICE,position);
                     bdKomunikacjaNaSpinnery.start();
             }
             @Override
@@ -71,6 +83,8 @@ public class Rejestracja extends AppCompatActivity {
             testEditText.setText("Nic nie wybrano");
             }
         });
+
+*/
 
         zarejestrujButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +112,14 @@ public class Rejestracja extends AppCompatActivity {
                                     String haslo = hasloEditText.getText().toString();
                                     String imie = imieEditText.getText().toString();
                                     String nazwisko = nazwiskoEditText.getText().toString();
-                                    int wybraneMiastoIndex = miastaSpinner.getSelectedItemPosition();
-                                    int wybranaUlicaIndex=uliceSpinner.getSelectedItemPosition();
-                                    String idMiasta = SpinnerWypelnij.idMiastZczytane[wybraneMiastoIndex];
+                                    //int wybraneMiastoIndex = miastaSpinner.getSelectedItemPosition();
+                                    int wybranaUlicaIndex=Integer.parseInt( uliceACTextView.getText().toString());
+                                    //String idMiasta = SpinnerWypelnij.idMiastZczytane[wybraneMiastoIndex];
                                     String idUlicy = SpinnerWypelnij.idUlicZczytane[wybranaUlicaIndex];
                                     String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
                                     WebView web = new WebView(getApplicationContext());
-                                    web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
-                                            "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
+                                    //web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
+                                          //  "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
 
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
@@ -113,8 +127,8 @@ public class Rejestracja extends AppCompatActivity {
                                         hasloEditText.setText("");
                                         imieEditText.setText("");
                                         nazwiskoEditText.setText("");
-                                        miastaSpinner.setSelection(0);
-                                        uliceSpinner.setSelection(0);
+                                        //miastaSpinner.setSelection(0);
+                                        //uliceSpinner.setSelection(0);
                                 }
                             }
                         });
