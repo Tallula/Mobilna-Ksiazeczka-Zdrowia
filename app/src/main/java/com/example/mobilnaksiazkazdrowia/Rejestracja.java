@@ -72,21 +72,6 @@ public class Rejestracja extends AppCompatActivity {
             bdKomunikacjaNaSpinnery.start();
         }
     });
-/*
-        miastaACTextView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery =
-                            new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceACTextView, SpinnerContent.ULICE,position);
-                    bdKomunikacjaNaSpinnery.start();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            testEditText.setText("Nic nie wybrano");
-            }
-        });
-
-*/
 
         zarejestrujButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,32 +90,43 @@ public class Rejestracja extends AppCompatActivity {
                         Rejestracja.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (myResponse.equals("True")) {
+                                if (myResponse.contains("True")) {
                                     Toast.makeText(getApplicationContext(), "Podany adres e-mail juz istnieje", Toast.LENGTH_LONG).show();
                                 }
-                                else if(myResponse.equals("False"))
+                                else if(myResponse.contains("False"))
                                     {
                                     String eMail = eMailEditText.getText().toString();
                                     String haslo = hasloEditText.getText().toString();
                                     String imie = imieEditText.getText().toString();
                                     String nazwisko = nazwiskoEditText.getText().toString();
-                                    //int wybraneMiastoIndex = miastaSpinner.getSelectedItemPosition();
-                                    int wybranaUlicaIndex=Integer.parseInt( uliceACTextView.getText().toString());
-                                    //String idMiasta = SpinnerWypelnij.idMiastZczytane[wybraneMiastoIndex];
-                                    String idUlicy = SpinnerWypelnij.idUlicZczytane[wybranaUlicaIndex];
-                                    String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
-                                    WebView web = new WebView(getApplicationContext());
-                                    //web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
-                                          //  "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
+                                    String idUlicy = "";
 
+                                    String czyWeterynarz = "TAK";
+                                    WebView web = new WebView(getApplicationContext());
+                                        int index=0;
+                                        for(int i=0; i<SpinnerWypelnij.nazwyUlicZczytane.length; i++)
+                                        {
+                                            if(SpinnerWypelnij.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
+                                                index=i;
+                                                break;
+                                            }
+                                        }
+                                        idUlicy = SpinnerWypelnij.idUlicZczytane[index].toString();
+
+                                        web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?" +
+                                                "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
+                                                "&par5="+BDKomunikacjaNaSpinnery.idMiasta + "&par6="+idUlicy+"&par7=NIE");
+                                        /*
+                                    web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
+                                           "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
+                                        */
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
                                         eMailEditText.setText("");
                                         hasloEditText.setText("");
                                         imieEditText.setText("");
                                         nazwiskoEditText.setText("");
-                                        //miastaSpinner.setSelection(0);
-                                        //uliceSpinner.setSelection(0);
+
                                 }
                             }
                         });

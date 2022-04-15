@@ -23,6 +23,7 @@ public class BDKomunikacjaNaSpinnery extends Thread{
     String url ="";
     int idUlicy;
     static String nazwaWybranegoMiasta;
+    public static String idMiasta;
 
     BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content, String nazwaWybranegoMiasta){
         this.activity = aktywnosc;
@@ -47,7 +48,7 @@ public class BDKomunikacjaNaSpinnery extends Thread{
                     index=i;
                 }
             }
-            String idMiasta = SpinnerWypelnij.idMiastZczytane[index].toString();
+             idMiasta = SpinnerWypelnij.idMiastZczytane[index].toString();
 
             url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1=" + idMiasta ;
         }
