@@ -66,11 +66,10 @@ public class Logowanie extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if(myResponse.contains("False")){
-                                    Toast.makeText(getApplicationContext(), "Blad", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "E-Mail lub haslo bledne. Sprobuj ponownie", Toast.LENGTH_LONG).show();
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
-
                                     try {
                                         JSONArray jsonArray = new JSONArray(myResponse);
                                          String [] rodzajUzytkownika = new String[jsonArray.length()];
@@ -95,8 +94,6 @@ public class Logowanie extends AppCompatActivity {
                                 }
                             }
                         });
-
-
                     }
                 });
             }

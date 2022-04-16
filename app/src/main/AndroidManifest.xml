@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MobilnaKsiazkaZdrowia"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PlanowanieSpotkaniaOkno"
+            android:exported="false" />
+        <activity
             android:name=".WeterynarzOkno"
             android:exported="false" />
         <activity
