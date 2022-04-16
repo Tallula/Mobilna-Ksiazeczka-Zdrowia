@@ -36,6 +36,8 @@ public class Logowanie extends AppCompatActivity {
         EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
         Button zalogujButton = findViewById(R.id.zalogujButton);
 
+        final String[] rodzaj = {""};
+
 
         zalogujButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,28 +73,25 @@ public class Logowanie extends AppCompatActivity {
 
                                     try {
                                         JSONArray jsonArray = new JSONArray(myResponse);
-                                        String [] rodzajUzytkownika = new String[jsonArray.length()];
+                                         String [] rodzajUzytkownika = new String[jsonArray.length()];
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         rodzajUzytkownika[0] = jsonObject.getString("rodzajUzytkownika");
                                         Log.d("RODZAJ UZYTKOWNIKA", rodzajUzytkownika[0]);
+
+                                        if(rodzajUzytkownika[0].equals("Wlasciciel")){
+                                            Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
+                                            startActivity(intent);
+                                        }
+                                        else
+                                        {
+                                            Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
+                                            startActivity(intent);
+                                        }
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
 
-                                    /*
-                                    if(myResponse.contains("Weterynarz"))
-                                    {
-                                        Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
-                                        startActivity(intent);
-                                    }
-                                    else
-                                    {
-                                        Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
-                                        startActivity(intent);
-                                    }
-
-                                     */
                                 }
                             }
                         });
