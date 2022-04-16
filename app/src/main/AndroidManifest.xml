@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MobilnaKsiazkaZdrowia"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".OknoUzytkownika"
+            android:name=".WlascicielOkno"
             android:exported="false" />
         <activity
             android:name=".OProgramie"

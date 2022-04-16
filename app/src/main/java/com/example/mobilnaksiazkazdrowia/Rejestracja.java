@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -101,7 +102,8 @@ public class Rejestracja extends AppCompatActivity {
                                     String nazwisko = nazwiskoEditText.getText().toString();
                                     String idUlicy = "";
 
-                                    String czyWeterynarz = "TAK";
+                                    String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
+                                    //Log.d("czy weterynarz", czyWeterynarz); //test
                                     WebView web = new WebView(getApplicationContext());
                                         int index=0;
                                         for(int i=0; i<SpinnerWypelnij.nazwyUlicZczytane.length; i++)
@@ -115,11 +117,8 @@ public class Rejestracja extends AppCompatActivity {
 
                                         web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?" +
                                                 "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                                "&par5="+BDKomunikacjaNaSpinnery.idMiasta + "&par6="+idUlicy+"&par7=NIE");
-                                        /*
-                                    web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?par1=" + eMail + "&par2=" + haslo +
-                                           "&par3=" + imie + "&par4=" + nazwisko + "&par5=" + idMiasta + "&par6=" + idUlicy + "&par7=" + czyWeterynarz);
-                                        */
+                                                "&par5="+BDKomunikacjaNaSpinnery.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
                                         eMailEditText.setText("");

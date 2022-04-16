@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -58,14 +63,36 @@ public class Logowanie extends AppCompatActivity {
                         Logowanie.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(myResponse.contains("True")){
-                                    Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
-
-                                    Intent intent = new Intent(getApplicationContext(),OknoUzytkownika.class);
-                                    startActivity(intent);
+                                if(myResponse.contains("False")){
+                                    Toast.makeText(getApplicationContext(), "Blad", Toast.LENGTH_LONG).show();
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(), "Blad", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
+
+                                    try {
+                                        JSONArray jsonArray = new JSONArray(myResponse);
+                                        String [] rodzajUzytkownika = new String[jsonArray.length()];
+                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                        rodzajUzytkownika[0] = jsonObject.getString("rodzajUzytkownika");
+                                        Log.d("RODZAJ UZYTKOWNIKA", rodzajUzytkownika[0]);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    /*
+                                    if(myResponse.contains("Weterynarz"))
+                                    {
+                                        Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
+                                        startActivity(intent);
+                                    }
+
+                                     */
                                 }
                             }
                         });
