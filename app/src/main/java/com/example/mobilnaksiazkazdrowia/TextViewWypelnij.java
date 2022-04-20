@@ -3,13 +3,12 @@ package com.example.mobilnaksiazkazdrowia;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SpinnerWypelnij implements Runnable {
+public class TextViewWypelnij implements Runnable {
     Activity activity;
     String myResponse;
     String ciagJSON="";
@@ -18,9 +17,9 @@ public class SpinnerWypelnij implements Runnable {
     public static String[] nazwyMiastZczytane;
     public static String[] nazwyUlicZczytane;
     AutoCompleteTextView autoCompleteTextView;
-    SpinnerContent content;
+    TextViewJakaZawartosc content;
 
-    public SpinnerWypelnij(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, SpinnerContent spinnerContent){
+    public TextViewWypelnij(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, TextViewJakaZawartosc spinnerContent){
         this.activity=activity;
         this.myResponse = response;
         this.autoCompleteTextView = autoCompleteTextView;
@@ -34,7 +33,7 @@ public class SpinnerWypelnij implements Runnable {
                 {
                     try {
                         JSONArray jsonArray = new JSONArray(myResponse);
-                        if(content==SpinnerContent.MIASTA){
+                        if(content== TextViewJakaZawartosc.MIASTA){
                             nazwyMiastZczytane = new String[jsonArray.length()];
                             idMiastZczytane = new String[jsonArray.length()];
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -45,7 +44,7 @@ public class SpinnerWypelnij implements Runnable {
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
                             autoCompleteTextView.setAdapter(adapter);
                         }
-                        else if(content==SpinnerContent.ULICE){
+                        else if(content== TextViewJakaZawartosc.ULICE){
                             nazwyUlicZczytane = new String[jsonArray.length()];
                             idUlicZczytane = new String[jsonArray.length()];
                             for (int i = 0; i < jsonArray.length(); i++) {

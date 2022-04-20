@@ -1,6 +1,6 @@
 package com.example.mobilnaksiazkazdrowia;
 
-public enum SpinnerContent {
+public enum TextViewJakaZawartosc {
         MIASTA,
         ULICE
 

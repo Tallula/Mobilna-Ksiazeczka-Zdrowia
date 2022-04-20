@@ -30,9 +30,7 @@ public class WlascicielOkno extends AppCompatActivity {
                         WlascicielOkno.this
                 );
                 intentIntegrator.setPrompt("test");
-
                 intentIntegrator.setBeepEnabled(true);
-
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
@@ -47,23 +45,8 @@ public class WlascicielOkno extends AppCompatActivity {
         IntentResult intentResult = IntentIntegrator.parseActivityResult(
                 requestCode,resultCode,data
         );
+        KodQR odczytQR = new KodQR();
+        odczytQR.odczytQR(intentResult, WlascicielOkno.this);
 
-        if(intentResult.getContents()!=null){
-            AlertDialog.Builder builder =new AlertDialog.Builder( WlascicielOkno.this );
-            builder.setTitle("Wynik");
-            builder.setMessage(intentResult.getContents());
-
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }});
-            builder.show();
-
-
-        }  else
-        {
-            Toast.makeText(getApplicationContext(), "Nie zeskanowales nic!!!", Toast.LENGTH_SHORT);
-        }
     }
 }

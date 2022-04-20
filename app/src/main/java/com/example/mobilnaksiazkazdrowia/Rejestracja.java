@@ -4,20 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -59,18 +53,16 @@ public class Rejestracja extends AppCompatActivity {
         ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
-        OkHttpClient client = new OkHttpClient();
 
-
-        BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, miastaACTextView, SpinnerContent.MIASTA, null);
-        bdKomunikacjaNaSpinnery.start();
+        BDKomunikacjaTextView bdKomunikacjaTextView = new BDKomunikacjaTextView(Rejestracja.this, miastaACTextView, TextViewJakaZawartosc.MIASTA, null);
+        bdKomunikacjaTextView.start();
 
     miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacjaNaSpinnery bdKomunikacjaNaSpinnery = new BDKomunikacjaNaSpinnery(Rejestracja.this, uliceACTextView, SpinnerContent.ULICE, miastaACTextView.getText().toString());
-            bdKomunikacjaNaSpinnery.start();
+            BDKomunikacjaTextView bdKomunikacjaTextView = new BDKomunikacjaTextView(Rejestracja.this, uliceACTextView, TextViewJakaZawartosc.ULICE, miastaACTextView.getText().toString());
+            bdKomunikacjaTextView.start();
         }
     });
 
@@ -78,7 +70,9 @@ public class Rejestracja extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 OkHttpClient client = new OkHttpClient();
-                String url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/emailSprawdz.php?par1=" + eMailEditText.getText().toString();
+
+                String url = Linki.zwrocRejestracjaFolder() + "emailSprawdz.php?par1="+ eMailEditText.getText().toString();
+                //String url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/emailSprawdz.php?par1=" + eMailEditText.getText().toString();
                 Request request = new Request.Builder().url(url).build();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -103,22 +97,29 @@ public class Rejestracja extends AppCompatActivity {
                                     String idUlicy = "";
 
                                     String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
-                                    //Log.d("czy weterynarz", czyWeterynarz); //test
+
                                     WebView web = new WebView(getApplicationContext());
                                         int index=0;
-                                        for(int i=0; i<SpinnerWypelnij.nazwyUlicZczytane.length; i++)
+                                        for(int i = 0; i< TextViewWypelnij.nazwyUlicZczytane.length; i++)
                                         {
-                                            if(SpinnerWypelnij.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
+                                            if(TextViewWypelnij.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
                                                 index=i;
                                                 break;
                                             }
                                         }
-                                        idUlicy = SpinnerWypelnij.idUlicZczytane[index].toString();
+                                        idUlicy = TextViewWypelnij.idUlicZczytane[index].toString();
 
+
+                                        web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
+                                                "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
+                                                "&par5="+BDKomunikacjaTextView.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+
+                                        /*
                                         web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?" +
                                                 "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                                "&par5="+BDKomunikacjaNaSpinnery.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+                                                "&par5="+BDKomunikacjaTextView.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
 
+                                        */
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
                                         eMailEditText.setText("");

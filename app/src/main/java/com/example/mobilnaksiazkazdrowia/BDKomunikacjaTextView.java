@@ -1,9 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
@@ -15,17 +13,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class BDKomunikacjaNaSpinnery extends Thread{
+public class BDKomunikacjaTextView extends Thread{
 
     Activity activity;
     AutoCompleteTextView autoCompleteTextView;
-    SpinnerContent spinnerContent;
+    TextViewJakaZawartosc spinnerContent;
     String url ="";
     int idUlicy;
     static String nazwaWybranegoMiasta;
     public static String idMiasta;
 
-    BDKomunikacjaNaSpinnery(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, SpinnerContent content, String nazwaWybranegoMiasta){
+    BDKomunikacjaTextView(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, TextViewJakaZawartosc content, String nazwaWybranegoMiasta){
         this.activity = aktywnosc;
         this.autoCompleteTextView = autoCompleteTextView;
         this.spinnerContent=content;
@@ -35,22 +33,26 @@ public class BDKomunikacjaNaSpinnery extends Thread{
     public void run() {
         OkHttpClient client = new OkHttpClient();
 
-        if(spinnerContent == SpinnerContent.MIASTA){
+        if(spinnerContent == TextViewJakaZawartosc.MIASTA){
 
-             url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajMiasta.php";
+            //url = "http://192.168.0.152/ksiazkaZdrowia/RejestracjaFormularz/czytajMiasta.php";
+             url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
+
         }
-        else if(spinnerContent == SpinnerContent.ULICE){
+        else if(spinnerContent == TextViewJakaZawartosc.ULICE){
 
             int index=0;
-            for(int i=0; i<SpinnerWypelnij.nazwyMiastZczytane.length; i++)
+            for(int i = 0; i< TextViewWypelnij.nazwyMiastZczytane.length; i++)
             {
-                if(SpinnerWypelnij.nazwyMiastZczytane[i].equals(nazwaWybranegoMiasta)){
+                if(TextViewWypelnij.nazwyMiastZczytane[i].equals(nazwaWybranegoMiasta)){
                     index=i;
                 }
             }
-             idMiasta = SpinnerWypelnij.idMiastZczytane[index].toString();
+             idMiasta = TextViewWypelnij.idMiastZczytane[index].toString();
 
-            url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/czytajUlice.php?par1=" + idMiasta ;
+           // url = "http://192.168.0.152/ksiazkaZdrowia/RejestracjaFormularz/czytajUlice.php?par1=" + idMiasta;
+            url = Linki.zwrocRejestracjaFormularzFolder() + "czytajUlice.php?par1=" + idMiasta;
+
         }
         Request request = new Request.Builder().url(url).build();
        client.newCall(request).enqueue(new Callback() {
@@ -60,7 +62,7 @@ public class BDKomunikacjaNaSpinnery extends Thread{
            @Override
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                final String myResponse = response.body().string();
-               SpinnerWypelnij spinnerWypelnij = new SpinnerWypelnij(activity, myResponse, autoCompleteTextView, spinnerContent);
+               TextViewWypelnij spinnerWypelnij = new TextViewWypelnij(activity, myResponse, autoCompleteTextView, spinnerContent);
                spinnerWypelnij.run();
            }
        });

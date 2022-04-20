@@ -36,7 +36,7 @@ public class Logowanie extends AppCompatActivity {
         EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
         Button zalogujButton = findViewById(R.id.zalogujButton);
 
-        final String[] rodzaj = {""};
+
 
 
         zalogujButton.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,8 @@ public class Logowanie extends AppCompatActivity {
 
 
                 OkHttpClient client = new OkHttpClient();
-                String url="http://192.168.0.152/ksiazkaZdrowia/Logowanie/zalogujUzytkownika.php?par1="+eMail + "&par2=" + haslo;
+                String url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +eMail + "&par2=" + haslo;
+               // String url="http://192.168.0.152/ksiazkaZdrowia/Logowanie/zalogujUzytkownika.php?par1="+eMail + "&par2=" + haslo;
 
                 Request request = new Request.Builder().url(url).build();
 
