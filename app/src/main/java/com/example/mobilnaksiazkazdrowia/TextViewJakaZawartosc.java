@@ -1,7 +1,8 @@
 package com.example.mobilnaksiazkazdrowia;
 
 public enum TextViewJakaZawartosc {
-        MIASTA,
-        ULICE
+        POBIERZ_MIASTA,
+        POBIERZ_ULICE,
+        POBIERZ_DANE_OSOBOWE
 
 }

@@ -54,15 +54,15 @@ public class Rejestracja extends AppCompatActivity {
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
 
-        BDKomunikacjaTextView bdKomunikacjaTextView = new BDKomunikacjaTextView(Rejestracja.this, miastaACTextView, TextViewJakaZawartosc.MIASTA, null);
+        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, TextViewJakaZawartosc.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
     miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacjaTextView bdKomunikacjaTextView = new BDKomunikacjaTextView(Rejestracja.this, uliceACTextView, TextViewJakaZawartosc.ULICE, miastaACTextView.getText().toString());
-            bdKomunikacjaTextView.start();
+            BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, uliceACTextView, TextViewJakaZawartosc.POBIERZ_ULICE, miastaACTextView.getText().toString());
+            bdKomunikacja.start();
         }
     });
 
@@ -85,10 +85,10 @@ public class Rejestracja extends AppCompatActivity {
                         Rejestracja.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (myResponse.contains("True")) {
+                                if (myResponse.equals("True")) {
                                     Toast.makeText(getApplicationContext(), "Podany adres e-mail juz istnieje", Toast.LENGTH_LONG).show();
                                 }
-                                else if(myResponse.contains("False"))
+                                else if(myResponse.equals("False"))
                                     {
                                     String eMail = eMailEditText.getText().toString();
                                     String haslo = hasloEditText.getText().toString();
@@ -100,19 +100,19 @@ public class Rejestracja extends AppCompatActivity {
 
                                     WebView web = new WebView(getApplicationContext());
                                         int index=0;
-                                        for(int i = 0; i< TextViewWypelnij.nazwyUlicZczytane.length; i++)
+                                        for(int i = 0; i< BDJSONDeserializacja.nazwyUlicZczytane.length; i++)
                                         {
-                                            if(TextViewWypelnij.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
+                                            if(BDJSONDeserializacja.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
                                                 index=i;
                                                 break;
                                             }
                                         }
-                                        idUlicy = TextViewWypelnij.idUlicZczytane[index].toString();
+                                        idUlicy = BDJSONDeserializacja.idUlicZczytane[index].toString();
 
 
                                         web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
                                                 "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                                "&par5="+BDKomunikacjaTextView.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+                                                "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
 
                                         /*
                                         web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?" +

@@ -16,6 +16,9 @@ public class WeterynarzOkno extends AppCompatActivity {
 
         Button zaplanujWizyteButton =(Button) findViewById(R.id.zaplanujWizyteButton);
 
+
+
+
         zaplanujWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

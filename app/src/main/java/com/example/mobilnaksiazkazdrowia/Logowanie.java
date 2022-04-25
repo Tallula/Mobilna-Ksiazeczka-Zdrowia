@@ -62,7 +62,6 @@ public class Logowanie extends AppCompatActivity {
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                          String myResponse = response.body().string();
 
-
                         Logowanie.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -70,17 +69,19 @@ public class Logowanie extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "E-Mail lub haslo bledne. Sprobuj ponownie", Toast.LENGTH_LONG).show();
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
+                                    ZalogowanyUzytkownik.ustawEMail(eMail);
+                                    //Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
                                     try {
                                         JSONArray jsonArray = new JSONArray(myResponse);
                                          String [] rodzajUzytkownika = new String[jsonArray.length()];
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         rodzajUzytkownika[0] = jsonObject.getString("rodzajUzytkownika");
-                                        Log.d("RODZAJ UZYTKOWNIKA", rodzajUzytkownika[0]);
+                                        //Log.d("RODZAJ UZYTKOWNIKA", rodzajUzytkownika[0]);
 
                                         if(rodzajUzytkownika[0].equals("Wlasciciel")){
                                             Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
                                             startActivity(intent);
+
                                         }
                                         else
                                         {
