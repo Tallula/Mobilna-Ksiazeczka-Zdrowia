@@ -62,20 +62,12 @@ public class BDJSONDeserializacja implements Runnable {
                         }
                         else if(content== TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE){
                             //Log.d("TAGTAG", "Dane osobowe");
-                            String [] imieUzytkownika = new String[jsonArray.length()];
-                            String [] nazwiskoUzytkownika = new String[jsonArray.length()];
-                            String [] numTelUzytkownika = new String[jsonArray.length()];
 
                             JSONObject jsonObject = jsonArray.getJSONObject(0);
-                            imieUzytkownika[0] = jsonObject.getString("imie");
-                            nazwiskoUzytkownika[0] = jsonObject.getString("nazwisko");
-                            numTelUzytkownika[0] = jsonObject.getString("numerTelefonu");
-
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
-                            autoCompleteTextView.setAdapter(adapter);
-
+                            ZalogowanyUzytkownik.ustawEMail(jsonObject.getString("imie"));
+                            ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
+                            ZalogowanyUzytkownik.ustawNumTel(jsonObject.getString("numerTelefonu"));
                         }
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
