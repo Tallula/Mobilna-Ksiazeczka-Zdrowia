@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,14 +18,13 @@ public class BDJSONDeserializacja implements Runnable {
     public static String[] nazwyMiastZczytane;
     public static String[] nazwyUlicZczytane;
     AutoCompleteTextView autoCompleteTextView;
-    TextViewJakaZawartosc content;
+    BDKomunikacjaCel bdKomunikacjaCel;
 
-
-    public BDJSONDeserializacja(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, TextViewJakaZawartosc spinnerContent){
+    public BDJSONDeserializacja(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel){
         this.activity=activity;
         this.myResponse = response;
         this.autoCompleteTextView = autoCompleteTextView;
-        this.content=spinnerContent;
+        this.bdKomunikacjaCel=bdKomunikacjaCel;
     }
     @Override
     public void run() {
@@ -36,7 +34,7 @@ public class BDJSONDeserializacja implements Runnable {
                 {
                     try {
                         JSONArray jsonArray = new JSONArray(myResponse);
-                        if(content== TextViewJakaZawartosc.POBIERZ_MIASTA){
+                        if(bdKomunikacjaCel== BDKomunikacjaCel.POBIERZ_MIASTA){
                             nazwyMiastZczytane = new String[jsonArray.length()];
                             idMiastZczytane = new String[jsonArray.length()];
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -46,9 +44,8 @@ public class BDJSONDeserializacja implements Runnable {
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
                             autoCompleteTextView.setAdapter(adapter);
-                            Log.d("TAGTAG", "MIASTA");
                         }
-                        else if(content== TextViewJakaZawartosc.POBIERZ_ULICE){
+                        else if(bdKomunikacjaCel== BDKomunikacjaCel.POBIERZ_ULICE){
                             nazwyUlicZczytane = new String[jsonArray.length()];
                             idUlicZczytane = new String[jsonArray.length()];
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -58,17 +55,15 @@ public class BDJSONDeserializacja implements Runnable {
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
                             autoCompleteTextView.setAdapter(adapter);
-                            Log.d("TAGTAG", "ULICE");
                         }
-                        else if(content== TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE){
-                            //Log.d("TAGTAG", "Dane osobowe");
+                        else if(bdKomunikacjaCel== BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE){
 
                             JSONObject jsonObject = jsonArray.getJSONObject(0);
-                            ZalogowanyUzytkownik.ustawEMail(jsonObject.getString("imie"));
+                            ZalogowanyUzytkownik.ustawIdOsoby(jsonObject.getString("idOsoby"));
+                            ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
                             ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
                             ZalogowanyUzytkownik.ustawNumTel(jsonObject.getString("numerTelefonu"));
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

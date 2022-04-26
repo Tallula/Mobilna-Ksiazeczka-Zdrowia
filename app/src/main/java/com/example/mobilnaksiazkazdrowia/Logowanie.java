@@ -36,15 +36,11 @@ public class Logowanie extends AppCompatActivity {
         EditText eMailLogowanieEditText = findViewById(R.id.eMailLogowanieEditText);
         Button zalogujButton = findViewById(R.id.zalogujButton);
 
-
-
-
         zalogujButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             String eMail = eMailLogowanieEditText.getText().toString();
             String haslo = hasloLogowanieEditText.getText().toString();
-
 
                 OkHttpClient client = new OkHttpClient();
                 String url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +eMail + "&par2=" + haslo;
@@ -55,9 +51,7 @@ public class Logowanie extends AppCompatActivity {
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
                     }
-
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                          String myResponse = response.body().string();
@@ -88,7 +82,6 @@ public class Logowanie extends AppCompatActivity {
                                             Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
                                             startActivity(intent);
                                         }
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

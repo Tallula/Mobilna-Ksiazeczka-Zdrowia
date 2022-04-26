@@ -1,9 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,16 +17,16 @@ public class BDKomunikacja extends Thread{
 
     Activity activity;
     AutoCompleteTextView autoCompleteTextView;
-    TextViewJakaZawartosc textViewContent;
+    BDKomunikacjaCel bdKomunikacjaCel;
     String url ="";
 
     static String arg;
     public static String idMiasta;
 
-    BDKomunikacja(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, TextViewJakaZawartosc content, String arg){
+    BDKomunikacja(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
         this.activity = aktywnosc;
         this.autoCompleteTextView = autoCompleteTextView;
-        this.textViewContent=content;
+        this.bdKomunikacjaCel=bdKomunikacjaCel;
         this.arg = arg;
     }
 
@@ -36,6 +34,27 @@ public class BDKomunikacja extends Thread{
     public void run() {
         OkHttpClient client = new OkHttpClient();
 
+        switch(bdKomunikacjaCel){
+            case POBIERZ_MIASTA:
+                url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
+                break;
+            case POBIERZ_ULICE:
+                int index=0;
+                for(int i = 0; i< BDJSONDeserializacja.nazwyMiastZczytane.length; i++)
+                {
+                    if(BDJSONDeserializacja.nazwyMiastZczytane[i].equals(arg)){
+                        index=i;
+                    }
+                }
+                idMiasta = BDJSONDeserializacja.idMiastZczytane[index];
+                url = Linki.zwrocRejestracjaFormularzFolder() + "czytajUlice.php?par1=" + idMiasta;
+                break;
+            case POBIERZ_DANE_OSOBOWE:
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ arg ;
+                break;
+
+        }
+        /*
         if(textViewContent == TextViewJakaZawartosc.POBIERZ_MIASTA){
 
             //url = "http://192.168.0.152/ksiazkaZdrowia/RejestracjaFormularz/czytajMiasta.php";
@@ -60,11 +79,11 @@ public class BDKomunikacja extends Thread{
         //if(textViewContent ==TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE)
         else if(textViewContent ==TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE){
 
-            //url = Linki.zwrocRejestracjaFormularzFolder() + "czytajDaneOsoby.php.php?par1='" + arg + "'";
+            //url = Linki.zwrocRejestracjaFormularzFolder() + "czytajDaneOsoby.php?par1='" + arg + "'";
             url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ arg ;
-
             Log.d("url", url);
         }
+         */
 
         Request request = new Request.Builder().url(url).build();
        client.newCall(request).enqueue(new Callback() {
@@ -75,7 +94,7 @@ public class BDKomunikacja extends Thread{
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                final String myResponse = response.body().string();
 
-               BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja(activity, myResponse, autoCompleteTextView, textViewContent);
+               BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja(activity, myResponse, autoCompleteTextView, bdKomunikacjaCel);
                JSONDeserializacja.run();
            }
        });

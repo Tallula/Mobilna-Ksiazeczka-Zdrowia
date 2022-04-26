@@ -33,11 +33,14 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
         Button wygenerujQRButton = (Button)findViewById(R.id.wygenerujQRButton);
         ImageView QRView = (ImageView) findViewById(R.id.kodQRImageView);
-        EditText dataEditText = (EditText)findViewById(R.id.dataEditText);
+
+        EditText terminWizytyEditText = (EditText)findViewById(R.id.terminWizytyEditText);
+        EditText rodzajWizytyEditText = (EditText)findViewById(R.id.rodzajWizytyEditText);
+        EditText opisWizytyEditText = (EditText)findViewById(R.id.opisWizytyEditText);
         InputMethodManager manager =(InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE
         );
-        manager.hideSoftInputFromWindow(dataEditText.getApplicationWindowToken(),0);
+        manager.hideSoftInputFromWindow(terminWizytyEditText.getApplicationWindowToken(),0);
 
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -45,7 +48,7 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-        dataEditText.setOnClickListener(new View.OnClickListener() {
+        terminWizytyEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -60,17 +63,16 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month +1;
                 String date = dayOfMonth + "/" + month + "/"+ year;
-                dataEditText.setText(date);
+                terminWizytyEditText.setText(date);
 
             }
         };
-
         wygenerujQRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String daneQR = terminWizytyEditText.getText().toString() + "," + rodzajWizytyEditText.getText().toString() + "," + opisWizytyEditText.getText().toString();
                 KodQR kodQR = new KodQR();
-                kodQR.wygenerujQR(dataEditText, QRView);
-
+                kodQR.wygenerujQR(daneQR, QRView);
             }
         });
 

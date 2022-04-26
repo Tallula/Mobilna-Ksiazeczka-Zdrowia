@@ -23,9 +23,8 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class KodQR extends AppCompatActivity {
 
-    public Bitmap wygenerujQR(EditText editText, ImageView QRView){
+    public Bitmap wygenerujQR(String tresc, ImageView QRView){
         MultiFormatWriter writer = new MultiFormatWriter();
-        String tresc = editText.getText().toString();
         Bitmap bitmap = null;
         try {
             BitMatrix matrix = writer.encode(tresc, BarcodeFormat.QR_CODE,350,350);

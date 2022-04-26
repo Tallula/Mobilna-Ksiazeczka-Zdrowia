@@ -54,14 +54,14 @@ public class Rejestracja extends AppCompatActivity {
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
 
-        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, TextViewJakaZawartosc.POBIERZ_MIASTA, null);
+        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
     miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, uliceACTextView, TextViewJakaZawartosc.POBIERZ_ULICE, miastaACTextView.getText().toString());
+            BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
             bdKomunikacja.start();
         }
     });

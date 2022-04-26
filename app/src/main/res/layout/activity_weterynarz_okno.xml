@@ -28,6 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="Zaplanuj wizyte" />
+
+        <TextView
+            android:id="@+id/testTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

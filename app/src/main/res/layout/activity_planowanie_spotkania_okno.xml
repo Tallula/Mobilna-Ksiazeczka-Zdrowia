@@ -9,22 +9,36 @@
 
     <LinearLayout
         android:layout_width="345dp"
-        android:layout_height="454dp"
+        android:layout_height="610dp"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dateTIL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
 
             <EditText
-                android:id="@+id/dataEditText"
+                android:id="@+id/terminWizytyEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Data"
+                android:layout_height="96dp"
+                android:hint="Termin wizyty"
                 android:inputType="date" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/rodzajWizytyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:hint="Rodzaj"
+            android:inputType="text" />
+        <EditText
+            android:id="@+id/opisWizytyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:hint="Opis wizyty"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/wygenerujQRButton"

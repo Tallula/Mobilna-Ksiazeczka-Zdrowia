@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class WeterynarzOkno extends AppCompatActivity {
 
@@ -17,14 +19,17 @@ public class WeterynarzOkno extends AppCompatActivity {
         Button zaplanujWizyteButton =(Button) findViewById(R.id.zaplanujWizyteButton);
 
 
+        BDKomunikacja bdKomunikacja = new BDKomunikacja(WeterynarzOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.eMail);
+        bdKomunikacja.start();
 
+        TextView test = findViewById(R.id.testTextView);
 
         zaplanujWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(),PlanowanieSpotkaniaOkno.class);
-                startActivity(intent);
+               startActivity(intent);
             }
         });
 
