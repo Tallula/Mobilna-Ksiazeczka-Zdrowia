@@ -45,14 +45,12 @@ public class Rejestracja extends AppCompatActivity {
 
         EditText imieEditText = (EditText)findViewById(R.id.imieEditText);
         EditText nazwiskoEditText = (EditText)findViewById(R.id.nazwiskoEditText);
-
         String[] czyWeterynarz = new String[2];
         czyWeterynarz[0] = "NIE";
         czyWeterynarz[1]="TAK";
 
         ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
-
 
         BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();

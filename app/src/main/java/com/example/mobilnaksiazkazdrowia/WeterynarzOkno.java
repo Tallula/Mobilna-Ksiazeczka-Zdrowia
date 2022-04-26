@@ -19,7 +19,7 @@ public class WeterynarzOkno extends AppCompatActivity {
         Button zaplanujWizyteButton =(Button) findViewById(R.id.zaplanujWizyteButton);
 
 
-        BDKomunikacja bdKomunikacja = new BDKomunikacja(WeterynarzOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.eMail);
+        BDKomunikacja bdKomunikacja = new BDKomunikacja(WeterynarzOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.wezeMail());
         bdKomunikacja.start();
 
         TextView test = findViewById(R.id.testTextView);

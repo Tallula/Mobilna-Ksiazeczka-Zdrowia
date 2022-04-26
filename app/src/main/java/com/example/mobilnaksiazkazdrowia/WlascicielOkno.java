@@ -37,7 +37,7 @@ public class WlascicielOkno extends AppCompatActivity {
             }
         });
 
-        BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.eMail);
+        BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.wezeMail());
         bdKomunikacja.start();
 
     }
