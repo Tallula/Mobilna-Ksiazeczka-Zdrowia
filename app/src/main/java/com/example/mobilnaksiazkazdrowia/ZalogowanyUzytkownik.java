@@ -3,8 +3,6 @@ package com.example.mobilnaksiazkazdrowia;
 public class ZalogowanyUzytkownik {
 
 
-
-
     private static String eMail="";
     private static String imie="";
     private static String nazwisko="";
@@ -19,6 +17,7 @@ public class ZalogowanyUzytkownik {
         return eMail;
     }
 
+
     public static void ustawImie(String imieArg){
 
         imie=imieArg;
@@ -26,6 +25,7 @@ public class ZalogowanyUzytkownik {
     public static String wezImie() {
         return imie;
     }
+
 
     public static void ustawNazwisko(String nazwiskoArg){
 
@@ -35,6 +35,7 @@ public class ZalogowanyUzytkownik {
         return nazwisko;
     }
 
+
     public static void ustawNumTel(String numTelArg){
 
         numTel=numTelArg;
@@ -42,6 +43,7 @@ public class ZalogowanyUzytkownik {
     public static String wezNumTel() {
         return numTel;
     }
+
 
     public static void ustawIdOsoby(String idOsobyArg){
 

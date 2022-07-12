@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class WlascicielOkno extends AppCompatActivity {
         TextView test = (TextView)findViewById(R.id.textView3);
 
 
+       // Log.d("NUM", ZalogowanyUzytkownik.wezeMail()); //dziala
         Button odczytajWizyteQRButton = (Button)findViewById(R.id.odczytajWizyteButton);
         odczytajWizyteQRButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,8 +39,7 @@ public class WlascicielOkno extends AppCompatActivity {
             }
         });
 
-        BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.wezeMail());
-        bdKomunikacja.start();
+
 
     }
     @Override

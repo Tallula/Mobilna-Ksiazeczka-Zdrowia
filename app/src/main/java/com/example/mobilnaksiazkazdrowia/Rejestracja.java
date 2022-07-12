@@ -40,13 +40,12 @@ public class Rejestracja extends AppCompatActivity {
         EditText hasloEditText =(EditText)findViewById(R.id.hasloEditText);
         AutoCompleteTextView miastaACTextView=(AutoCompleteTextView) findViewById(R.id.miastaACTextView);
         AutoCompleteTextView uliceACTextView=(AutoCompleteTextView) findViewById(R.id.uliceACTextView);
-
         Spinner czyWeterynarzSpinner = (Spinner) findViewById(R.id.czyWeterynarzSpinner);
 
         EditText imieEditText = (EditText)findViewById(R.id.imieEditText);
         EditText nazwiskoEditText = (EditText)findViewById(R.id.nazwiskoEditText);
         String[] czyWeterynarz = new String[2];
-        czyWeterynarz[0] = "NIE";
+        czyWeterynarz[0] ="NIE";
         czyWeterynarz[1]="TAK";
 
         ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
@@ -120,6 +119,9 @@ public class Rejestracja extends AppCompatActivity {
                                         */
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
+
+                                        miastaACTextView.setText("");
+                                        uliceACTextView.setText("");
                                         eMailEditText.setText("");
                                         hasloEditText.setText("");
                                         imieEditText.setText("");

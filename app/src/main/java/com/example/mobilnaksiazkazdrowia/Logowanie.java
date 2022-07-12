@@ -54,8 +54,9 @@ public class Logowanie extends AppCompatActivity {
                     }
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this, null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, null);
+                        bdKomunikacja.start();
                          String myResponse = response.body().string();
-
                         Logowanie.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -64,23 +65,24 @@ public class Logowanie extends AppCompatActivity {
                                 }
                                 else{
                                     ZalogowanyUzytkownik.ustawEMail(eMail);
-                                    //Toast.makeText(getApplicationContext(), "Pomyslnie zalogowano", Toast.LENGTH_LONG).show();
                                     try {
+
                                         JSONArray jsonArray = new JSONArray(myResponse);
                                          String [] rodzajUzytkownika = new String[jsonArray.length()];
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         rodzajUzytkownika[0] = jsonObject.getString("rodzajUzytkownika");
-                                        //Log.d("RODZAJ UZYTKOWNIKA", rodzajUzytkownika[0]);
+
+                                        BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.wezeMail());
+                                        bdKomunikacja.start();
 
                                         if(rodzajUzytkownika[0].equals("Wlasciciel")){
                                             Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
                                             startActivity(intent);
-
                                         }
-                                        else
-                                        {
+                                        else {
                                             Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
                                             startActivity(intent);
+
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();

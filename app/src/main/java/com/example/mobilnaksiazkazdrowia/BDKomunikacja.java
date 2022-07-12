@@ -54,36 +54,6 @@ public class BDKomunikacja extends Thread{
                 break;
 
         }
-        /*
-        if(textViewContent == TextViewJakaZawartosc.POBIERZ_MIASTA){
-
-            //url = "http://192.168.0.152/ksiazkaZdrowia/RejestracjaFormularz/czytajMiasta.php";
-             url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
-
-        }
-        else if(textViewContent == TextViewJakaZawartosc.POBIERZ_ULICE){
-
-            int index=0;
-            for(int i = 0; i< BDJSONDeserializacja.nazwyMiastZczytane.length; i++)
-            {
-                if(BDJSONDeserializacja.nazwyMiastZczytane[i].equals(arg)){
-                    index=i;
-                }
-            }
-             idMiasta = BDJSONDeserializacja.idMiastZczytane[index].toString();
-
-           // url = "http://192.168.0.152/ksiazkaZdrowia/RejestracjaFormularz/czytajUlice.php?par1=" + idMiasta;
-            url = Linki.zwrocRejestracjaFormularzFolder() + "czytajUlice.php?par1=" + idMiasta;
-
-        }
-        //if(textViewContent ==TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE)
-        else if(textViewContent ==TextViewJakaZawartosc.POBIERZ_DANE_OSOBOWE){
-
-            //url = Linki.zwrocRejestracjaFormularzFolder() + "czytajDaneOsoby.php?par1='" + arg + "'";
-            url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ arg ;
-            Log.d("url", url);
-        }
-         */
 
         Request request = new Request.Builder().url(url).build();
        client.newCall(request).enqueue(new Callback() {
