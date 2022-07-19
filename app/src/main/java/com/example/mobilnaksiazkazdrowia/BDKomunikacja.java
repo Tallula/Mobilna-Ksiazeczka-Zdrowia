@@ -53,6 +53,10 @@ public class BDKomunikacja extends Thread{
                 url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ arg ;
                 break;
 
+            case POBIERZ_DANE_O_ZWIERZETACH:
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1="+ ZalogowanyUzytkownik.wezIdOsoby();
+                break;
+
         }
 
         Request request = new Request.Builder().url(url).build();
@@ -63,7 +67,6 @@ public class BDKomunikacja extends Thread{
            @Override
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                final String myResponse = response.body().string();
-
                BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja(activity, myResponse, autoCompleteTextView, bdKomunikacjaCel);
                JSONDeserializacja.run();
            }

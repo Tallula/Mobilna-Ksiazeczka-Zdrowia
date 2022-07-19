@@ -25,6 +25,11 @@ public class WlascicielOkno extends AppCompatActivity {
 
        // Log.d("NUM", ZalogowanyUzytkownik.wezeMail()); //dziala
         Button odczytajWizyteQRButton = (Button)findViewById(R.id.odczytajWizyteButton);
+
+
+        BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
+        bdKomunikacja.start();
+        /*
         odczytajWizyteQRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,9 +43,6 @@ public class WlascicielOkno extends AppCompatActivity {
                 intentIntegrator.initiateScan();
             }
         });
-
-
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -51,6 +53,8 @@ public class WlascicielOkno extends AppCompatActivity {
         );
         KodQR odczytQR = new KodQR();
         odczytQR.odczytQR(intentResult, WlascicielOkno.this);
-
+*/
     }
+
+
 }

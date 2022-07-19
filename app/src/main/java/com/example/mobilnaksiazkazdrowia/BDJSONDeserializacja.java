@@ -74,6 +74,16 @@ public class BDJSONDeserializacja implements Runnable {
                                     }
                                 }
                                 break;
+                            case POBIERZ_DANE_O_ZWIERZETACH:
+                                ZwierzetaWlasciciela.imie = new String[jsonArray.length()];
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    ZwierzetaWlasciciela.imie[i] = jsonObject.getString("imie");
+                                }
+
+                                Log.d("PSY:",ZwierzetaWlasciciela.imie[0] );
+                                break;
                         }
 
 
