@@ -18,6 +18,8 @@ public class BDJSONDeserializacja implements Runnable {
     public static String[] idUlicZczytane;
     public static String[] nazwyMiastZczytane;
     public static String[] nazwyUlicZczytane;
+    public static String[] nazwyRasZczytane;
+    public static String[] idRasZczytane;
 
     AutoCompleteTextView autoCompleteTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
@@ -45,8 +47,8 @@ public class BDJSONDeserializacja implements Runnable {
                                     nazwyMiastZczytane[i] = jsonObject.getString("nazwaMiasta");
                                     idMiastZczytane[i] = jsonObject.getString("idMiasta");
                                 }
-                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
-                                autoCompleteTextView.setAdapter(adapter);
+                                ArrayAdapter<String> adapterMiasta = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
+                                autoCompleteTextView.setAdapter(adapterMiasta);
                                 break;
                             case POBIERZ_ULICE:
                                 nazwyUlicZczytane = new String[jsonArray.length()];
@@ -56,8 +58,8 @@ public class BDJSONDeserializacja implements Runnable {
                                     nazwyUlicZczytane[i] = jsonObject.getString("nazwaUlicy");
                                     idUlicZczytane[i] = jsonObject.getString("idUlicy");
                                 }
-                                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
-                                autoCompleteTextView.setAdapter(adapter1);
+                                ArrayAdapter<String> adapterUlice = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
+                                autoCompleteTextView.setAdapter(adapterUlice);
                                 break;
 
                             case POBIERZ_DANE_OSOBOWE:
@@ -82,7 +84,19 @@ public class BDJSONDeserializacja implements Runnable {
                                     ZwierzetaWlasciciela.imie[i] = jsonObject.getString("imie");
                                 }
 
-                                Log.d("PSY:",ZwierzetaWlasciciela.imie[0] );
+                                //Log.d("PSY:",ZwierzetaWlasciciela.imie[1] ); //dziala
+                                break;
+                            case POBIERZ_RASY_PSOW:
+                                nazwyRasZczytane = new String[jsonArray.length()];
+                                idRasZczytane = new String[jsonArray.length()];
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    nazwyRasZczytane[i] = jsonObject.getString("nazwa");
+                                    idRasZczytane[i] = jsonObject.getString("idRasy");
+                                }
+
+                                ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
+                                autoCompleteTextView.setAdapter(adapterRasy);
                                 break;
                         }
 

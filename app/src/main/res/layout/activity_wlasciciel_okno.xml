@@ -31,10 +31,10 @@
             android:text="WLASCICIEL" />
 
         <Button
-            android:id="@+id/odczytajWizyteButton"
+            android:id="@+id/dodajZwierzeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Odczytaj wizyte" />
+            android:text="Dodaj zwierze" />
 
         <TextView
             android:id="@+id/textView3"

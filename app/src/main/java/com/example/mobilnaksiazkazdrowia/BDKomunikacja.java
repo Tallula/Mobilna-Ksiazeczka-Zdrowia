@@ -54,7 +54,10 @@ public class BDKomunikacja extends Thread{
                 break;
 
             case POBIERZ_DANE_O_ZWIERZETACH:
-                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1="+ ZalogowanyUzytkownik.wezIdOsoby();
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby();
+                break;
+            case POBIERZ_RASY_PSOW:
+                url = Linki.zwrocDodawaniePsaFormularzFolder() + "czytajRasy.php";
                 break;
 
         }
