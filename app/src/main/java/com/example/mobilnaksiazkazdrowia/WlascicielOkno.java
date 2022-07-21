@@ -20,7 +20,7 @@ public class WlascicielOkno extends AppCompatActivity {
 
 
        // Log.d("NUM", ZalogowanyUzytkownik.wezeMail()); //dziala
-        Button dodajZwierzeButton = (Button)findViewById(R.id.dodajZwierzeButton);
+        Button dodajZwierzeButton = (Button)findViewById(R.id.dodajPsaOknoButton);
 
         new Handler().postDelayed(new Runnable() {
             @Override
