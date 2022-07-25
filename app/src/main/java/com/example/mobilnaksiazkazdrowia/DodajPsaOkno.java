@@ -3,11 +3,13 @@ package com.example.mobilnaksiazkazdrowia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class DodajPsaOkno extends AppCompatActivity {
@@ -18,7 +20,10 @@ public class DodajPsaOkno extends AppCompatActivity {
         setContentView(R.layout.activity_dodaj_zwierze_okno);
         Button dodajPsaButton = findViewById(R.id.dodajPsaButton);
         Spinner plecPsaSpinner = (Spinner) findViewById(R.id.plecPsaSpinner);
-        AutoCompleteTextView rasyPsowACTextView = findViewById(R.id.rasaPsaTextView);
+        AutoCompleteTextView rasyPsowACTextView = findViewById(R.id.rasaPsaACTextView);
+        EditText imiePsaEditText = findViewById(R.id.imiePsaEditText);
+        EditText wiekPsaEditText = findViewById(R.id.wiekPsaEditText);
+        AutoCompleteTextView rasaPsaACTextView = findViewById(R.id.rasaPsaACTextView);
 
         String[] plecPsa = new String[2];
         plecPsa[0] ="Pies";
@@ -34,11 +39,24 @@ public class DodajPsaOkno extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String imiePsa = imiePsaEditText.getText().toString();
+                String rasaPsa = rasaPsaACTextView.getText().toString();
+                String plecPsa = plecPsaSpinner.getSelectedItem().toString();
+                String wiekPsa = wiekPsaEditText.getText().toString();
+                int index =0;
+                for(int i=0; i< BDJSONDeserializacja.nazwyRasZczytane.length; i++ )
+                {
+                if(BDJSONDeserializacja.nazwyRasZczytane[i].equals(rasaPsa))
+                    {
+                    index=i;
+                    }
+                }
+                String idRasy = BDJSONDeserializacja.idRasZczytane[index];
+                Log.d("ID RASY",idRasy );
                 WebView web = new WebView(getApplicationContext());
 
-                web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
-                        "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                        "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+                web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "par2=" + idRasy +
+                        "par3=" + plecPsa + "par4=" + wiekPsa + "par5=" + ZalogowanyUzytkownik.wezIdOsoby());
             }
         });
     }
