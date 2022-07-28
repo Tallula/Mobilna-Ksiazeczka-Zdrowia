@@ -16,7 +16,7 @@ public class WlascicielOkno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wlasciciel_okno);
-        TextView test = (TextView)findViewById(R.id.textView3);
+        TextView test = (TextView)findViewById(R.id.wyborPsaTestView);
 
 
        // Log.d("NUM", ZalogowanyUzytkownik.wezeMail()); //dziala

@@ -22,25 +22,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567">
+        app:layout_constraintVertical_bias="0.567"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="68dp"
-            android:text="WLASCICIEL" />
+            android:text="Wlasciciel"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/dodajPsaOknoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dodaj zwierze" />
-
+            android:text="Dodaj zwierze"
+            tools:ignore="HardcodedText" />
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/udostepnijQRTextView"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="TextView" />
+            android:layout_height="68dp"
+            android:text="Wybierz zwierze"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:id="@+id/wybierzPsaSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 

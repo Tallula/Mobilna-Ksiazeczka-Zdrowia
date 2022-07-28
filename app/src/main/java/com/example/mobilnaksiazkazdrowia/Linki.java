@@ -9,7 +9,7 @@ public  class Linki{
     public static String rejestracjaFormularzFolder ="RejestracjaFormularz/";
     public static String logowanieFolder ="logowanie/";
     public static String dodawaniePsaFormularzFolder ="DodawaniePsaFormularz/";
-    public static String dodawaniePsaFolder ="Dodawanie psow/";
+    public static String dodawaniePsaFolder ="DodawaniePsa/";
 
     public static String zwrocRejestracjaFolder(){
     return adres + projekt + rejestracjaFolder;
@@ -19,13 +19,12 @@ public  class Linki{
         return adres + projekt + logowanieFolder;
     }
 
-    public static String zwrocDodawaniePsaFormularzFolder(){  return adres + projekt + dodawaniePsaFormularzFolder; }
+    public static String zwrocDodawaniePsaFormularzFolder(){ return adres + projekt + dodawaniePsaFormularzFolder; }
 
 
-    public static String zwrocRejestracjaFormularzFolder(){
-        return adres + projekt + rejestracjaFormularzFolder;
+    public static String zwrocRejestracjaFormularzFolder(){ return adres + projekt + rejestracjaFormularzFolder;
     }
 
-    public static String zwrocDodawaniePsaFolder(){  return adres + projekt + dodawaniePsaFolder; }
+    public static String zwrocDodawaniePsaFolder(){ return adres + projekt + dodawaniePsaFolder; }
 
 }

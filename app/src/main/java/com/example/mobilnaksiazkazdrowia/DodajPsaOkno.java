@@ -52,11 +52,17 @@ public class DodajPsaOkno extends AppCompatActivity {
                     }
                 }
                 String idRasy = BDJSONDeserializacja.idRasZczytane[index];
-                Log.d("ID RASY",idRasy );
+
+                Log.d("idOsoby",ZalogowanyUzytkownik.wezIdOsoby() );
                 WebView web = new WebView(getApplicationContext());
 
-                web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "par2=" + idRasy +
-                        "par3=" + plecPsa + "par4=" + wiekPsa + "par5=" + ZalogowanyUzytkownik.wezIdOsoby());
+                web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "&par2=" + idRasy +
+                        "&par3=" + plecPsa + "&par4=" + wiekPsa + "&par5=" + ZalogowanyUzytkownik.wezIdOsoby());
+
+                imiePsaEditText.setText("");
+                rasaPsaACTextView.setText("");
+                wiekPsaEditText.setText("");
+
             }
         });
     }
