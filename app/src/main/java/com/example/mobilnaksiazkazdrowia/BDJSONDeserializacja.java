@@ -78,13 +78,18 @@ public class BDJSONDeserializacja implements Runnable {
                                 break;
                             case POBIERZ_DANE_O_ZWIERZETACH:
                                 ZwierzetaWlasciciela.imie = new String[jsonArray.length()];
+                                ZwierzetaWlasciciela.idPsa = new String[jsonArray.length()];
+                                ZwierzetaWlasciciela.rasaPsa = new String[jsonArray.length()];
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     ZwierzetaWlasciciela.imie[i] = jsonObject.getString("imie");
+                                    ZwierzetaWlasciciela.idPsa[i] = jsonObject.getString("idPsa");
+                                    ZwierzetaWlasciciela.rasaPsa[i] = jsonObject.getString("nazwaRasy");
+
                                 }
 
-                                //Log.d("PSY:",ZwierzetaWlasciciela.imie[1] ); //dziala
+                               // Log.d("PSY:",ZwierzetaWlasciciela.imie[0] ); //dziala
                                 break;
                             case POBIERZ_RASY_PSOW:
                                 nazwyRasZczytane = new String[jsonArray.length()];

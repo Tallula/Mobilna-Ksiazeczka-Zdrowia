@@ -38,7 +38,6 @@ public class DodajPsaOkno extends AppCompatActivity {
         dodajPsaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String imiePsa = imiePsaEditText.getText().toString();
                 String rasaPsa = rasaPsaACTextView.getText().toString();
                 String plecPsa = plecPsaSpinner.getSelectedItem().toString();
@@ -52,7 +51,6 @@ public class DodajPsaOkno extends AppCompatActivity {
                     }
                 }
                 String idRasy = BDJSONDeserializacja.idRasZczytane[index];
-
                 Log.d("idOsoby",ZalogowanyUzytkownik.wezIdOsoby() );
                 WebView web = new WebView(getApplicationContext());
 

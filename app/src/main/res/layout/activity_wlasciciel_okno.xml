@@ -2,21 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wybierzPsaSpinner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WlascicielOkno">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="624dp"
+        android:layout_width="321dp"
+        android:layout_height="593dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="39dp"
         android:layout_marginTop="21dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginBottom="201dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="117dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Dodaj zwierze"
             tools:ignore="HardcodedText" />
+
         <TextView
             android:id="@+id/udostepnijQRTextView"
             android:layout_width="match_parent"
@@ -46,9 +48,24 @@
             tools:ignore="HardcodedText" />
 
         <Spinner
-            android:id="@+id/wybierzPsaSpinner"
+            android:id="@+id/wybranyPieSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/qrPsaImageView"
+            android:layout_width="match_parent"
+            android:layout_height="268dp"
+            android:adjustViewBounds="true"
+            android:scaleType="center" />
+
+        <Button
+            android:id="@+id/wygenerujQRButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wygeneruj QR psa" />
 
 
     </LinearLayout>

@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="96dp"
                 android:hint="Termin wizyty"
-                android:inputType="date" />
+                android:inputType="date"
+                tools:ignore="SpeakableTextPresentCheck" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -33,6 +34,7 @@
             android:layout_height="85dp"
             android:hint="Cel wizyty"
             android:inputType="text" />
+
         <EditText
             android:id="@+id/opisWizytyEditText"
             android:layout_width="match_parent"
@@ -41,23 +43,14 @@
             android:inputType="text" />
 
         <Button
-            android:id="@+id/wygenerujQRButton"
+            android:id="@+id/zapiszWizyteButton"
 
             android:layout_width="match_parent"
             android:layout_height="125dp"
 
             android:width="50dp"
             android:height="10dp"
-            android:text="Wygeneruj QR" />
-
-        <ImageView
-            android:id="@+id/kodQRImageView"
-            android:layout_width="match_parent"
-            android:layout_height="188dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-
-            />
+            android:text="Zapisz wizyte" />
 
     </LinearLayout>
 

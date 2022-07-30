@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -41,9 +42,10 @@ public class KodQR extends AppCompatActivity {
 
         if(wynik.getContents()!=null){
             AlertDialog.Builder builder =new AlertDialog.Builder( aktywnosc );
-            builder.setTitle("Wynik");
+            builder.setTitle("Rezultat");
             builder.setMessage(wynik.getContents());
 
+            WeterynarzOkno.badanyPies = wynik.getContents();
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -16,11 +20,12 @@ public class WlascicielOkno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wlasciciel_okno);
-        TextView test = (TextView)findViewById(R.id.wyborPsaTestView);
 
 
-       // Log.d("NUM", ZalogowanyUzytkownik.wezeMail()); //dziala
-        Button dodajZwierzeButton = (Button)findViewById(R.id.dodajPsaOknoButton);
+        Button dodajZwierzeButton = findViewById(R.id.dodajPsaOknoButton);
+        Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
+        Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
+        ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -28,7 +33,7 @@ public class WlascicielOkno extends AppCompatActivity {
                 BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
                 bdKomunikacja.start();
             }
-        }, 500);
+        }, 100);
 
         dodajZwierzeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,32 +42,35 @@ public class WlascicielOkno extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        dodajZwierzeButton.setOnClickListener(new View.OnClickListener() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
+                wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
+
+            }
+        }, 150);
+
+        wygenerujQRPsaButton.setOnClickListener(new View.OnClickListener() {
+            int index = 0;
+
             @Override
             public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(
-                        WlascicielOkno.this
-                );
-                intentIntegrator.setPrompt("test");
-                intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setOrientationLocked(true);
-                intentIntegrator.setCaptureActivity(Capture.class);
-                intentIntegrator.initiateScan();
+                for (int i = 0; i < ZwierzetaWlasciciela.imie.length; i++) {
+                    if (ZwierzetaWlasciciela.imie[i].equals(wybranyPiesSpinner.getSelectedItem().toString())) {
+                        index=i;
+                        break;
+                    }
+                }
+                String idPsa = ZwierzetaWlasciciela.idPsa[index];
+                String imiePsa = ZwierzetaWlasciciela.imie[index];
+                String rasaPsa = ZwierzetaWlasciciela.rasaPsa[index];
+                String daneQR = idPsa + "," + imiePsa + ","+ rasaPsa;
+
+                KodQR kodQR = new KodQR();
+                kodQR.wygenerujQR(daneQR, qrPsaImageView);
             }
         });
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(
-                requestCode,resultCode,data
-        );
-        KodQR odczytQR = new KodQR();
-        odczytQR.odczytQR(intentResult, WlascicielOkno.this);
-*/
-    }
-
-
 }

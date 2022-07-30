@@ -7,33 +7,55 @@
     tools:context=".WeterynarzOkno">
 
     <LinearLayout
-        android:layout_width="296dp"
-        android:layout_height="556dp"
+        android:layout_width="349dp"
+        android:layout_height="476dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497">
+        app:layout_constraintVertical_bias="0.161">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="WETERYNARZ" />
+            android:text="Zeskanuj QR badanego psa" />
 
         <Button
-            android:id="@+id/zaplanujWizyteButton"
+            android:id="@+id/odczytajQRPsaButton"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:text="Zaplanuj wizyte" />
+            android:layout_height="wrap_content"
+            android:text="odczytaj QR badanego psa" />
 
         <TextView
             android:id="@+id/testTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Zaplanuj wizyte" />
+
+        <Button
+            android:id="@+id/zapiszWizyteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zaplanuj wizyte" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="TextView" />
+
+        <Button
+            android:id="@+id/zeskanujRFIDButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zeskanuj RFID" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
