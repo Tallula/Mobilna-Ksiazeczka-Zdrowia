@@ -45,7 +45,7 @@ public class KodQR extends AppCompatActivity {
             builder.setTitle("Rezultat");
             builder.setMessage(wynik.getContents());
 
-            WeterynarzOkno.badanyPies = wynik.getContents();
+            WeterynarzOkno.badanyPiesInfo = wynik.getContents().split(",");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

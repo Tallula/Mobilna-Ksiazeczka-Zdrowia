@@ -14,7 +14,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class WeterynarzOkno extends AppCompatActivity {
 
-    public static String badanyPies="";
+    public static String[] badanyPiesInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

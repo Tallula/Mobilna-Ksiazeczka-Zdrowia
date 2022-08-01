@@ -10,6 +10,7 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
     DatePickerDialog.OnDateSetListener onDateSetListener;
+    String dataWizyty="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
 
         EditText terminWizytyEditText = (EditText)findViewById(R.id.terminWizytyEditText);
-        EditText rodzajWizytyEditText = (EditText)findViewById(R.id.rodzajWizytyEditText);
+        EditText celWizytyEditText = (EditText)findViewById(R.id.celWizytyEditText);
         EditText opisWizytyEditText = (EditText)findViewById(R.id.opisWizytyEditText);
 
         InputMethodManager manager =(InputMethodManager) getSystemService(
@@ -54,16 +56,30 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month +1;
-                String date = dayOfMonth + "/" + month + "/"+ year;
-                terminWizytyEditText.setText(date);
+                dataWizyty = year + "-" + month + "-"+ dayOfMonth;
+                terminWizytyEditText.setText(dataWizyty);
 
             }
         };
-
+//INSERT INTO `wizyty`( `dataWizyty`, `cel`, `opis`, `czyZrealizowana`, `idZwierzeciaZwierzeta`, `idWeterynarzaWeterynarze`) VALUES ('2022-08-10','szczepienie',' ','T','1','1');
         zapiszWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+            //zapis wizyty
+                String celWizyty = celWizytyEditText.getText().toString();
+                String opisWizyty = opisWizytyEditText.getText().toString();
+                String idBadanegoPsa = WeterynarzOkno.badanyPiesInfo[0];
+
+                celWizytyEditText.setText("");
+                opisWizytyEditText.setText("");
+                terminWizytyEditText.setText("");
+
+                WebView web = new WebView(getApplicationContext());
+    //localhost/ksiazkaZdrowia/Wizyty/Planowanie/dodajWizyte.php?par1=2020-2-12&par2=szczepienie&par3=opis&par4=1&par5=1&par6=1
+
+                web.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + dataWizyty +  "&par2=" + celWizyty +
+                       "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdOsoby());
+
             }
         });
 

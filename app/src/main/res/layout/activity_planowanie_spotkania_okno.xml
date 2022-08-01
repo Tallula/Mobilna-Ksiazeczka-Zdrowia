@@ -29,7 +29,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
-            android:id="@+id/rodzajWizytyEditText"
+            android:id="@+id/celWizytyEditText"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:hint="Cel wizyty"
