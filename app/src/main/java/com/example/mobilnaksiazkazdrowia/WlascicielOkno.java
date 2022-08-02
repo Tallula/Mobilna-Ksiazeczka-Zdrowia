@@ -24,6 +24,7 @@ public class WlascicielOkno extends AppCompatActivity {
 
         Button dodajZwierzeButton = findViewById(R.id.dodajPsaOknoButton);
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
+        Button testButton = findViewById(R.id.testButton);
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
@@ -70,6 +71,16 @@ public class WlascicielOkno extends AppCompatActivity {
 
                 KodQR kodQR = new KodQR();
                 kodQR.wygenerujQR(daneQR, qrPsaImageView);
+            }
+
+
+        });
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_WIZYTY_INFO, null);
+                bdKomunikacja.start();
+
             }
         });
     }

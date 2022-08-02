@@ -61,7 +61,6 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
             }
         };
-//INSERT INTO `wizyty`( `dataWizyty`, `cel`, `opis`, `czyZrealizowana`, `idZwierzeciaZwierzeta`, `idWeterynarzaWeterynarze`) VALUES ('2022-08-10','szczepienie',' ','T','1','1');
         zapiszWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +74,6 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
                 terminWizytyEditText.setText("");
 
                 WebView web = new WebView(getApplicationContext());
-    //localhost/ksiazkaZdrowia/Wizyty/Planowanie/dodajWizyte.php?par1=2020-2-12&par2=szczepienie&par3=opis&par4=1&par5=1&par6=1
 
                 web.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + dataWizyty +  "&par2=" + celWizyty +
                        "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdOsoby());

@@ -63,7 +63,6 @@ public class BDJSONDeserializacja implements Runnable {
                                 break;
 
                             case POBIERZ_DANE_OSOBOWE:
-
                                 if(jsonArray.length() >0)
                                 {
                                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -86,10 +85,7 @@ public class BDJSONDeserializacja implements Runnable {
                                     ZwierzetaWlasciciela.imie[i] = jsonObject.getString("imie");
                                     ZwierzetaWlasciciela.idPsa[i] = jsonObject.getString("idPsa");
                                     ZwierzetaWlasciciela.rasaPsa[i] = jsonObject.getString("nazwaRasy");
-
                                 }
-
-                               // Log.d("PSY:",ZwierzetaWlasciciela.imie[0] ); //dziala
                                 break;
                             case POBIERZ_RASY_PSOW:
                                 nazwyRasZczytane = new String[jsonArray.length()];
@@ -102,6 +98,21 @@ public class BDJSONDeserializacja implements Runnable {
 
                                 ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
                                 autoCompleteTextView.setAdapter(adapterRasy);
+                                break;
+                            case POBIERZ_WIZYTY_INFO:
+                                Wizyty.dataWizyty = new String[jsonArray.length()];
+                                Wizyty.imiePsa = new String[jsonArray.length()];
+                                Wizyty.celWizyty = new String[jsonArray.length()];
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    Wizyty.imiePsa[i] = jsonObject.getString("imie");
+                                    Wizyty.celWizyty[i] = jsonObject.getString("cel");
+                                    Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");
+                                }
+                                JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length()-1);
+                                Wizyty.idWizytyMax = jsonObject.getString("idWizyty");
+                                 Log.d("MAX ID:",Wizyty.idWizytyMax);
                                 break;
                         }
 

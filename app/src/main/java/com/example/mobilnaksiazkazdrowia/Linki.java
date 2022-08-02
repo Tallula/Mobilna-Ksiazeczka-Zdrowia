@@ -11,6 +11,7 @@ public  class Linki{
     public static String dodawaniePsaFormularzFolder ="DodawaniePsaFormularz/";
     public static String dodawaniePsaFolder ="DodawaniePsa/";
     public static String dadawanieWizytyFolder = "Wizyty/Planowanie/";
+    public static String pobieranieWizytyFolder = "Wizyty/Pobieranie/";
 
     public static String zwrocRejestracjaFolder(){
     return adres + projekt + rejestracjaFolder;
@@ -27,5 +28,7 @@ public  class Linki{
     public static String zwrocDodawaniePsaFolder(){ return adres + projekt + dodawaniePsaFolder; }
 
     public static String zwrocDodawanieWizytyFolder(){ return adres + projekt + dadawanieWizytyFolder; }
+
+    public static String zwrocPobieranieWizytyFolder(){ return adres + projekt + pobieranieWizytyFolder; }
 
 }
