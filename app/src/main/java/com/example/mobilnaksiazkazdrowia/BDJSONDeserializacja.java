@@ -112,7 +112,7 @@ public class BDJSONDeserializacja implements Runnable {
                                 }
                                 JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length()-1);
                                 Wizyty.idWizytyMax = jsonObject.getString("idWizyty");
-                                 Log.d("MAX ID:",Wizyty.idWizytyMax);
+                                //Log.d("MAX ID:",Wizyty.idWizytyMax);
                                 break;
                         }
 
