@@ -2,11 +2,13 @@ package com.example.mobilnaksiazkazdrowia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,9 +28,9 @@ public class WlascicielOkno extends AppCompatActivity {
         Button dodajZwierzeButton = findViewById(R.id.dodajPsaOknoButton);
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
         Button testButton = findViewById(R.id.testButton);
+        Button test2Button = findViewById(R.id.test2Button);
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -78,7 +80,26 @@ public class WlascicielOkno extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // SharedPreferences mPrefs = getSharedPreferences("ABC1", 0);
+               // String mString = mPrefs.getString("ABC1", "default_value_if_variable_not_found");
+               // Log.d("ABC1",mString);
 
+                //zapis
+                SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("ZZZZ", "ZZZZ");
+                editor.apply();
+        //dziala
+            }
+        });
+        test2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //odczyt
+                SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+                String text = sharedPreferences.getString("ZZZZ", "");
+                Log.d("ZZZZ", text);
             }
         });
     }
@@ -101,20 +122,25 @@ public class WlascicielOkno extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_WIZYTY_INFO, null);
+                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
                 bdKomunikacja.start();
             }
         }, 300);
-
-    Log.d("Testy",Wizyty.idWizytyMax);
+        SharedPreferences mPrefs = getSharedPreferences("ABC1", 0);
+        String mString = mPrefs.getString("ABC1", "default_value_if_variable_not_found");
+        Log.d("ABC1",mString);
+   // Log.d("Testy",Wizyty.idWizytyMax);
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
+
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("idWizytyMax",Wizyty.idWizytyMax);
+        //editor.putString("idWizytyMax",Wizyty.idWizytyMax);
+        editor.putString("ABC1", "ABC1");
         editor.apply();
     }
 }

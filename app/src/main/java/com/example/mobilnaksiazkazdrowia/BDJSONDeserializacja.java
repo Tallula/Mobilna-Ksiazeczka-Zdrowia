@@ -99,7 +99,7 @@ public class BDJSONDeserializacja implements Runnable {
                                 ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
                                 autoCompleteTextView.setAdapter(adapterRasy);
                                 break;
-                            case POBIERZ_WIZYTY_INFO:
+                            case POBIERZ_DANE_O_WIZYTACH:
                                 Wizyty.dataWizyty = new String[jsonArray.length()];
                                 Wizyty.imiePsa = new String[jsonArray.length()];
                                 Wizyty.celWizyty = new String[jsonArray.length()];
@@ -125,6 +125,5 @@ public class BDJSONDeserializacja implements Runnable {
 
             }
         });
-
     }
 }

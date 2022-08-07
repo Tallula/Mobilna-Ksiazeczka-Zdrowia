@@ -47,7 +47,6 @@ public class Logowanie extends AppCompatActivity {
                // String url="http://192.168.0.152/ksiazkaZdrowia/Logowanie/zalogujUzytkownika.php?par1="+eMail + "&par2=" + haslo;
 
                 Request request = new Request.Builder().url(url).build();
-
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {

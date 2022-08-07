@@ -26,7 +26,6 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
         Button zapiszWizyteButton = (Button)findViewById(R.id.zapiszWizyteButton);
 
-
         EditText terminWizytyEditText = (EditText)findViewById(R.id.terminWizytyEditText);
         EditText celWizytyEditText = (EditText)findViewById(R.id.celWizytyEditText);
         EditText opisWizytyEditText = (EditText)findViewById(R.id.opisWizytyEditText);
@@ -58,7 +57,6 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
                 month = month +1;
                 dataWizyty = year + "-" + month + "-"+ dayOfMonth;
                 terminWizytyEditText.setText(dataWizyty);
-
             }
         };
         zapiszWizyteButton.setOnClickListener(new View.OnClickListener() {

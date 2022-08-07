@@ -20,19 +20,18 @@ public class DodajPsaOkno extends AppCompatActivity {
         setContentView(R.layout.activity_dodaj_zwierze_okno);
         Button dodajPsaButton = findViewById(R.id.dodajPsaButton);
         Spinner plecPsaSpinner = (Spinner) findViewById(R.id.plecPsaSpinner);
-        AutoCompleteTextView rasyPsowACTextView = findViewById(R.id.rasaPsaACTextView);
         EditText imiePsaEditText = findViewById(R.id.imiePsaEditText);
         EditText wiekPsaEditText = findViewById(R.id.wiekPsaEditText);
         AutoCompleteTextView rasaPsaACTextView = findViewById(R.id.rasaPsaACTextView);
 
         String[] plecPsa = new String[2];
-        plecPsa[0] ="Pies";
-        plecPsa[1]="Suka";
+        plecPsa[0] ="Samiec";
+        plecPsa[1]="Samica";
 
         ArrayAdapter<String> plecPsaAdapter = new ArrayAdapter<String>(DodajPsaOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, plecPsa);
         plecPsaSpinner.setAdapter(plecPsaAdapter);
 
-        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(DodajPsaOkno.this, rasyPsowACTextView, BDKomunikacjaCel.POBIERZ_RASY_PSOW, null);
+        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(DodajPsaOkno.this, rasaPsaACTextView, BDKomunikacjaCel.POBIERZ_RASY_PSOW, null);
         bdKomunikacjaTextView.start();
 
         dodajPsaButton.setOnClickListener(new View.OnClickListener() {

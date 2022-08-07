@@ -19,7 +19,6 @@ public class BDKomunikacja extends Thread{
     AutoCompleteTextView autoCompleteTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
     String url ="";
-
     static String arg;
     public static String idMiasta;
 
@@ -59,10 +58,9 @@ public class BDKomunikacja extends Thread{
             case POBIERZ_RASY_PSOW:
                 url = Linki.zwrocDodawaniePsaFormularzFolder() + "czytajRasy.php";
                 break;
-            case POBIERZ_WIZYTY_INFO:
+            case POBIERZ_DANE_O_WIZYTACH:
                 url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby() + "&par2=" + Wizyty.idWizytyMax;
                 break;
-
         }
 
         Request request = new Request.Builder().url(url).build();
@@ -77,12 +75,6 @@ public class BDKomunikacja extends Thread{
                JSONDeserializacja.run();
            }
        });
-
-
-
-
-
-
 
     }
 }

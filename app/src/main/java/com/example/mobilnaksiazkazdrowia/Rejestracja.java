@@ -33,17 +33,17 @@ public class Rejestracja extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rejestracja);
-        Button zarejestrujButton = (Button)findViewById(R.id.zarejestrujButton);
+        Button zarejestrujButton = findViewById(R.id.zarejestrujButton);
 
-        EditText testEditText = (EditText)findViewById(R.id.testEditText);
-        EditText eMailEditText = (EditText) findViewById(R.id.eMailEditText);
-        EditText hasloEditText =(EditText)findViewById(R.id.hasloEditText);
-        AutoCompleteTextView miastaACTextView=(AutoCompleteTextView) findViewById(R.id.miastaACTextView);
-        AutoCompleteTextView uliceACTextView=(AutoCompleteTextView) findViewById(R.id.uliceACTextView);
-        Spinner czyWeterynarzSpinner = (Spinner) findViewById(R.id.czyWeterynarzSpinner);
 
-        EditText imieEditText = (EditText)findViewById(R.id.imieEditText);
-        EditText nazwiskoEditText = (EditText)findViewById(R.id.nazwiskoEditText);
+        EditText eMailEditText = findViewById(R.id.eMailEditText);
+        EditText hasloEditText =findViewById(R.id.hasloEditText);
+        AutoCompleteTextView miastaACTextView= findViewById(R.id.miastaACTextView);
+        AutoCompleteTextView uliceACTextView= findViewById(R.id.uliceACTextView);
+        Spinner czyWeterynarzSpinner =  findViewById(R.id.czyWeterynarzSpinner);
+
+        EditText imieEditText = findViewById(R.id.imieEditText);
+        EditText nazwiskoEditText = findViewById(R.id.nazwiskoEditText);
         String[] czyWeterynarz = new String[2];
         czyWeterynarz[0] ="NIE";
         czyWeterynarz[1]="TAK";
@@ -54,19 +54,20 @@ public class Rejestracja extends AppCompatActivity {
         BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
-    miastaACTextView.setOnClickListener(new View.OnClickListener() {
+        miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
             BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
             bdKomunikacja.start();
         }
-    });
+        });
 
         zarejestrujButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OkHttpClient client = new OkHttpClient();
+            //poprawic rejestracje
 
                 String url = Linki.zwrocRejestracjaFolder() + "emailSprawdz.php?par1="+ eMailEditText.getText().toString();
                 //String url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/emailSprawdz.php?par1=" + eMailEditText.getText().toString();
@@ -111,12 +112,7 @@ public class Rejestracja extends AppCompatActivity {
                                                 "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
                                                 "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
 
-                                        /*
-                                        web.loadUrl("http://192.168.0.152/ksiazkaZdrowia/Rejestracja/zarejestrujUzytkownika.php?" +
-                                                "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                                "&par5="+BDKomunikacjaTextView.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
 
-                                        */
                                         Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
 
 

@@ -51,8 +51,8 @@ public class WeterynarzOkno extends AppCompatActivity {
 
             }
         });
-
     }
+
     @Override
     protected void onActivityResult(int requestCode , int resultCode , @Nullable Intent data ) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -64,6 +64,5 @@ public class WeterynarzOkno extends AppCompatActivity {
         odczytQR.odczytQR(intentResult, WeterynarzOkno.this);
 
     }
-
 
 }
