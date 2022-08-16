@@ -41,14 +41,11 @@ public class WeterynarzOkno extends AppCompatActivity {
             }
 
         });
-
         zaplanujWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(),PlanowanieSpotkaniaOkno.class);
                startActivity(intent);
-
             }
         });
     }

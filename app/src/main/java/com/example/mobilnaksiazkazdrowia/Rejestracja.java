@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -28,13 +30,13 @@ public class Rejestracja extends AppCompatActivity {
     String[] idMiastZczytane;
     String[] nazwyMiastZczytane;
     String[] nazwyUlicZczytane;
+    public static boolean czyZarejestrowac=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rejestracja);
         Button zarejestrujButton = findViewById(R.id.zarejestrujButton);
-
 
         EditText eMailEditText = findViewById(R.id.eMailEditText);
         EditText hasloEditText =findViewById(R.id.hasloEditText);
@@ -69,65 +71,52 @@ public class Rejestracja extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
             //poprawic rejestracje
 
-                String url = Linki.zwrocRejestracjaFolder() + "emailSprawdz.php?par1="+ eMailEditText.getText().toString();
-                //String url = "http://192.168.0.152/ksiazkaZdrowia/Rejestracja/emailSprawdz.php?par1=" + eMailEditText.getText().toString();
-                Request request = new Request.Builder().url(url).build();
-                client.newCall(request).enqueue(new Callback() {
+                BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, null, BDKomunikacjaCel.POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE, eMailEditText.getText().toString());
+                bdKomunikacja.start();
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    public void run() {
+                        if(Rejestracja.czyZarejestrowac)
+                        {
+                            Log.d("CZY ZAREJESTROWAC: ", "TAK"); //dziala
 
-                    }
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        String myResponse = response.body().string();
-                        Rejestracja.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (myResponse.equals("True")) {
-                                    Toast.makeText(getApplicationContext(), "Podany adres e-mail juz istnieje", Toast.LENGTH_LONG).show();
-                                }
-                                else if(myResponse.equals("False"))
-                                    {
-                                    String eMail = eMailEditText.getText().toString();
-                                    String haslo = hasloEditText.getText().toString();
-                                    String imie = imieEditText.getText().toString();
-                                    String nazwisko = nazwiskoEditText.getText().toString();
-                                    String idUlicy = "";
+                            String eMail = eMailEditText.getText().toString();
+                            String haslo = hasloEditText.getText().toString();
+                            String imie = imieEditText.getText().toString();
+                            String nazwisko = nazwiskoEditText.getText().toString();
+                            String idUlicy = "";
 
-                                    String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
+                            String czyWeterynarz = czyWeterynarzSpinner.getSelectedItem().toString();
 
-                                    WebView web = new WebView(getApplicationContext());
-                                        int index=0;
-                                        for(int i = 0; i< BDJSONDeserializacja.nazwyUlicZczytane.length; i++)
-                                        {
-                                            if(BDJSONDeserializacja.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
-                                                index=i;
-                                                break;
-                                            }
-                                        }
-                                        idUlicy = BDJSONDeserializacja.idUlicZczytane[index].toString();
-
-
-                                        web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
-                                                "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                                "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
-
-
-                                        Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
-
-
-                                        miastaACTextView.setText("");
-                                        uliceACTextView.setText("");
-                                        eMailEditText.setText("");
-                                        hasloEditText.setText("");
-                                        imieEditText.setText("");
-                                        nazwiskoEditText.setText("");
-
+                            WebView web = new WebView(getApplicationContext());
+                            int index=0;
+                            for(int i = 0; i< BDJSONDeserializacja.nazwyUlicZczytane.length; i++)
+                            {
+                                if(BDJSONDeserializacja.nazwyUlicZczytane[i].equals(uliceACTextView.getText().toString())){
+                                    index=i;
+                                    break;
                                 }
                             }
-                        });
+                            idUlicy = BDJSONDeserializacja.idUlicZczytane[index].toString();
+
+                            web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
+                                    "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
+                                    "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+                            Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Log.d("CZY ZAREJESTROWAC: ", "NIE"); //dziala
+                            Toast.makeText(getApplicationContext(), "Konto juz istnieje", Toast.LENGTH_LONG).show();
+                        }
                     }
-                });
+                }, 200);
+                miastaACTextView.setText("");
+                uliceACTextView.setText("");
+                eMailEditText.setText("");
+                hasloEditText.setText("");
+                imieEditText.setText("");
+                nazwiskoEditText.setText("");
             }
         });
     }

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Button oProgramieButton = (Button)findViewById(R.id.oProgramieButton);
 
        // Spinner miastaSpinner =(Spinner) findViewById(R.id.miastoSpinner);
-        EditText test = (EditText) findViewById(R.id.testEditText);
+       // EditText test = (EditText) findViewById(R.id.testEditText);
 
 
         zalogujSieButton.setOnClickListener(new View.OnClickListener() {

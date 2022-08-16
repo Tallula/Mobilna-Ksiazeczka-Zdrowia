@@ -18,6 +18,7 @@ public class DodajPsaOkno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodaj_zwierze_okno);
+
         Button dodajPsaButton = findViewById(R.id.dodajPsaButton);
         Spinner plecPsaSpinner = (Spinner) findViewById(R.id.plecPsaSpinner);
         EditText imiePsaEditText = findViewById(R.id.imiePsaEditText);
@@ -59,7 +60,6 @@ public class DodajPsaOkno extends AppCompatActivity {
                 imiePsaEditText.setText("");
                 rasaPsaACTextView.setText("");
                 wiekPsaEditText.setText("");
-
             }
         });
     }

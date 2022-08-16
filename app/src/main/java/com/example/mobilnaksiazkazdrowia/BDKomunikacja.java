@@ -34,6 +34,9 @@ public class BDKomunikacja extends Thread{
         OkHttpClient client = new OkHttpClient();
 
         switch(bdKomunikacjaCel){
+            case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
+               url= Linki.zwrocRejestracjaFolder() + "sprawdzCzyIstnieje.php?par1=" + arg;
+                break;
             case POBIERZ_MIASTA:
                 url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
                 break;

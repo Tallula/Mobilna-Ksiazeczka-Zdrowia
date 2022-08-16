@@ -20,6 +20,7 @@ public class BDJSONDeserializacja implements Runnable {
     public static String[] nazwyUlicZczytane;
     public static String[] nazwyRasZczytane;
     public static String[] idRasZczytane;
+    String czyUzytkownikIstnieje = "";
 
     AutoCompleteTextView autoCompleteTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
@@ -39,6 +40,22 @@ public class BDJSONDeserializacja implements Runnable {
                     try {
                         JSONArray jsonArray = new JSONArray(myResponse);
                         switch(bdKomunikacjaCel){
+                            case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
+                                JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                                czyUzytkownikIstnieje = jsonObject1.getString("czyIstnieje");
+                                //Log.d("CZY_ISTNIEJE: ", czyUzytkownikIstnieje); //dziala
+
+                                if(czyUzytkownikIstnieje.equals("TAK"))
+                                {
+                                    Rejestracja.czyZarejestrowac=false;
+                                }
+                                else
+                                {
+                                    Rejestracja.czyZarejestrowac=true;
+                                }
+
+
+                                break;
                             case POBIERZ_MIASTA:
                                 nazwyMiastZczytane = new String[jsonArray.length()];
                                 idMiastZczytane = new String[jsonArray.length()];
