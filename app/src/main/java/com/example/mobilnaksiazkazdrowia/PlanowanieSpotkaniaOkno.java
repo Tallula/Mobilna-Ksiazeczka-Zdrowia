@@ -74,7 +74,7 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
                 WebView web = new WebView(getApplicationContext());
 
                 web.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + dataWizyty +  "&par2=" + celWizyty +
-                       "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdOsoby());
+                       "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdUzytkownika());
 
             }
         });

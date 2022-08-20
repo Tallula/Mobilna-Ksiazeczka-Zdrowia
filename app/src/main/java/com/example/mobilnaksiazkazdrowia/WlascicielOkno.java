@@ -35,6 +35,35 @@ public class WlascicielOkno extends AppCompatActivity {
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
+        SQLiteDatabase bazaDanychWizyty=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
+        //stworz jesli nie istnieje
+        bazaDanychWizyty.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
+                "idWizyty INTEGER PRIMARY KEY," +
+                " imiePsa string," +
+                "celWizyty string," +
+                "dataWizyty string)");
+        Cursor kursor = bazaDanychWizyty.rawQuery ("SELECT max(idWizyty) FROM wizyty ",null);
+        int ileWizyt=kursor.getCount();
+        kursor.moveToFirst();
+
+        if(ileWizyt==0)
+        {
+            Wizyty.idWizytyMax="0";
+        }
+        else
+        {
+            Wizyty.idWizytyMax = kursor.getString(0);
+        }
+
+        bazaDanychWizyty.close();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+                bdKomunikacja.start();
+            }
+        }, 50);
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -83,53 +112,12 @@ public class WlascicielOkno extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TEST", "BUTTON");
-                /*
-                SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-                //stworz jesli nie istnieje
-                    baza.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
-                        "idWizyty INTEGER PRIMARY KEY," +
-                        " imiePsa string," +
-                        "celWizyty string," +
-                        "dataWizyty string)");
-                    //baza.execSQL("INSERT INTO sklep (nazwa) VALUES ( 'testowa')");
-                    Cursor c = baza.rawQuery ("SELECT * FROM wizyty",null);
-                    int ileWizyt=c.getCount();
-                   if(ileWizyt==0) {
-                       BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-                       bdKomunikacja.start();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0; i < Wizyty.idWizyty.length; i++) {
-                                          baza.execSQL("INSERT INTO wizyty (idWizyty, imiePsa, celWizyty, dataWizyty) VALUES  " +
-                                         "('" + c.getString(0) + "', " + c.getString(1) + "', " +
-                                         c.getString(2) + "', " + c.getString(3) + "')");
-                                }
-                            }
-                     }, 250);
-                 }
-                //baza.close();
-                //Toast.makeText(getApplicationContext(), String.valueOf(ileWizyt), Toast.LENGTH_LONG).show();
-                */
-            }
 
+            }
         });
         test2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TEST2", "BUTTON2");
-                //String row="";
-
-               // SQLiteDatabase baza=openOrCreateDatabase("baza1.db", Context.MODE_PRIVATE,  null);
-                //ursor c = baza.rawQuery ("SELECT * FROM sklep;",null);
-                //int ile=c.getCount();
-
-               // Toast.makeText(getApplicationContext(), c.getString(0), Toast.LENGTH_LONG).show();
-               // for(int i=0; i<ile; i++)
-                //{
-                   // c.moveToNext();
-                //}
 
             }
         });
@@ -138,39 +126,8 @@ public class WlascicielOkno extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String rekordDB="";
-        SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-        //stworz jesli nie istnieje
-        baza.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
-                "idWizyty INTEGER PRIMARY KEY," +
-                " imiePsa string," +
-                "celWizyty string," +
-                "dataWizyty string)");
-        Cursor kursor = baza.rawQuery ("SELECT idWizyty FROM wizyty LIMIT 1",null);
-        int ileWizyt=kursor.getCount();
-        kursor.moveToFirst();
-       // baza.execSQL("INSERT INTO wizyty(idWizyty, imiePsa, celWizyty, dataWizyty) VALUES " +
-            //    "('1','gutek','szczepienie','2020-02-02')");
-        if(ileWizyt==0)
-        {
-            Wizyty.idWizytyMax="0";
-            Toast.makeText(getApplicationContext(), String.valueOf(ileWizyt), Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            Wizyty.idWizytyMax = kursor.getString(0);
-            Toast.makeText(getApplicationContext(), Wizyty.idWizytyMax, Toast.LENGTH_LONG).show();
-        }
-
-        baza.close();
-
-        //BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-       // bdKomunikacja.start();
-
-        // Toast.makeText(getApplicationContext(), Wizyty.idWizyty.length, Toast.LENGTH_LONG).show();
-
-        //Cursor c = baza.rawQuery ("SELECT * FROM wizyty",null);
-
+               // BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+                //bdKomunikacja.start();
     }
 
     @Override

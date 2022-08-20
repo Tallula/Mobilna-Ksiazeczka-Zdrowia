@@ -1,6 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,8 @@ public class BDKomunikacja extends Thread{
     static String arg;
     public static String idMiasta;
 
-    BDKomunikacja(Activity aktywnosc, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
-        this.activity = aktywnosc;
+    BDKomunikacja(Activity activity, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
+        this.activity = activity;
         this.autoCompleteTextView = autoCompleteTextView;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
         this.arg = arg;
@@ -32,10 +33,13 @@ public class BDKomunikacja extends Thread{
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
-
         switch(bdKomunikacjaCel){
             case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
                url= Linki.zwrocRejestracjaFolder() + "sprawdzCzyIstnieje.php?par1=" + arg;
+                break;
+            case POBIERZ_JAKI_UZYTKOWNIK:
+                String[] dane = arg.split(",");
+                url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +dane[0] + "&par2=" + dane[1];
                 break;
             case POBIERZ_MIASTA:
                 url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
@@ -56,13 +60,20 @@ public class BDKomunikacja extends Thread{
                 break;
 
             case POBIERZ_DANE_O_ZWIERZETACH:
-                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby();
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.wezIdUzytkownika();
                 break;
             case POBIERZ_RASY_PSOW:
                 url = Linki.zwrocDodawaniePsaFormularzFolder() + "czytajRasy.php";
                 break;
             case POBIERZ_DANE_O_WIZYTACH:
-                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby() + "&par2="+ Wizyty.idWizytyMax ;
+                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdUzytkownika() + "&par2="+ Wizyty.idWizytyMax ;
+/*
+                SQLiteDatabase bazaDanychWizyty=activity.openOrCreateDatabase("wizyty.db", android.content.Context.MODE_PRIVATE,  null);
+                bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");
+                bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
+                 bazaDanychWizyty.close();
+
+ */
                 break;
         }
 

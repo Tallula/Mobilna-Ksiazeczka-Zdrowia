@@ -7,7 +7,17 @@ public class ZalogowanyUzytkownik {
     private static String imie="";
     private static String nazwisko="";
     private static String numTel="";
-    private static String idOsoby="";
+    private static String idUzytkownika="";
+    private static String typUzytkownika="";
+    public static boolean czyIstnieje=false;
+
+    public static void ustawTypUzytkownika(String typUzytkownikaArg){
+
+        typUzytkownika=typUzytkownikaArg;
+    }
+    public static String wezTypUzytkownika() {
+        return typUzytkownika;
+    }
 
     public static void ustawEMail(String eMailArg){
 
@@ -45,12 +55,12 @@ public class ZalogowanyUzytkownik {
     }
 
 
-    public static void ustawIdOsoby(String idOsobyArg){
+    public static void ustawIdUzytkownika(String idUzytkownikaArg){
 
-        idOsoby=idOsobyArg;
+        idUzytkownika=idUzytkownikaArg;
     }
-    public static String wezIdOsoby() {
-        return idOsoby;
+    public static String wezIdUzytkownika() {
+        return idUzytkownika;
     }
 
 

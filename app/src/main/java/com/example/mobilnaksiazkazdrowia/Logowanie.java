@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,56 +44,27 @@ public class Logowanie extends AppCompatActivity {
             String eMail = eMailLogowanieEditText.getText().toString();
             String haslo = hasloLogowanieEditText.getText().toString();
 
-                OkHttpClient client = new OkHttpClient();
-                String url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +eMail + "&par2=" + haslo;
-               // String url="http://192.168.0.152/ksiazkaZdrowia/Logowanie/zalogujUzytkownika.php?par1="+eMail + "&par2=" + haslo;
+                BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_JAKI_UZYTKOWNIK, eMail+","+haslo);
+                bdKomunikacja.start();
 
-                Request request = new Request.Builder().url(url).build();
-                client.newCall(request).enqueue(new Callback() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    public void run() {
+                        if(ZalogowanyUzytkownik.wezTypUzytkownika().equals("Wlasciciel")){
+                            Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
+                            startActivity(intent);
+                        }
+                        else if(ZalogowanyUzytkownik.wezTypUzytkownika().equals("Weterynarz")){
+                            Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "E-Mail lub haslo bledne. Sprobuj ponownie", Toast.LENGTH_LONG).show();
+                        }
                     }
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this, null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, null);
-                        bdKomunikacja.start();
-                         String myResponse = response.body().string();
-                        Logowanie.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(myResponse.contains("False")){
-                                    Toast.makeText(getApplicationContext(), "E-Mail lub haslo bledne. Sprobuj ponownie", Toast.LENGTH_LONG).show();
-                                }
-                                else{
-                                    ZalogowanyUzytkownik.ustawEMail(eMail);
-                                    try {
+                }, 1000);
 
-                                        JSONArray jsonArray = new JSONArray(myResponse);
-                                         String [] rodzajUzytkownika = new String[jsonArray.length()];
-                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                        rodzajUzytkownika[0] = jsonObject.getString("rodzajUzytkownika");
-
-                                        BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_DANE_OSOBOWE, ZalogowanyUzytkownik.wezeMail());
-                                        bdKomunikacja.start();
-
-                                        if(rodzajUzytkownika[0].equals("Wlasciciel")){
-                                            Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
-                                            startActivity(intent);
-                                        }
-                                        else {
-                                            Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
-                                            startActivity(intent);
-
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        });
-                    }
-                });
             }
         });
     }

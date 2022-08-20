@@ -1,8 +1,31 @@
 package com.example.mobilnaksiazkazdrowia;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,6 +77,11 @@ public class BDJSONDeserializacja implements Runnable {
                                     Rejestracja.czyZarejestrowac=true;
                                 }
                                 break;
+                            case POBIERZ_JAKI_UZYTKOWNIK:
+                                JSONObject jsonZalogowanyUzytkownik = jsonArray.getJSONObject(0);
+                                ZalogowanyUzytkownik.ustawTypUzytkownika(jsonZalogowanyUzytkownik.getString("rodzajUzytkownika"));
+                                ZalogowanyUzytkownik.ustawIdUzytkownika(jsonZalogowanyUzytkownik.getString("idUzytkownika"));
+                                break;
                             case POBIERZ_MIASTA:
                                 nazwyMiastZczytane = new String[jsonArray.length()];
                                 idMiastZczytane = new String[jsonArray.length()];
@@ -76,14 +104,13 @@ public class BDJSONDeserializacja implements Runnable {
                                 ArrayAdapter<String> adapterUlice = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
                                 autoCompleteTextView.setAdapter(adapterUlice);
                                 break;
-
                             case POBIERZ_DANE_OSOBOWE:
-                                if(jsonArray.length() >0)
+                                if(jsonArray.length()>0)
                                 {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                        ZalogowanyUzytkownik.ustawIdOsoby(jsonObject.getString("idOsoby"));
+                                        ZalogowanyUzytkownik.ustawIdUzytkownika(jsonObject.getString("idOsoby"));
                                         ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
                                         ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
                                         ZalogowanyUzytkownik.ustawNumTel(jsonObject.getString("numerTelefonu"));
@@ -110,7 +137,6 @@ public class BDJSONDeserializacja implements Runnable {
                                     nazwyRasZczytane[i] = jsonObject.getString("nazwa");
                                     idRasZczytane[i] = jsonObject.getString("idRasy");
                                 }
-
                                 ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
                                 autoCompleteTextView.setAdapter(adapterRasy);
                                 break;
@@ -118,29 +144,38 @@ public class BDJSONDeserializacja implements Runnable {
                                 Wizyty.dataWizyty = new String[jsonArray.length()];
                                 Wizyty.imiePsa = new String[jsonArray.length()];
                                 Wizyty.celWizyty = new String[jsonArray.length()];
-                                Log.d("WIZYTY CZYTANIE", "TAK");
+                                Wizyty.idWizyty = new String[jsonArray.length()];
 
+                               SQLiteDatabase bazaDanychWizyty=activity.openOrCreateDatabase("wizyty.db", android.content.Context.MODE_PRIVATE,  null);
+                                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");
+                               // bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
+                               // bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +jsonArray.length()+ "')");
+                                //int idWizytyMax = Integer.parseInt(Wizyty.idWizytyMax);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    Wizyty.idWizyty[i] = jsonObject.getString("idWizyty");
-
                                     Wizyty.imiePsa[i] = jsonObject.getString("imie");
                                     Wizyty.celWizyty[i] = jsonObject.getString("cel");
                                     Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");
+                                    Wizyty.idWizyty[i] = jsonObject.getString("idWizyty");
+                                    //dziala
+                                    //if(idWizytyMax<Integer.parseInt(jsonObject.getString("idWizyty")))
+                                   // {
+                                    //    idWizytyMax = Integer.parseInt(jsonObject.getString("idWizyty"));
+                                    //}
+
+                                  // bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty, imiePsa, celWizyty, dataWizyty) VALUES " +
+                                          // "('"+ Wizyty.idWizyty[i] + "','" + Wizyty.imiePsa[i]+"','" + Wizyty.celWizyty[i]+ "','" + Wizyty.dataWizyty[i]+ "')");
                                 }
-                                JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length()-1);
-                                Wizyty.idWizytyMax = jsonObject.getString("idWizyty");
-                                //Log.d("MAX ID:",Wizyty.idWizytyMax);
+
+                              //  Wizyty.idWizytyMax = String.valueOf(idWizytyMax);
+                                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
+                                bazaDanychWizyty.close();
                                 break;
                         }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
-
             }
         });
     }
