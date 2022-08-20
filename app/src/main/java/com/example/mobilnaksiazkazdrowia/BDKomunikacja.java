@@ -62,7 +62,7 @@ public class BDKomunikacja extends Thread{
                 url = Linki.zwrocDodawaniePsaFormularzFolder() + "czytajRasy.php";
                 break;
             case POBIERZ_DANE_O_WIZYTACH:
-                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby() + "&par2=" + Wizyty.idWizytyMax;
+                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdOsoby() + "&par2="+ Wizyty.idWizytyMax ;
                 break;
         }
 

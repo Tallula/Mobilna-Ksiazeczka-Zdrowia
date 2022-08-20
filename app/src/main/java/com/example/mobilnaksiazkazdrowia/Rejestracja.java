@@ -103,20 +103,27 @@ public class Rejestracja extends AppCompatActivity {
                                     "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
                                     "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
                             Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
+                            miastaACTextView.setText("");
+                            uliceACTextView.setText("");
+                            eMailEditText.setText("");
+                            hasloEditText.setText("");
+                            imieEditText.setText("");
+                            nazwiskoEditText.setText("");
                         }
                         else
                         {
                             Log.d("CZY ZAREJESTROWAC: ", "NIE"); //dziala
                             Toast.makeText(getApplicationContext(), "Konto juz istnieje", Toast.LENGTH_LONG).show();
+                            miastaACTextView.setText("");
+                            uliceACTextView.setText("");
+                            eMailEditText.setText("");
+                            hasloEditText.setText("");
+                            imieEditText.setText("");
+                            nazwiskoEditText.setText("");
                         }
                     }
                 }, 200);
-                miastaACTextView.setText("");
-                uliceACTextView.setText("");
-                eMailEditText.setText("");
-                hasloEditText.setText("");
-                imieEditText.setText("");
-                nazwiskoEditText.setText("");
+
             }
         });
     }

@@ -1,6 +1,8 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -43,8 +45,6 @@ public class BDJSONDeserializacja implements Runnable {
                             case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(0);
                                 czyUzytkownikIstnieje = jsonObject1.getString("czyIstnieje");
-                                //Log.d("CZY_ISTNIEJE: ", czyUzytkownikIstnieje); //dziala
-
                                 if(czyUzytkownikIstnieje.equals("TAK"))
                                 {
                                     Rejestracja.czyZarejestrowac=false;
@@ -53,8 +53,6 @@ public class BDJSONDeserializacja implements Runnable {
                                 {
                                     Rejestracja.czyZarejestrowac=true;
                                 }
-
-
                                 break;
                             case POBIERZ_MIASTA:
                                 nazwyMiastZczytane = new String[jsonArray.length()];
@@ -120,9 +118,12 @@ public class BDJSONDeserializacja implements Runnable {
                                 Wizyty.dataWizyty = new String[jsonArray.length()];
                                 Wizyty.imiePsa = new String[jsonArray.length()];
                                 Wizyty.celWizyty = new String[jsonArray.length()];
+                                Log.d("WIZYTY CZYTANIE", "TAK");
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    Wizyty.idWizyty[i] = jsonObject.getString("idWizyty");
+
                                     Wizyty.imiePsa[i] = jsonObject.getString("imie");
                                     Wizyty.celWizyty[i] = jsonObject.getString("cel");
                                     Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");

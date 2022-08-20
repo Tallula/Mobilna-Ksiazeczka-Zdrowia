@@ -1,21 +1,24 @@
 package com.example.mobilnaksiazkazdrowia;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class WlascicielOkno extends AppCompatActivity {
@@ -31,6 +34,7 @@ public class WlascicielOkno extends AppCompatActivity {
         Button test2Button = findViewById(R.id.test2Button);
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -58,7 +62,6 @@ public class WlascicielOkno extends AppCompatActivity {
 
         wygenerujQRPsaButton.setOnClickListener(new View.OnClickListener() {
             int index = 0;
-
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < ZwierzetaWlasciciela.imie.length; i++) {
@@ -80,26 +83,54 @@ public class WlascicielOkno extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // SharedPreferences mPrefs = getSharedPreferences("ABC1", 0);
-               // String mString = mPrefs.getString("ABC1", "default_value_if_variable_not_found");
-               // Log.d("ABC1",mString);
-
-                //zapis
-                SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                editor.putString("ZZZZ", "ZZZZ");
-                editor.apply();
-        //dziala
+                Log.d("TEST", "BUTTON");
+                /*
+                SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
+                //stworz jesli nie istnieje
+                    baza.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
+                        "idWizyty INTEGER PRIMARY KEY," +
+                        " imiePsa string," +
+                        "celWizyty string," +
+                        "dataWizyty string)");
+                    //baza.execSQL("INSERT INTO sklep (nazwa) VALUES ( 'testowa')");
+                    Cursor c = baza.rawQuery ("SELECT * FROM wizyty",null);
+                    int ileWizyt=c.getCount();
+                   if(ileWizyt==0) {
+                       BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+                       bdKomunikacja.start();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < Wizyty.idWizyty.length; i++) {
+                                          baza.execSQL("INSERT INTO wizyty (idWizyty, imiePsa, celWizyty, dataWizyty) VALUES  " +
+                                         "('" + c.getString(0) + "', " + c.getString(1) + "', " +
+                                         c.getString(2) + "', " + c.getString(3) + "')");
+                                }
+                            }
+                     }, 250);
+                 }
+                //baza.close();
+                //Toast.makeText(getApplicationContext(), String.valueOf(ileWizyt), Toast.LENGTH_LONG).show();
+                */
             }
+
         });
         test2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //odczyt
-                SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-                String text = sharedPreferences.getString("ZZZZ", "");
-                Log.d("ZZZZ", text);
+                Log.d("TEST2", "BUTTON2");
+                //String row="";
+
+               // SQLiteDatabase baza=openOrCreateDatabase("baza1.db", Context.MODE_PRIVATE,  null);
+                //ursor c = baza.rawQuery ("SELECT * FROM sklep;",null);
+                //int ile=c.getCount();
+
+               // Toast.makeText(getApplicationContext(), c.getString(0), Toast.LENGTH_LONG).show();
+               // for(int i=0; i<ile; i++)
+                //{
+                   // c.moveToNext();
+                //}
+
             }
         });
     }
@@ -107,40 +138,61 @@ public class WlascicielOkno extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String idWizytyMax = sharedPref.getString("idWizytyMax", "");
-
-        if(idWizytyMax.length() == 0)
+        String rekordDB="";
+        SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
+        //stworz jesli nie istnieje
+        baza.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
+                "idWizyty INTEGER PRIMARY KEY," +
+                " imiePsa string," +
+                "celWizyty string," +
+                "dataWizyty string)");
+        Cursor kursor = baza.rawQuery ("SELECT idWizyty FROM wizyty LIMIT 1",null);
+        int ileWizyt=kursor.getCount();
+        kursor.moveToFirst();
+       // baza.execSQL("INSERT INTO wizyty(idWizyty, imiePsa, celWizyty, dataWizyty) VALUES " +
+            //    "('1','gutek','szczepienie','2020-02-02')");
+        if(ileWizyt==0)
         {
             Wizyty.idWizytyMax="0";
+            Toast.makeText(getApplicationContext(), String.valueOf(ileWizyt), Toast.LENGTH_LONG).show();
         }
         else
         {
-            Wizyty.idWizytyMax = idWizytyMax;
+            Wizyty.idWizytyMax = kursor.getString(0);
+            Toast.makeText(getApplicationContext(), Wizyty.idWizytyMax, Toast.LENGTH_LONG).show();
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-                bdKomunikacja.start();
-            }
-        }, 300);
-        SharedPreferences mPrefs = getSharedPreferences("ABC1", 0);
-        String mString = mPrefs.getString("ABC1", "default_value_if_variable_not_found");
-        Log.d("ABC1",mString);
-   // Log.d("Testy",Wizyty.idWizytyMax);
-    }
+        baza.close();
 
+        //BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+       // bdKomunikacja.start();
+
+        // Toast.makeText(getApplicationContext(), Wizyty.idWizyty.length, Toast.LENGTH_LONG).show();
+
+        //Cursor c = baza.rawQuery ("SELECT * FROM wizyty",null);
+
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+       // Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_LONG).show();
+
+        //SharedPreferences sharedPrefPobierz = this.getPreferences(Context.MODE_PRIVATE);
+       // String idWizyt="";
+
+        //SharedPreferences sharedPrefZapisz = this.getPreferences(Context.MODE_PRIVATE);
+       // SharedPreferences.Editor editor = sharedPrefZapisz.edit();
+
         //editor.putString("idWizytyMax",Wizyty.idWizytyMax);
-        editor.putString("ABC1", "ABC1");
-        editor.apply();
+
+        //zapis do pliku - przerobic
+      //  for (int i = 0; i < Wizyty.idWizyty.length; i++) {
+           // idWizyt = sharedPrefPobierz.getString("idWizyt", "");
+           // editor.putString("idWizyt",idWizyt + "," +Wizyty.idWizyty[i]);
+       // }
+
+       // editor.apply();
     }
 }
