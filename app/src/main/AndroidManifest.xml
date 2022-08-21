@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MobilnaKsiazkaZdrowia"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".WizytyOkno"
+            android:exported="false" />
+        <activity
             android:name=".DodajPsaOkno"
             android:exported="false" />
         <activity

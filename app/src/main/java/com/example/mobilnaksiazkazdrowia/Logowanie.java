@@ -1,31 +1,14 @@
 package com.example.mobilnaksiazkazdrowia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class Logowanie extends AppCompatActivity {
 
@@ -44,8 +27,8 @@ public class Logowanie extends AppCompatActivity {
             String eMail = eMailLogowanieEditText.getText().toString();
             String haslo = hasloLogowanieEditText.getText().toString();
 
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_JAKI_UZYTKOWNIK, eMail+","+haslo);
-                bdKomunikacja.start();
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_JAKI_UZYTKOWNIK, eMail+","+haslo);
+                bdKomunikacjaPobieranie.start();
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

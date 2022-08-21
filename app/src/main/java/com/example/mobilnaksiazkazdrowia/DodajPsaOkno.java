@@ -32,7 +32,7 @@ public class DodajPsaOkno extends AppCompatActivity {
         ArrayAdapter<String> plecPsaAdapter = new ArrayAdapter<String>(DodajPsaOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, plecPsa);
         plecPsaSpinner.setAdapter(plecPsaAdapter);
 
-        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(DodajPsaOkno.this, rasaPsaACTextView, BDKomunikacjaCel.POBIERZ_RASY_PSOW, null);
+        BDKomunikacjaPobieranie bdKomunikacjaTextView = new BDKomunikacjaPobieranie(DodajPsaOkno.this, rasaPsaACTextView, BDKomunikacjaCel.POBIERZ_RASY_PSOW, null);
         bdKomunikacjaTextView.start();
 
         dodajPsaButton.setOnClickListener(new View.OnClickListener() {

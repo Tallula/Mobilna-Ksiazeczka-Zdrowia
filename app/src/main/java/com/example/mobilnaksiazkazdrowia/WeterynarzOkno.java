@@ -39,7 +39,6 @@ public class WeterynarzOkno extends AppCompatActivity {
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
             }
-
         });
         zaplanujWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override

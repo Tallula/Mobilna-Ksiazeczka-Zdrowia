@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class BDKomunikacja extends Thread{
+public class BDKomunikacjaPobieranie extends Thread{
 
     Activity activity;
     AutoCompleteTextView autoCompleteTextView;
@@ -23,13 +23,12 @@ public class BDKomunikacja extends Thread{
     static String arg;
     public static String idMiasta;
 
-    BDKomunikacja(Activity activity, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
+    BDKomunikacjaPobieranie(Activity activity, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
         this.activity = activity;
         this.autoCompleteTextView = autoCompleteTextView;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
         this.arg = arg;
     }
-
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
@@ -67,13 +66,6 @@ public class BDKomunikacja extends Thread{
                 break;
             case POBIERZ_DANE_O_WIZYTACH:
                 url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdUzytkownika() + "&par2="+ Wizyty.idWizytyMax ;
-/*
-                SQLiteDatabase bazaDanychWizyty=activity.openOrCreateDatabase("wizyty.db", android.content.Context.MODE_PRIVATE,  null);
-                bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");
-                bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
-                 bazaDanychWizyty.close();
-
- */
                 break;
         }
 

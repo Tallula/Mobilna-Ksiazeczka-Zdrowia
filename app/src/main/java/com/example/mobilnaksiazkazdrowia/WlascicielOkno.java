@@ -2,23 +2,17 @@ package com.example.mobilnaksiazkazdrowia;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.File;
-import java.io.IOException;
 
 
 public class WlascicielOkno extends AppCompatActivity {
@@ -30,7 +24,7 @@ public class WlascicielOkno extends AppCompatActivity {
 
         Button dodajZwierzeButton = findViewById(R.id.dodajPsaOknoButton);
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
-        Button testButton = findViewById(R.id.testButton);
+        Button wizytyOknoButton = findViewById(R.id.wizytyOknoButton);
         Button test2Button = findViewById(R.id.test2Button);
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
@@ -59,17 +53,18 @@ public class WlascicielOkno extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-                bdKomunikacja.start();
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+                bdKomunikacjaPobieranie.start();
             }
         }, 50);
+
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
-                bdKomunikacja.start();
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
+                bdKomunikacjaPobieranie.start();
             }
         }, 100);
 
@@ -109,10 +104,12 @@ public class WlascicielOkno extends AppCompatActivity {
             }
 
         });
-        testButton.setOnClickListener(new View.OnClickListener() {
+
+        wizytyOknoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), WizytyOkno.class);
+                startActivity(intent);
             }
         });
         test2Button.setOnClickListener(new View.OnClickListener() {

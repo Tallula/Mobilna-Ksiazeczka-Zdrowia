@@ -146,30 +146,13 @@ public class BDJSONDeserializacja implements Runnable {
                                 Wizyty.celWizyty = new String[jsonArray.length()];
                                 Wizyty.idWizyty = new String[jsonArray.length()];
 
-                               SQLiteDatabase bazaDanychWizyty=activity.openOrCreateDatabase("wizyty.db", android.content.Context.MODE_PRIVATE,  null);
-                                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");
-                               // bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
-                               // bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +jsonArray.length()+ "')");
-                                //int idWizytyMax = Integer.parseInt(Wizyty.idWizytyMax);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     Wizyty.imiePsa[i] = jsonObject.getString("imie");
                                     Wizyty.celWizyty[i] = jsonObject.getString("cel");
                                     Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");
                                     Wizyty.idWizyty[i] = jsonObject.getString("idWizyty");
-                                    //dziala
-                                    //if(idWizytyMax<Integer.parseInt(jsonObject.getString("idWizyty")))
-                                   // {
-                                    //    idWizytyMax = Integer.parseInt(jsonObject.getString("idWizyty"));
-                                    //}
-
-                                  // bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty, imiePsa, celWizyty, dataWizyty) VALUES " +
-                                          // "('"+ Wizyty.idWizyty[i] + "','" + Wizyty.imiePsa[i]+"','" + Wizyty.celWizyty[i]+ "','" + Wizyty.dataWizyty[i]+ "')");
                                 }
-
-                              //  Wizyty.idWizytyMax = String.valueOf(idWizytyMax);
-                                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizytyMax+ "')");
-                                bazaDanychWizyty.close();
                                 break;
                         }
                     } catch (JSONException e) {

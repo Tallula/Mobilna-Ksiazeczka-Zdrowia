@@ -8,6 +8,8 @@ public enum BDKomunikacjaCel {
         POBIERZ_DANE_OSOBOWE,
         POBIERZ_DANE_O_ZWIERZETACH,
         POBIERZ_RASY_PSOW,
-        POBIERZ_DANE_O_WIZYTACH
+        POBIERZ_DANE_O_WIZYTACH,
+
+        WPROWADZ_NOWE_WIZYTY
 
 }

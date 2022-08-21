@@ -1,6 +1,5 @@
 package com.example.mobilnaksiazkazdrowia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -15,13 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 public class Rejestracja extends AppCompatActivity {
@@ -53,15 +46,15 @@ public class Rejestracja extends AppCompatActivity {
         ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
-        BDKomunikacja bdKomunikacjaTextView = new BDKomunikacja(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
+        BDKomunikacjaPobieranie bdKomunikacjaTextView = new BDKomunikacjaPobieranie(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
         miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
-            bdKomunikacja.start();
+            BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
+            bdKomunikacjaPobieranie.start();
         }
         });
 
@@ -71,8 +64,8 @@ public class Rejestracja extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
             //poprawic rejestracje
 
-                BDKomunikacja bdKomunikacja = new BDKomunikacja(Rejestracja.this, null, BDKomunikacjaCel.POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE, eMailEditText.getText().toString());
-                bdKomunikacja.start();
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Rejestracja.this, null, BDKomunikacjaCel.POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE, eMailEditText.getText().toString());
+                bdKomunikacjaPobieranie.start();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -101,7 +94,7 @@ public class Rejestracja extends AppCompatActivity {
 
                             web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
                                     "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                    "&par5="+ BDKomunikacja.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+                                    "&par5="+ BDKomunikacjaPobieranie.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
                             Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
                             miastaACTextView.setText("");
                             uliceACTextView.setText("");

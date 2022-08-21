@@ -68,10 +68,10 @@
             android:text="Wygeneruj QR psa" />
 
         <Button
-            android:id="@+id/testButton"
+            android:id="@+id/wizytyOknoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TEST" />
+            android:text="Wizyty" />
 
         <Button
             android:id="@+id/test2Button"
