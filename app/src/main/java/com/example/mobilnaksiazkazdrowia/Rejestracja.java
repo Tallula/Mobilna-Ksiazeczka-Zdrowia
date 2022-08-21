@@ -46,14 +46,16 @@ public class Rejestracja extends AppCompatActivity {
         ArrayAdapter<String> czyWeterynarzAdapter = new ArrayAdapter<String>(Rejestracja.this.getApplicationContext(), android.R.layout.simple_spinner_item, czyWeterynarz);
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
-        BDKomunikacjaPobieranie bdKomunikacjaTextView = new BDKomunikacjaPobieranie(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
+        BDKomunikacjaPobieranie bdKomunikacjaTextView =
+                new BDKomunikacjaPobieranie(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
         miastaACTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
+            BDKomunikacjaPobieranie bdKomunikacjaPobieranie =
+                    new BDKomunikacjaPobieranie(Rejestracja.this, uliceACTextView, BDKomunikacjaCel.POBIERZ_ULICE, miastaACTextView.getText().toString());
             bdKomunikacjaPobieranie.start();
         }
         });
@@ -62,8 +64,6 @@ public class Rejestracja extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 OkHttpClient client = new OkHttpClient();
-            //poprawic rejestracje
-
                 BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Rejestracja.this, null, BDKomunikacjaCel.POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE, eMailEditText.getText().toString());
                 bdKomunikacjaPobieranie.start();
                 new Handler().postDelayed(new Runnable() {
@@ -71,8 +71,6 @@ public class Rejestracja extends AppCompatActivity {
                     public void run() {
                         if(Rejestracja.czyZarejestrowac)
                         {
-                            Log.d("CZY ZAREJESTROWAC: ", "TAK"); //dziala
-
                             String eMail = eMailEditText.getText().toString();
                             String haslo = hasloEditText.getText().toString();
                             String imie = imieEditText.getText().toString();
@@ -90,11 +88,11 @@ public class Rejestracja extends AppCompatActivity {
                                     break;
                                 }
                             }
-                            idUlicy = BDJSONDeserializacja.idUlicZczytane[index].toString();
-
+                            idUlicy = BDJSONDeserializacja.idUlicZczytane[index];
                             web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
                                     "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
                                     "&par5="+ BDKomunikacjaPobieranie.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+
                             Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
                             miastaACTextView.setText("");
                             uliceACTextView.setText("");
@@ -105,7 +103,6 @@ public class Rejestracja extends AppCompatActivity {
                         }
                         else
                         {
-                            Log.d("CZY ZAREJESTROWAC: ", "NIE"); //dziala
                             Toast.makeText(getApplicationContext(), "Konto juz istnieje", Toast.LENGTH_LONG).show();
                             miastaACTextView.setText("");
                             uliceACTextView.setText("");

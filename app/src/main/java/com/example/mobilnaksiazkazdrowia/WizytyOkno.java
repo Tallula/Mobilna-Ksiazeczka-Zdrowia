@@ -1,5 +1,6 @@
 package com.example.mobilnaksiazkazdrowia;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 public class WizytyOkno extends AppCompatActivity {
@@ -16,14 +18,23 @@ public class WizytyOkno extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizyty_okno);
         TextView testWTextView = findViewById(R.id.testWTextView);
+        CalendarView wizytyCalendarView = findViewById(R.id.wizytyCalendarView);
+
+        BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, testWTextView);
+        bdKomunikacjaWprowadzanie.start();
 
        // testWTextView.setText(Wizyty.idWizyty.length);
 
-                //testWTextView.setText(String.valueOf(Wizyty.idWizyty.length));
-               //dziala
+      wizytyCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+          @Override
+          public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+              testWTextView.setText(year+ "/" + month + "/"+ dayOfMonth);
+          }
+      });
+    //dodac wizyty do kalendarza
 
-        BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, testWTextView);
-         bdKomunikacjaWprowadzanie.start();
+
+
 
 
                 //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");

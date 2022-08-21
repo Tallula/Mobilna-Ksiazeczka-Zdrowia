@@ -109,7 +109,6 @@ public class BDJSONDeserializacja implements Runnable {
                                 {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                                         ZalogowanyUzytkownik.ustawIdUzytkownika(jsonObject.getString("idOsoby"));
                                         ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
                                         ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
