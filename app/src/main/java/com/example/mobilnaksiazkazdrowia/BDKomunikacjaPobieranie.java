@@ -17,15 +17,15 @@ import okhttp3.Response;
 public class BDKomunikacjaPobieranie extends Thread{
 
     Activity activity;
-    AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteTextView daneACTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
     String url ="";
     static String arg;
     public static String idMiasta;
 
-    BDKomunikacjaPobieranie(Activity activity, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
+    BDKomunikacjaPobieranie(Activity activity, AutoCompleteTextView daneACTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
         this.activity = activity;
-        this.autoCompleteTextView = autoCompleteTextView;
+        this.daneACTextView = daneACTextView;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
         this.arg = arg;
     }
@@ -76,8 +76,9 @@ public class BDKomunikacjaPobieranie extends Thread{
            }
            @Override
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-               final String myResponse = response.body().string();
-               BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja(activity, myResponse, autoCompleteTextView, bdKomunikacjaCel);
+               final String wynik = response.body().string();
+               BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja
+                       (activity, wynik, daneACTextView, bdKomunikacjaCel);
                JSONDeserializacja.run();
            }
        });

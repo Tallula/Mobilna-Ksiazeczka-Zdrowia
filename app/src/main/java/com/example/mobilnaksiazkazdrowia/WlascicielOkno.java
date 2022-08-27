@@ -11,8 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class WlascicielOkno extends AppCompatActivity {
@@ -115,7 +121,27 @@ public class WlascicielOkno extends AppCompatActivity {
         test2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
 
+                String aktualnaData = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                Cursor wynik = baza.rawQuery ("SELECT dataWizyty FROM wizyty  WHERE dataWizyty > '" + aktualnaData+"';",null);
+                wynik.moveToFirst();
+                int ileRekordow=wynik.getCount();
+
+                String rekord="";
+                Wizyty.datyPrzyszlychWizyt = new String[ileRekordow];
+
+                for(int i=0; i<ileRekordow; i++)
+                {
+                    rekord = wynik.getString(0);
+                    Wizyty.datyPrzyszlychWizyt[i] = rekord;
+                    wynik.moveToNext();
+                }
+
+                Toast.makeText(getApplicationContext(), Wizyty.datyPrzyszlychWizyt[1], Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "AKTUALNA DATA: "+ aktualnaData, Toast.LENGTH_LONG).show();
+                baza.close();
             }
         });
     }
@@ -141,11 +167,7 @@ public class WlascicielOkno extends AppCompatActivity {
 
         //editor.putString("idWizytyMax",Wizyty.idWizytyMax);
 
-        //zapis do pliku - przerobic
-      //  for (int i = 0; i < Wizyty.idWizyty.length; i++) {
-           // idWizyt = sharedPrefPobierz.getString("idWizyt", "");
-           // editor.putString("idWizyt",idWizyt + "," +Wizyty.idWizyty[i]);
-       // }
+
 
        // editor.apply();
     }

@@ -37,7 +37,7 @@ import org.json.JSONObject;
 
 public class BDJSONDeserializacja implements Runnable {
     Activity activity;
-    String myResponse;
+    String wynik;
 
     public static String[] idMiastZczytane;
     public static String[] idUlicZczytane;
@@ -47,13 +47,13 @@ public class BDJSONDeserializacja implements Runnable {
     public static String[] idRasZczytane;
     String czyUzytkownikIstnieje = "";
 
-    AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteTextView daneACTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
 
-    public BDJSONDeserializacja(Activity activity, String response, AutoCompleteTextView autoCompleteTextView, BDKomunikacjaCel bdKomunikacjaCel){
+    public BDJSONDeserializacja(Activity activity, String wynik, AutoCompleteTextView daneACTextView, BDKomunikacjaCel bdKomunikacjaCel){
         this.activity=activity;
-        this.myResponse = response;
-        this.autoCompleteTextView = autoCompleteTextView;
+        this.wynik = wynik;
+        this.daneACTextView = daneACTextView;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
     }
     @Override
@@ -63,10 +63,10 @@ public class BDJSONDeserializacja implements Runnable {
             public void run() {
                 {
                     try {
-                        JSONArray jsonArray = new JSONArray(myResponse);
+                        JSONArray wynikJSONTab = new JSONArray(wynik);
                         switch(bdKomunikacjaCel){
                             case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
-                                JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                                JSONObject jsonObject1 = wynikJSONTab.getJSONObject(0);
                                 czyUzytkownikIstnieje = jsonObject1.getString("czyIstnieje");
                                 if(czyUzytkownikIstnieje.equals("TAK"))
                                 {
@@ -78,37 +78,38 @@ public class BDJSONDeserializacja implements Runnable {
                                 }
                                 break;
                             case POBIERZ_JAKI_UZYTKOWNIK:
-                                JSONObject jsonZalogowanyUzytkownik = jsonArray.getJSONObject(0);
+                                JSONObject jsonZalogowanyUzytkownik = wynikJSONTab.getJSONObject(0);
                                 ZalogowanyUzytkownik.ustawTypUzytkownika(jsonZalogowanyUzytkownik.getString("rodzajUzytkownika"));
                                 ZalogowanyUzytkownik.ustawIdUzytkownika(jsonZalogowanyUzytkownik.getString("idUzytkownika"));
                                 break;
                             case POBIERZ_MIASTA:
-                                nazwyMiastZczytane = new String[jsonArray.length()];
-                                idMiastZczytane = new String[jsonArray.length()];
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                nazwyMiastZczytane = new String[wynikJSONTab.length()];
+                                idMiastZczytane = new String[wynikJSONTab.length()];
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                     nazwyMiastZczytane[i] = jsonObject.getString("nazwaMiasta");
                                     idMiastZczytane[i] = jsonObject.getString("idMiasta");
                                 }
-                                ArrayAdapter<String> adapterMiasta = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
-                                autoCompleteTextView.setAdapter(adapterMiasta);
+                                ArrayAdapter<String> adapterMiasta = new ArrayAdapter<String>
+                                        (activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
+                                daneACTextView.setAdapter(adapterMiasta);
                                 break;
                             case POBIERZ_ULICE:
-                                nazwyUlicZczytane = new String[jsonArray.length()];
-                                idUlicZczytane = new String[jsonArray.length()];
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                nazwyUlicZczytane = new String[wynikJSONTab.length()];
+                                idUlicZczytane = new String[wynikJSONTab.length()];
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                     nazwyUlicZczytane[i] = jsonObject.getString("nazwaUlicy");
                                     idUlicZczytane[i] = jsonObject.getString("idUlicy");
                                 }
                                 ArrayAdapter<String> adapterUlice = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
-                                autoCompleteTextView.setAdapter(adapterUlice);
+                                daneACTextView.setAdapter(adapterUlice);
                                 break;
                             case POBIERZ_DANE_OSOBOWE:
-                                if(jsonArray.length()>0)
+                                if(wynikJSONTab.length()>0)
                                 {
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                        JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                         ZalogowanyUzytkownik.ustawIdUzytkownika(jsonObject.getString("idOsoby"));
                                         ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
                                         ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
@@ -117,36 +118,37 @@ public class BDJSONDeserializacja implements Runnable {
                                 }
                                 break;
                             case POBIERZ_DANE_O_ZWIERZETACH:
-                                ZwierzetaWlasciciela.imie = new String[jsonArray.length()];
-                                ZwierzetaWlasciciela.idPsa = new String[jsonArray.length()];
-                                ZwierzetaWlasciciela.rasaPsa = new String[jsonArray.length()];
+                                ZwierzetaWlasciciela.imie = new String[wynikJSONTab.length()];
+                                ZwierzetaWlasciciela.idPsa = new String[wynikJSONTab.length()];
+                                ZwierzetaWlasciciela.rasaPsa = new String[wynikJSONTab.length()];
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                     ZwierzetaWlasciciela.imie[i] = jsonObject.getString("imie");
                                     ZwierzetaWlasciciela.idPsa[i] = jsonObject.getString("idPsa");
                                     ZwierzetaWlasciciela.rasaPsa[i] = jsonObject.getString("nazwaRasy");
                                 }
                                 break;
                             case POBIERZ_RASY_PSOW:
-                                nazwyRasZczytane = new String[jsonArray.length()];
-                                idRasZczytane = new String[jsonArray.length()];
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                nazwyRasZczytane = new String[wynikJSONTab.length()];
+                                idRasZczytane = new String[wynikJSONTab.length()];
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                     nazwyRasZczytane[i] = jsonObject.getString("nazwa");
                                     idRasZczytane[i] = jsonObject.getString("idRasy");
                                 }
-                                ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
-                                autoCompleteTextView.setAdapter(adapterRasy);
+                                ArrayAdapter<String> adapterRasy = new ArrayAdapter<String>
+                                        (activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyRasZczytane);
+                                daneACTextView.setAdapter(adapterRasy);
                                 break;
                             case POBIERZ_DANE_O_WIZYTACH:
-                                Wizyty.dataWizyty = new String[jsonArray.length()];
-                                Wizyty.imiePsa = new String[jsonArray.length()];
-                                Wizyty.celWizyty = new String[jsonArray.length()];
-                                Wizyty.idWizyty = new String[jsonArray.length()];
+                                Wizyty.dataWizyty = new String[wynikJSONTab.length()];
+                                Wizyty.imiePsa = new String[wynikJSONTab.length()];
+                                Wizyty.celWizyty = new String[wynikJSONTab.length()];
+                                Wizyty.idWizyty = new String[wynikJSONTab.length()];
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
                                     Wizyty.imiePsa[i] = jsonObject.getString("imie");
                                     Wizyty.celWizyty[i] = jsonObject.getString("cel");
                                     Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");
