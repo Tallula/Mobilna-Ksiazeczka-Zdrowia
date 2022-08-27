@@ -7,6 +7,7 @@ public class Wizyty {
     public static String[] idWizyty;
 
     public static String[] datyPrzyszlychWizyt;
+    public static String dataNajblizszejWizyty = "3000-12-12";
 
     public static String idWizytyMax;
     public static String najblizszaWizytaData;

@@ -136,10 +136,22 @@ public class WlascicielOkno extends AppCompatActivity {
                 {
                     rekord = wynik.getString(0);
                     Wizyty.datyPrzyszlychWizyt[i] = rekord;
+
                     wynik.moveToNext();
                 }
 
-                Toast.makeText(getApplicationContext(), Wizyty.datyPrzyszlychWizyt[1], Toast.LENGTH_LONG).show();
+                for(int i=0; i<Wizyty.datyPrzyszlychWizyt.length; i++)
+                {
+                    if(Wizyty.datyPrzyszlychWizyt[i].compareTo(Wizyty.dataNajblizszejWizyty) < 0)
+                    {
+                        Wizyty.dataNajblizszejWizyty= Wizyty.datyPrzyszlychWizyt[i];
+                    }
+                }
+                //do tego momentu dziala, nastepnie ustawianie powiadomien dla najblizszej wizyty!!!
+                
+                //Toast.makeText(getApplicationContext(), Wizyty.dataNajblizszejWizyty, Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), Wizyty.datyPrzyszlychWizyt[0], Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), String.valueOf(Wizyty.datyPrzyszlychWizyt.length), Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), "AKTUALNA DATA: "+ aktualnaData, Toast.LENGTH_LONG).show();
                 baza.close();
             }
