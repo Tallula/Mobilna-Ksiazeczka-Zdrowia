@@ -36,7 +36,7 @@ public class WeterynarzOkno extends AppCompatActivity {
                 intentIntegrator.setPrompt("Zeskanuj kod QR badanego psa");
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
-                intentIntegrator.setCaptureActivity(Capture.class);
+                intentIntegrator.setCaptureActivity(QRPomoc.class);
                 intentIntegrator.initiateScan();
             }
         });

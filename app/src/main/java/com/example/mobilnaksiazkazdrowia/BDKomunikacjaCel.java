@@ -10,6 +10,7 @@ public enum BDKomunikacjaCel {
         POBIERZ_RASY_PSOW,
         POBIERZ_DANE_O_WIZYTACH,
 
-        WPROWADZ_NOWE_WIZYTY
+        WPROWADZ_NOWE_WIZYTY,
+        WPROWADZ_ZAPLANOWANA_WIZYTE
 
 }

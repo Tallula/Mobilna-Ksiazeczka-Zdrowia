@@ -47,10 +47,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Capture"
+            android:name=".QRPomoc"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
+        <receiver android:name=".Alarm"/>
     </application>
 
 </manifest>

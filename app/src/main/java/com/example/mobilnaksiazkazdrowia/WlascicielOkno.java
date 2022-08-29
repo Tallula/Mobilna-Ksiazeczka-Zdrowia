@@ -1,9 +1,14 @@
 package com.example.mobilnaksiazkazdrowia;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,6 +28,12 @@ import java.util.Locale;
 
 public class WlascicielOkno extends AppCompatActivity {
 
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +45,7 @@ public class WlascicielOkno extends AppCompatActivity {
         Button test2Button = findViewById(R.id.test2Button);
         Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
+
 
         SQLiteDatabase bazaDanychWizyty=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
         //stworz jesli nie istnieje
@@ -121,66 +133,10 @@ public class WlascicielOkno extends AppCompatActivity {
         test2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
 
-                String aktualnaData = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                Cursor wynik = baza.rawQuery ("SELECT dataWizyty FROM wizyty  WHERE dataWizyty > '" + aktualnaData+"';",null);
-                wynik.moveToFirst();
-                int ileRekordow=wynik.getCount();
-
-                String rekord="";
-                Wizyty.datyPrzyszlychWizyt = new String[ileRekordow];
-
-                for(int i=0; i<ileRekordow; i++)
-                {
-                    rekord = wynik.getString(0);
-                    Wizyty.datyPrzyszlychWizyt[i] = rekord;
-
-                    wynik.moveToNext();
-                }
-
-                for(int i=0; i<Wizyty.datyPrzyszlychWizyt.length; i++)
-                {
-                    if(Wizyty.datyPrzyszlychWizyt[i].compareTo(Wizyty.dataNajblizszejWizyty) < 0)
-                    {
-                        Wizyty.dataNajblizszejWizyty= Wizyty.datyPrzyszlychWizyt[i];
-                    }
-                }
-                //do tego momentu dziala, nastepnie ustawianie powiadomien dla najblizszej wizyty!!!
-                
-                //Toast.makeText(getApplicationContext(), Wizyty.dataNajblizszejWizyty, Toast.LENGTH_LONG).show();
-               // Toast.makeText(getApplicationContext(), Wizyty.datyPrzyszlychWizyt[0], Toast.LENGTH_LONG).show();
-               // Toast.makeText(getApplicationContext(), String.valueOf(Wizyty.datyPrzyszlychWizyt.length), Toast.LENGTH_LONG).show();
-                //Toast.makeText(getApplicationContext(), "AKTUALNA DATA: "+ aktualnaData, Toast.LENGTH_LONG).show();
-                baza.close();
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-               // BDKomunikacja bdKomunikacja = new BDKomunikacja(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-                //bdKomunikacja.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-       // Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_LONG).show();
-
-        //SharedPreferences sharedPrefPobierz = this.getPreferences(Context.MODE_PRIVATE);
-       // String idWizyt="";
-
-        //SharedPreferences sharedPrefZapisz = this.getPreferences(Context.MODE_PRIVATE);
-       // SharedPreferences.Editor editor = sharedPrefZapisz.edit();
-
-        //editor.putString("idWizytyMax",Wizyty.idWizytyMax);
-
-
-
-       // editor.apply();
-    }
 }

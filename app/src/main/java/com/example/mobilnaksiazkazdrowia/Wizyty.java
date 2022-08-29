@@ -10,7 +10,5 @@ public class Wizyty {
     public static String dataNajblizszejWizyty = "3000-12-12";
 
     public static String idWizytyMax;
-    public static String najblizszaWizytaData;
-    public static String najblizszaWizytaCel;
-    public static String najblizszaWizytaImiePsa;
+
 }
