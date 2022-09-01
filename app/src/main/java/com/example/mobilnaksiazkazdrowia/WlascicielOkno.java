@@ -1,14 +1,11 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,14 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+
 
 
 public class WlascicielOkno extends AppCompatActivity {
@@ -31,8 +25,6 @@ public class WlascicielOkno extends AppCompatActivity {
     private Calendar calendar;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +40,6 @@ public class WlascicielOkno extends AppCompatActivity {
 
 
         SQLiteDatabase bazaDanychWizyty=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-        //stworz jesli nie istnieje
         bazaDanychWizyty.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
                 "idWizyty INTEGER PRIMARY KEY," +
                 " imiePsa string," +
@@ -66,7 +57,6 @@ public class WlascicielOkno extends AppCompatActivity {
         {
             Wizyty.idWizytyMax = kursor.getString(0);
         }
-
         bazaDanychWizyty.close();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -120,7 +110,6 @@ public class WlascicielOkno extends AppCompatActivity {
                 KodQR kodQR = new KodQR();
                 kodQR.wygenerujQR(daneQR, qrPsaImageView);
             }
-
         });
 
         wizytyOknoButton.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +123,23 @@ public class WlascicielOkno extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null,null,null);
+                bdKomunikacjaWprowadzanie.start();
+            }
+        }, 200);
+
     }
 
 }

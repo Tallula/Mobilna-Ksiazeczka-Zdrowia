@@ -19,13 +19,12 @@
             android:id="@+id/testWTextView"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="TextView" />
+            android:text="TextView"
+            />
 
-        <CalendarView
-            android:id="@+id/wizytyCalendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 

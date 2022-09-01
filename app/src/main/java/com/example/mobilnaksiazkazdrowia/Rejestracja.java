@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -89,9 +88,16 @@ public class Rejestracja extends AppCompatActivity {
                                 }
                             }
                             idUlicy = BDJSONDeserializacja.idUlicZczytane[index];
-                            web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
-                                    "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
-                                    "&par5="+ BDKomunikacjaPobieranie.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
+
+                            String[] argumenty = {eMail,haslo,imie,nazwisko,BDKomunikacjaPobieranie.idMiasta,idUlicy,czyWeterynarz};
+
+                            BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                                    new BDKomunikacjaWprowadzanie(Rejestracja.this,  BDKomunikacjaCel.ZAREJESTRUJ_UZYTKOWNIKA, null,new WebView(getApplicationContext()), argumenty);
+                            bdKomunikacjaWprowadzanie.start();
+
+                            //web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
+                                 //   "par1=" + eMail + "&par2=" + haslo + "&par3=+ "+ imie+ "&par4="+nazwisko+
+                                  //  "&par5="+ BDKomunikacjaPobieranie.idMiasta + "&par6="+idUlicy+"&par7=" + czyWeterynarz);
 
                             Toast.makeText(getApplicationContext(), "Konto zostalo zalozone", Toast.LENGTH_LONG).show();
                             miastaACTextView.setText("");

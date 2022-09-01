@@ -1,7 +1,6 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;

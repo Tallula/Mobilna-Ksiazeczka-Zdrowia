@@ -50,12 +50,19 @@ public class DodajPsaOkno extends AppCompatActivity {
                     index=i;
                     }
                 }
+
                 String idRasy = BDJSONDeserializacja.idRasZczytane[index];
                 Log.d("idOsoby",ZalogowanyUzytkownik.wezIdUzytkownika() );
                 WebView web = new WebView(getApplicationContext());
 
-                web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "&par2=" + idRasy +
-                        "&par3=" + plecPsa + "&par4=" + wiekPsa + "&par5=" + ZalogowanyUzytkownik.wezIdUzytkownika());
+               // web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "&par2=" + idRasy +
+                       // "&par3=" + plecPsa + "&par4=" + wiekPsa + "&par5=" + ZalogowanyUzytkownik.wezIdUzytkownika());
+
+                String[] argumenty= {imiePsa, idRasy, plecPsa, wiekPsa, ZalogowanyUzytkownik.wezIdUzytkownika()};
+
+                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                        new BDKomunikacjaWprowadzanie(DodajPsaOkno.this,  BDKomunikacjaCel.WPROWADZ_PSA, null,new WebView(getApplicationContext()), argumenty);
+                bdKomunikacjaWprowadzanie.start();
 
                 imiePsaEditText.setText("");
                 rasaPsaACTextView.setText("");

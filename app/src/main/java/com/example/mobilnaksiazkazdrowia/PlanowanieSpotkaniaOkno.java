@@ -73,9 +73,14 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
                 WebView web = new WebView(getApplicationContext());
 
-                web.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + dataWizyty +  "&par2=" + celWizyty +
-                       "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdUzytkownika());
+               // web.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + dataWizyty +  "&par2=" + celWizyty +
+                 //      "&par3=" + opisWizyty + "&par4=0&par5=" + idBadanegoPsa+ "&par6=" + ZalogowanyUzytkownik.wezIdUzytkownika());
+                //w razie w
 
+                String[] argumenty = {dataWizyty,celWizyty,opisWizyty,idBadanegoPsa };
+                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                        new BDKomunikacjaWprowadzanie(PlanowanieSpotkaniaOkno.this,  BDKomunikacjaCel.WPROWADZ_ZAPLANOWANA_WIZYTE, null,new WebView(getApplicationContext()), argumenty);
+                bdKomunikacjaWprowadzanie.start();
             }
         });
 
