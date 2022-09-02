@@ -14,5 +14,5 @@ public enum BDKomunikacjaCel {
         WPROWADZ_ZAPLANOWANA_WIZYTE,
         ZAREJESTRUJ_UZYTKOWNIKA,
         WPROWADZ_PSA
-
 }
+

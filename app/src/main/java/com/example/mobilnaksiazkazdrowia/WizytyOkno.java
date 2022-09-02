@@ -26,7 +26,6 @@ public class WizytyOkno extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizyty_okno);
         TextView testWTextView = findViewById(R.id.testWTextView);
-        CalendarView wizytyCalendarView = findViewById(R.id.wizytyCalendarView);
         contextOBJ = this;
 
         Powiadomienia powiadomienie = new Powiadomienia(contextOBJ);
