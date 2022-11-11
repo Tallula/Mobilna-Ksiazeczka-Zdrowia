@@ -10,15 +10,14 @@ public class BDKomunikacjaWprowadzanie extends Thread{
 
     Activity aktywnosc;
     BDKomunikacjaCel bdKomunikacjaCel;
-    TextView test;
-    WebView webView;
+    WebView phpUruchom;
     String[] argumenty;
 
-    BDKomunikacjaWprowadzanie(Activity aktywnosc, BDKomunikacjaCel bdKomunikacjaCel, TextView test, WebView webView, String [] argumenty){
+    BDKomunikacjaWprowadzanie(Activity aktywnosc, BDKomunikacjaCel bdKomunikacjaCel, WebView phpUruchom, String [] argumenty){
         this.aktywnosc = aktywnosc;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
-        this.test = test;
-        this.webView = webView;
+
+        this.phpUruchom = phpUruchom;
         this.argumenty = argumenty;
     }
     @Override
@@ -37,17 +36,20 @@ public class BDKomunikacjaWprowadzanie extends Thread{
                         bazaDanychWizyty.close();
                     break;
                     case WPROWADZ_ZAPLANOWANA_WIZYTE:
-                        webView.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
+                        phpUruchom.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
                                 "&par3=" + argumenty[2] + "&par4=0&par5=" + argumenty[3]+ "&par6=" + ZalogowanyUzytkownik.wezIdUzytkownika());
                         break;
                     case ZAREJESTRUJ_UZYTKOWNIKA:
-                        webView.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
+                        phpUruchom.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
                                 "par1=" + argumenty[0] + "&par2=" + argumenty[1] + "&par3=+ "+ argumenty[2]+ "&par4="+argumenty[3]+
                                 "&par5="+ argumenty[4]+ "&par6="+argumenty[5]+"&par7=" + argumenty[6]);
                         break;
                     case WPROWADZ_PSA:
-                        webView.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
+                        phpUruchom.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
                                  "&par3=" + argumenty[2] + "&par4=" + argumenty[3] + "&par5=" + argumenty[4]);
+                        break;
+                    case WPROWADZ_RFID:
+
                         break;
                 }
             }

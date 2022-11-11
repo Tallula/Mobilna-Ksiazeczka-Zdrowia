@@ -15,28 +15,28 @@ import okhttp3.Response;
 
 public class BDKomunikacjaPobieranie extends Thread{
 
-    Activity activity;
+    Activity aktywnosc;
     AutoCompleteTextView daneACTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
     String url ="";
-    static String arg;
+    static String argument;
     public static String idMiasta;
 
-    BDKomunikacjaPobieranie(Activity activity, AutoCompleteTextView daneACTextView, BDKomunikacjaCel bdKomunikacjaCel, String arg){
-        this.activity = activity;
+    BDKomunikacjaPobieranie(Activity aktywnosc, AutoCompleteTextView daneACTextView, BDKomunikacjaCel bdKomunikacjaCel, String argument){
+        this.aktywnosc = aktywnosc;
         this.daneACTextView = daneACTextView;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
-        this.arg = arg;
+        this.argument = argument;
     }
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
         switch(bdKomunikacjaCel){
             case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
-               url= Linki.zwrocRejestracjaFolder() + "sprawdzCzyIstnieje.php?par1=" + arg;
+               url= Linki.zwrocRejestracjaFolder() + "sprawdzCzyIstnieje.php?par1=" + argument;
                 break;
             case POBIERZ_JAKI_UZYTKOWNIK:
-                String[] dane = arg.split(",");
+                String[] dane = argument.split(",");
                 url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +dane[0] + "&par2=" + dane[1];
                 break;
             case POBIERZ_MIASTA:
@@ -46,7 +46,7 @@ public class BDKomunikacjaPobieranie extends Thread{
                 int index=0;
                 for(int i = 0; i< BDJSONDeserializacja.nazwyMiastZczytane.length; i++)
                 {
-                    if(BDJSONDeserializacja.nazwyMiastZczytane[i].equals(arg)){
+                    if(BDJSONDeserializacja.nazwyMiastZczytane[i].equals(argument)){
                         index=i;
                     }
                 }
@@ -54,7 +54,7 @@ public class BDKomunikacjaPobieranie extends Thread{
                 url = Linki.zwrocRejestracjaFormularzFolder() + "czytajUlice.php?par1=" + idMiasta;
                 break;
             case POBIERZ_DANE_OSOBOWE:
-                url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ arg ;
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ argument ;
                 break;
 
             case POBIERZ_DANE_O_ZWIERZETACH:
@@ -77,7 +77,7 @@ public class BDKomunikacjaPobieranie extends Thread{
            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                final String wynik = response.body().string();
                BDJSONDeserializacja JSONDeserializacja = new BDJSONDeserializacja
-                       (activity, wynik, daneACTextView, bdKomunikacjaCel);
+                       (aktywnosc, wynik, daneACTextView, bdKomunikacjaCel);
                JSONDeserializacja.run();
            }
        });

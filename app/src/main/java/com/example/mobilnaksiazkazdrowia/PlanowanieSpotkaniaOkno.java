@@ -79,7 +79,7 @@ public class PlanowanieSpotkaniaOkno extends AppCompatActivity {
 
                 String[] argumenty = {dataWizyty,celWizyty,opisWizyty,idBadanegoPsa };
                 BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(PlanowanieSpotkaniaOkno.this,  BDKomunikacjaCel.WPROWADZ_ZAPLANOWANA_WIZYTE, null,new WebView(getApplicationContext()), argumenty);
+                        new BDKomunikacjaWprowadzanie(PlanowanieSpotkaniaOkno.this,  BDKomunikacjaCel.WPROWADZ_ZAPLANOWANA_WIZYTE,new WebView(getApplicationContext()), argumenty);
                 bdKomunikacjaWprowadzanie.start();
             }
         });

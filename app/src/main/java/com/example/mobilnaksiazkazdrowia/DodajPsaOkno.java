@@ -61,7 +61,8 @@ public class DodajPsaOkno extends AppCompatActivity {
                 String[] argumenty= {imiePsa, idRasy, plecPsa, wiekPsa, ZalogowanyUzytkownik.wezIdUzytkownika()};
 
                 BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(DodajPsaOkno.this,  BDKomunikacjaCel.WPROWADZ_PSA, null,new WebView(getApplicationContext()), argumenty);
+                        new BDKomunikacjaWprowadzanie(DodajPsaOkno.this,  BDKomunikacjaCel.WPROWADZ_PSA,
+                                                    new WebView(getApplicationContext()), argumenty);
                 bdKomunikacjaWprowadzanie.start();
 
                 imiePsaEditText.setText("");

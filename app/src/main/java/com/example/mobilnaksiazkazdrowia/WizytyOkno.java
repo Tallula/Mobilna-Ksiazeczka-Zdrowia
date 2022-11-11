@@ -31,12 +31,11 @@ public class WizytyOkno extends AppCompatActivity {
         Powiadomienia powiadomienie = new Powiadomienia(contextOBJ);
         powiadomienie.createNotificationChannel();
 
-        BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, testWTextView, null, null);
+        BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null, null);
         bdKomunikacjaWprowadzanie.start();
 
-    //dodac wizyty do kalendarza
 
-//
+
         SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
         String aktualnaData = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         Cursor wynikPrzyszleWizyty = baza.rawQuery ("SELECT dataWizyty FROM wizyty  WHERE dataWizyty > '" + aktualnaData+"';",null);

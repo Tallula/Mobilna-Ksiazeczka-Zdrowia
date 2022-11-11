@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient;
 
 public class Rejestracja extends AppCompatActivity {
 
-    String ciagJSON="";
+
     String[] idMiastZczytane;
     String[] nazwyMiastZczytane;
     String[] nazwyUlicZczytane;
@@ -92,7 +92,7 @@ public class Rejestracja extends AppCompatActivity {
                             String[] argumenty = {eMail,haslo,imie,nazwisko,BDKomunikacjaPobieranie.idMiasta,idUlicy,czyWeterynarz};
 
                             BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                                    new BDKomunikacjaWprowadzanie(Rejestracja.this,  BDKomunikacjaCel.ZAREJESTRUJ_UZYTKOWNIKA, null,new WebView(getApplicationContext()), argumenty);
+                                    new BDKomunikacjaWprowadzanie(Rejestracja.this,  BDKomunikacjaCel.ZAREJESTRUJ_UZYTKOWNIKA,new WebView(getApplicationContext()), argumenty);
                             bdKomunikacjaWprowadzanie.start();
 
                             //web.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +

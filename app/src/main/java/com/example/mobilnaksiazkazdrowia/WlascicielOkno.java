@@ -135,7 +135,7 @@ public class WlascicielOkno extends AppCompatActivity {
             public void run() {
 
                 BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null,null,null);
+                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,null,null);
                 bdKomunikacjaWprowadzanie.start();
             }
         }, 200);
