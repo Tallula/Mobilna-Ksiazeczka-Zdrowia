@@ -31,3 +31,5 @@ public  class Linki{
     public static String zwrocPobieranieWizytyFolder(){ return adres + projekt + pobieranieWizytyFolder; }
 
 }
+
+

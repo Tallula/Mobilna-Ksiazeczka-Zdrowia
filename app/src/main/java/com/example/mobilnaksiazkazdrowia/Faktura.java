@@ -12,7 +12,7 @@ public class Faktura {
 
     WebView fakturaWebView;
     PrintManager printManager;
-    Faktura(WebView fakturaWebView, PrintManager printManager){
+    public Faktura(WebView fakturaWebView, PrintManager printManager){
         this.fakturaWebView = fakturaWebView;
         this.printManager = printManager;
     }
@@ -51,8 +51,6 @@ public class Faktura {
             //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     public String trescFakturyHTML=
             "<html> \n <head> \n <title> Tytul </title></head> \n"+
@@ -125,6 +123,7 @@ public class Faktura {
             "</tbody>\n" +
             "</table>"+
             "<p>&nbsp;</p>\n"+
+                    " KOD QR BADANEGO PSA \n"+
             "<img src=\"/storage/emulated/0/Download/APLIKACJA/kodQRBadanegoPsa.bmp\"" + "style=\"width:300px;height:300px;\">"+
             "</html>";
 

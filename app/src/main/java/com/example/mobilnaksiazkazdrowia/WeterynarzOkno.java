@@ -36,7 +36,7 @@ public class WeterynarzOkno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weterynarz_okno);
-        NfcAdapter nfcAdapter= NfcAdapter.getDefaultAdapter(this);
+       // NfcAdapter nfcAdapter= NfcAdapter.getDefaultAdapter(this);
         Tag tag;
 
         Button zaplanujWizyteButton =findViewById(R.id.zapiszWizyteButton);
@@ -74,6 +74,7 @@ public class WeterynarzOkno extends AppCompatActivity {
                 intentIntegrator.initiateScan();
             }
         });
+
         zaplanujWizyteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +96,7 @@ public class WeterynarzOkno extends AppCompatActivity {
 
         Faktura faktura = new Faktura(fakturaWebView, printManager);
         KodQR kodQR = new KodQR();
-                kodQR.zapiszQR(kodQR.wygenerujQR(badanyPiesInfo[0]));
+               kodQR.zapiszQR(kodQR.wygenerujQR(badanyPiesInfo[0]));
             faktura.wydrukuj();
             }
         });

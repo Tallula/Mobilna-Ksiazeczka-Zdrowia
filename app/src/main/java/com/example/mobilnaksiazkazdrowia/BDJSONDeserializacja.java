@@ -56,8 +56,12 @@ public class BDJSONDeserializacja implements Runnable {
                                 break;
                             case POBIERZ_JAKI_UZYTKOWNIK:
                                 JSONObject jsonZalogowanyUzytkownik = wynikJSONTab.getJSONObject(0);
-                                ZalogowanyUzytkownik.ustawTypUzytkownika(jsonZalogowanyUzytkownik.getString("rodzajUzytkownika"));
-                                ZalogowanyUzytkownik.ustawIdUzytkownika(jsonZalogowanyUzytkownik.getString("idUzytkownika"));
+                                //ZalogowanyUzytkownik.ustawTypUzytkownika(jsonZalogowanyUzytkownik.getString("rodzajUzytkownika"));
+
+                                //ZalogowanyUzytkownik.ustawIdUzytkownika(jsonZalogowanyUzytkownik.getString("idUzytkownika"));
+
+                                ZalogowanyUzytkownik.typUzytkownika=jsonZalogowanyUzytkownik.getString("rodzajUzytkownika");
+                                ZalogowanyUzytkownik.idUzytkownika=jsonZalogowanyUzytkownik.getString("idUzytkownika");
                                 break;
                             case POBIERZ_MIASTA:
                                 nazwyMiastZczytane = new String[wynikJSONTab.length()];
@@ -68,7 +72,8 @@ public class BDJSONDeserializacja implements Runnable {
                                     idMiastZczytane[i] = jsonObject.getString("idMiasta");
                                 }
                                 ArrayAdapter<String> adapterMiasta = new ArrayAdapter<String>
-                                        (activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyMiastZczytane);
+                                        (activity.getApplicationContext(),
+                                                android.R.layout.simple_spinner_item, nazwyMiastZczytane);
                                 daneACTextView.setAdapter(adapterMiasta);
                                 break;
                             case POBIERZ_ULICE:
@@ -79,7 +84,9 @@ public class BDJSONDeserializacja implements Runnable {
                                     nazwyUlicZczytane[i] = jsonObject.getString("nazwaUlicy");
                                     idUlicZczytane[i] = jsonObject.getString("idUlicy");
                                 }
-                                ArrayAdapter<String> adapterUlice = new ArrayAdapter<String>(activity.getApplicationContext(), android.R.layout.simple_spinner_item, nazwyUlicZczytane);
+                                ArrayAdapter<String> adapterUlice = new ArrayAdapter<String>
+                                        (activity.getApplicationContext(),
+                                                android.R.layout.simple_spinner_item, nazwyUlicZczytane);
                                 daneACTextView.setAdapter(adapterUlice);
                                 break;
                             case POBIERZ_DANE_OSOBOWE:
@@ -87,10 +94,15 @@ public class BDJSONDeserializacja implements Runnable {
                                 {
                                     for (int i = 0; i < wynikJSONTab.length(); i++) {
                                         JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
-                                        ZalogowanyUzytkownik.ustawIdUzytkownika(jsonObject.getString("idOsoby"));
-                                        ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
-                                        ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
-                                        ZalogowanyUzytkownik.ustawNumTel(jsonObject.getString("numerTelefonu"));
+                                        //ZalogowanyUzytkownik.ustawIdUzytkownika(jsonObject.getString("idOsoby"));
+                                        //ZalogowanyUzytkownik.ustawImie(jsonObject.getString("imie"));
+                                        //ZalogowanyUzytkownik.ustawNazwisko(jsonObject.getString("nazwisko"));
+                                       // ZalogowanyUzytkownik.ustawNumTel(jsonObject.getString("numerTelefonu"));
+
+                                        ZalogowanyUzytkownik.idUzytkownika=jsonObject.getString("idOsoby");
+                                        ZalogowanyUzytkownik.imie=jsonObject.getString("imie");
+                                        ZalogowanyUzytkownik.nazwisko =jsonObject.getString("nazwisko");
+                                         ZalogowanyUzytkownik.numTel=jsonObject.getString("numerTelefonu");
                                     }
                                 }
                                 break;
@@ -119,17 +131,17 @@ public class BDJSONDeserializacja implements Runnable {
                                 daneACTextView.setAdapter(adapterRasy);
                                 break;
                             case POBIERZ_DANE_O_WIZYTACH:
-                                Wizyty.dataWizyty = new String[wynikJSONTab.length()];
-                                Wizyty.imiePsa = new String[wynikJSONTab.length()];
-                                Wizyty.celWizyty = new String[wynikJSONTab.length()];
-                                Wizyty.idWizyty = new String[wynikJSONTab.length()];
+                                Wizyta.dataWizyty = new String[wynikJSONTab.length()];
+                                Wizyta.imiePsa = new String[wynikJSONTab.length()];
+                                Wizyta.celWizyty = new String[wynikJSONTab.length()];
+                                Wizyta.idWizyty = new String[wynikJSONTab.length()];
 
                                 for (int i = 0; i < wynikJSONTab.length(); i++) {
                                     JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
-                                    Wizyty.imiePsa[i] = jsonObject.getString("imie");
-                                    Wizyty.celWizyty[i] = jsonObject.getString("cel");
-                                    Wizyty.dataWizyty[i] = jsonObject.getString("dataWizyty");
-                                    Wizyty.idWizyty[i] = jsonObject.getString("idWizyty");
+                                    Wizyta.imiePsa[i] = jsonObject.getString("imie");
+                                    Wizyta.celWizyty[i] = jsonObject.getString("cel");
+                                    Wizyta.dataWizyty[i] = jsonObject.getString("dataWizyty");
+                                    Wizyta.idWizyty[i] = jsonObject.getString("idWizyty");
                                 }
                                 break;
                         }

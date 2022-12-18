@@ -1,6 +1,6 @@
 package com.example.mobilnaksiazkazdrowia;
 
-public class Wizyty {
+public class Wizyta {
     public static String[] dataWizyty;
     public static String[] imiePsa;
     public static String[] celWizyty;

@@ -51,20 +51,14 @@ public class WlascicielOkno extends AppCompatActivity {
 
         if(ileWizyt==0)
         {
-            Wizyty.idWizytyMax="0";
+            Wizyta.idWizytyMax="0";
         }
         else
         {
-            Wizyty.idWizytyMax = kursor.getString(0);
+            Wizyta.idWizytyMax = kursor.getString(0);
         }
         bazaDanychWizyty.close();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
-                bdKomunikacjaPobieranie.start();
-            }
-        }, 50);
+
 
 
 
@@ -130,16 +124,27 @@ public class WlascicielOkno extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
+                                BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null, null);
+                bdKomunikacjaWprowadzanie.start();
+            }
+        },50);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,null,null);
+                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
+                                BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,null,null);
                 bdKomunikacjaWprowadzanie.start();
             }
-        }, 200);
-
+        }, 300);
     }
 
 }

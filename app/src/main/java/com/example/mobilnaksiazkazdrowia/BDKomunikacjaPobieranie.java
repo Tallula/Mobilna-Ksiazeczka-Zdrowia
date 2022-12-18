@@ -31,6 +31,7 @@ public class BDKomunikacjaPobieranie extends Thread{
     @Override
     public void run() {
         OkHttpClient client = new OkHttpClient();
+
         switch(bdKomunikacjaCel){
             case POBIERZ_CZY_UZYTKOWNIK_ISTNIEJE:
                url= Linki.zwrocRejestracjaFolder() + "sprawdzCzyIstnieje.php?par1=" + argument;
@@ -58,13 +59,13 @@ public class BDKomunikacjaPobieranie extends Thread{
                 break;
 
             case POBIERZ_DANE_O_ZWIERZETACH:
-                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.wezIdUzytkownika();
+                url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.idUzytkownika;
                 break;
             case POBIERZ_RASY_PSOW:
                 url = Linki.zwrocDodawaniePsaFormularzFolder() + "czytajRasy.php";
                 break;
             case POBIERZ_DANE_O_WIZYTACH:
-                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.wezIdUzytkownika() + "&par2="+ Wizyty.idWizytyMax ;
+                url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.idUzytkownika + "&par2="+ Wizyta.idWizytyMax ;
                 break;
         }
 

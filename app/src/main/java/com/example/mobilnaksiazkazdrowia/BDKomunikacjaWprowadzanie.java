@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 public class BDKomunikacjaWprowadzanie extends Thread{
 
@@ -28,16 +27,16 @@ public class BDKomunikacjaWprowadzanie extends Thread{
                 switch(bdKomunikacjaCel){
                     case WPROWADZ_NOWE_WIZYTY:
                         SQLiteDatabase bazaDanychWizyty=aktywnosc.openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-                        for(int i=0; i<Wizyty.idWizyty.length;i++)
+                        for(int i = 0; i< Wizyta.idWizyty.length; i++)
                         {
                             bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty,imiePsa, celWizyty, dataWizyty) VALUES "
-                                    + "('" +Wizyty.idWizyty[i]+ "','" +Wizyty.imiePsa[i] + "','"+Wizyty.celWizyty[i]  + "','"+Wizyty.dataWizyty[i] + "')");
+                                    + "('" + Wizyta.idWizyty[i]+ "','" + Wizyta.imiePsa[i] + "','"+ Wizyta.celWizyty[i]  + "','"+ Wizyta.dataWizyty[i] + "')");
                         }
                         bazaDanychWizyty.close();
                     break;
                     case WPROWADZ_ZAPLANOWANA_WIZYTE:
                         phpUruchom.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
-                                "&par3=" + argumenty[2] + "&par4=0&par5=" + argumenty[3]+ "&par6=" + ZalogowanyUzytkownik.wezIdUzytkownika());
+                                "&par3=" + argumenty[2] + "&par4=0&par5=" + argumenty[3]+ "&par6=" + ZalogowanyUzytkownik.idUzytkownika);
                         break;
                     case ZAREJESTRUJ_UZYTKOWNIKA:
                         phpUruchom.loadUrl(Linki.zwrocRejestracjaFolder() + "zarejestrujUzytkownika.php?" +
@@ -48,9 +47,7 @@ public class BDKomunikacjaWprowadzanie extends Thread{
                         phpUruchom.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +
                                  "&par3=" + argumenty[2] + "&par4=" + argumenty[3] + "&par5=" + argumenty[4]);
                         break;
-                    case WPROWADZ_RFID:
 
-                        break;
                 }
             }
         });

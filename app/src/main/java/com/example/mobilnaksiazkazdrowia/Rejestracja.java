@@ -46,7 +46,8 @@ public class Rejestracja extends AppCompatActivity {
         czyWeterynarzSpinner.setAdapter(czyWeterynarzAdapter);
 
         BDKomunikacjaPobieranie bdKomunikacjaTextView =
-                new BDKomunikacjaPobieranie(Rejestracja.this, miastaACTextView, BDKomunikacjaCel.POBIERZ_MIASTA, null);
+                new BDKomunikacjaPobieranie(Rejestracja.this, miastaACTextView,
+                        BDKomunikacjaCel.POBIERZ_MIASTA, null);
         bdKomunikacjaTextView.start();
 
         miastaACTextView.setOnClickListener(new View.OnClickListener() {

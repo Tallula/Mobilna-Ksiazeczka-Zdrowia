@@ -1,6 +1,5 @@
 package com.example.mobilnaksiazkazdrowia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,11 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,7 +26,7 @@ public class WizytyOkno extends AppCompatActivity {
         contextOBJ = this;
 
         Powiadomienia powiadomienie = new Powiadomienia(contextOBJ);
-        powiadomienie.createNotificationChannel();
+        powiadomienie.stworzKanalPowiadomien();
 
         BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null, null);
         bdKomunikacjaWprowadzanie.start();
@@ -42,19 +39,19 @@ public class WizytyOkno extends AppCompatActivity {
         wynikPrzyszleWizyty.moveToFirst();
         int ileRekordow=wynikPrzyszleWizyty.getCount();
         String rekord="";
-        Wizyty.datyPrzyszlychWizyt = new String[ileRekordow];
+        Wizyta.datyPrzyszlychWizyt = new String[ileRekordow];
         for(int i=0; i<ileRekordow; i++)
         {
             rekord = wynikPrzyszleWizyty.getString(0);
-            Wizyty.datyPrzyszlychWizyt[i] = rekord;
+            Wizyta.datyPrzyszlychWizyt[i] = rekord;
             wynikPrzyszleWizyty.moveToNext();
         }
 
         Cursor wynikPrzyszlaWizyta = baza.rawQuery ("SELECT min(dataWizyty) FROM wizyty  WHERE dataWizyty > '" + aktualnaData+"';",null);
         wynikPrzyszlaWizyta.moveToFirst();
-        Wizyty.dataNajblizszejWizyty= wynikPrzyszlaWizyta.getString(0);
+        Wizyta.dataNajblizszejWizyty= wynikPrzyszlaWizyta.getString(0);
 
-        powiadomienie.ustawPowiadomienie(Wizyty.dataNajblizszejWizyty);
+        powiadomienie.ustawPowiadomienie(Wizyta.dataNajblizszejWizyty);
         baza.close();
 
 

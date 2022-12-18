@@ -13,7 +13,7 @@ public enum BDKomunikacjaCel {
         WPROWADZ_NOWE_WIZYTY,
         WPROWADZ_ZAPLANOWANA_WIZYTE,
         ZAREJESTRUJ_UZYTKOWNIKA,
-        WPROWADZ_PSA,
-        WPROWADZ_RFID
+        WPROWADZ_PSA
+
 }
 

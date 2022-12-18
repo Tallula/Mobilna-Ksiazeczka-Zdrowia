@@ -10,7 +10,6 @@ import android.os.Build;
 
 import java.util.Calendar;
 
-
 public class Powiadomienia {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
@@ -18,12 +17,12 @@ public class Powiadomienia {
     //Context context;
     Context kontekst;
     Object kontekstObj;
-    Powiadomienia(Object kontekstObj)
+    public Powiadomienia(Object kontekstObj)
     {
         kontekstObj = kontekstObj;
         kontekst=(Context) kontekstObj;
     }
-     void createNotificationChannel() {
+    public  void stworzKanalPowiadomien() {
 
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
              CharSequence nazwa = "foxandroidReminderChannel";
@@ -34,9 +33,7 @@ public class Powiadomienia {
 
              NotificationManager menadzerPowiadomien = kontekst.getSystemService(NotificationManager.class);
              menadzerPowiadomien.createNotificationChannel(kanalPowiadomien);
-
          }
-
     }
     void ustawPowiadomienie(String dataNajblizszejWizyty){
 
@@ -59,8 +56,7 @@ public class Powiadomienia {
 
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,pendingIntent);
-
-
+        
         }
     }
 
