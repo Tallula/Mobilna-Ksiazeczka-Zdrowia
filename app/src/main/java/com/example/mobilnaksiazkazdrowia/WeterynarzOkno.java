@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.nfc.NfcAdapter;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
-import android.util.Base64;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -31,23 +27,23 @@ public class WeterynarzOkno extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     public static String[] badanyPiesInfo;
+    public boolean czyWyswietlicHistorieLeczenia=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weterynarz_okno);
-       // NfcAdapter nfcAdapter= NfcAdapter.getDefaultAdapter(this);
-        Tag tag;
 
-        Button zaplanujWizyteButton =findViewById(R.id.zapiszWizyteButton);
-        Button odczytajQRPsaButton = findViewById(R.id.odczytajQRPsaButton);
-        Button zeskanujRFIDButton = findViewById(R.id.zeskanujRFIDButton);
-        Button wydrukujFaktureButton = findViewById(R.id.wydrukujFaktureButton);
-        WebView fakturaWebView =  findViewById(R.id.fakturaWebView);
+        Button zaplanujWizyteButton =(Button)findViewById(R.id.zapiszWizyteButton);
+        Button odczytajQRPsaButton =(Button) findViewById(R.id.odczytajQRPsaButton);
+        Button odczytajQRFaktury = (Button)findViewById(R.id.odczytajQRFakturyButton);
+        Button wydrukujFaktureButton = (Button)findViewById(R.id.wydrukujFaktureButton);
+        WebView fakturaWebView =  (WebView)findViewById(R.id.fakturaWebView);
 
         PrintManager printManager = (PrintManager) WeterynarzOkno.this.getSystemService(Context.PRINT_SERVICE);
 
-        TextView test = findViewById(R.id.zaplanujWizyteTextView);
+        TextView test = findViewById(R.id.testowy);
 
         int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -63,7 +59,6 @@ public class WeterynarzOkno extends AppCompatActivity {
         odczytajQRPsaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 IntentIntegrator intentIntegrator = new IntentIntegrator(
                         WeterynarzOkno.this
                 );
@@ -83,21 +78,42 @@ public class WeterynarzOkno extends AppCompatActivity {
             }
         });
 
-        zeskanujRFIDButton.setOnClickListener(new View.OnClickListener() {
+        odczytajQRFaktury.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                IntentIntegrator intentIntegrator = new IntentIntegrator(
+                        WeterynarzOkno.this
+                );
+                intentIntegrator.setPrompt("Zeskanuj kod QR widoczny na fakturze");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setCaptureActivity(QRPomoc.class);
+                intentIntegrator.initiateScan();
+                czyWyswietlicHistorieLeczenia=true;
             }
+
         });
 
         wydrukujFaktureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Faktura faktura = new Faktura(fakturaWebView, printManager);
+                KodQR kodQR = new KodQR();
+            try{
+                kodQR.zapiszQR(kodQR.wygenerujQR(badanyPiesInfo[0]));
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                //test.setText("BLAD");
+            }
 
-        Faktura faktura = new Faktura(fakturaWebView, printManager);
-        KodQR kodQR = new KodQR();
-               kodQR.zapiszQR(kodQR.wygenerujQR(badanyPiesInfo[0]));
-            faktura.wydrukuj();
+
+
+            //kodQR.zapiszQR(kodQR.wygenerujQR("badanyPiesInfo[0]"));
+            //faktura.wydrukuj();
+
+            //test.setText("test");
+
+
             }
         });
     }
@@ -111,6 +127,12 @@ public class WeterynarzOkno extends AppCompatActivity {
         );
         KodQR odczytQR = new KodQR();
         odczytQR.odczytQR(intentResult, WeterynarzOkno.this);
+        Toast.makeText(getApplicationContext(), WeterynarzOkno.badanyPiesInfo[0], Toast.LENGTH_LONG).show();
+        if(czyWyswietlicHistorieLeczenia)
+        {
+            czyWyswietlicHistorieLeczenia=false;
+
+        }
 
     }
 

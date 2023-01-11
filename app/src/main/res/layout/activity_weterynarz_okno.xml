@@ -45,18 +45,6 @@
             android:text="Zaplanuj wizyte" />
 
         <TextView
-            android:id="@+id/RFIDInfoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zeskanuj RFID" />
-
-        <Button
-            android:id="@+id/zeskanujRFIDButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zeskanuj RFID" />
-
-        <TextView
             android:id="@+id/wydrukujFaktureTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,11 +56,29 @@
             android:layout_height="wrap_content"
             android:text="Wydrukuj fakture" />
 
+        <TextView
+            android:id="@+id/RFIDInfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zeskanuj RFID" />
+
+        <Button
+            android:id="@+id/odczytajQRFakturyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Odczytaj QR faktury" />
+
         <WebView
             android:id="@+id/fakturaWebView"
             android:layout_width="match_parent"
-            android:layout_height="301dp"
+            android:layout_height="97dp"
             android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/testowy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
     </LinearLayout>
 

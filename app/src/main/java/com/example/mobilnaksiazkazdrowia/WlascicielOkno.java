@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,57 +36,58 @@ public class WlascicielOkno extends AppCompatActivity {
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
         Button wizytyOknoButton = findViewById(R.id.wizytyOknoButton);
         Button test2Button = findViewById(R.id.test2Button);
-        Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPieSpinner);
+        Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPiesSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
 
-        SQLiteDatabase bazaDanychWizyty=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-        bazaDanychWizyty.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
-                "idWizyty INTEGER PRIMARY KEY," +
-                " imiePsa string," +
-                "celWizyty string," +
-                "dataWizyty string)");
-        Cursor kursor = bazaDanychWizyty.rawQuery ("SELECT max(idWizyty) FROM wizyty ",null);
-        int ileWizyt=kursor.getCount();
-        kursor.moveToFirst();
+    SQLiteDatabase bazaDanychWizyty = openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE, null);
+    bazaDanychWizyty.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
+            "idWizyty INTEGER PRIMARY KEY," +
+            " imiePsa string," +
+            "celWizyty string," +
+            "dataWizyty string)");
+    Cursor kursor = bazaDanychWizyty.rawQuery("SELECT max(idWizyty) FROM wizyty ", null);
+    int ileWizyt = kursor.getCount();
+    kursor.moveToFirst();
 
-        if(ileWizyt==0)
-        {
-            Wizyta.idWizytyMax="0";
+    if (ileWizyt == 0) {
+        Wizyta.idWizytyMax = "0";
+    } else {
+        Wizyta.idWizytyMax = kursor.getString(0);
+    }
+    bazaDanychWizyty.close();
+
+    new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
+            bdKomunikacjaPobieranie.start();
         }
-        else
-        {
-            Wizyta.idWizytyMax = kursor.getString(0);
+    }, 100);
+
+    new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
+            wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
         }
-        bazaDanychWizyty.close();
-
-
-
+    }, 150);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
                 bdKomunikacjaPobieranie.start();
             }
-        }, 100);
+        }, 250);
 
-        dodajZwierzeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DodajPsaOkno.class);
-                startActivity(intent);
-            }
-        });
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
-                wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
-            }
-        }, 150);
-
+    dodajZwierzeButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), DodajPsaOkno.class);
+            startActivity(intent);
+        }
+    });
         wygenerujQRPsaButton.setOnClickListener(new View.OnClickListener() {
             int index = 0;
             @Override
@@ -128,23 +130,19 @@ public class WlascicielOkno extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
-                                BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null, null);
-                bdKomunikacjaWprowadzanie.start();
-            }
-        },50);
+                try{
+                    BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                            new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
+                                    BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,
+                                    null,null);
+                    bdKomunikacjaWprowadzanie.start();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
-                                BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,null,null);
-                bdKomunikacjaWprowadzanie.start();
             }
-        }, 300);
+        }, 400);
+
     }
 
 }

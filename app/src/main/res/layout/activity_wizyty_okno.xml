@@ -22,6 +22,11 @@
             android:text="TextView"
             />
 
+        <ListView
+            android:id="@+id/wizytyListView"
+            android:layout_width="match_parent"
+            android:layout_height="273dp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

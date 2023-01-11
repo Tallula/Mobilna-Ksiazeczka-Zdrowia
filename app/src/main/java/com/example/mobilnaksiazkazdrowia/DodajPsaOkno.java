@@ -52,13 +52,13 @@ public class DodajPsaOkno extends AppCompatActivity {
                 }
 
                 String idRasy = BDJSONDeserializacja.idRasZczytane[index];
-                Log.d("idOsoby",ZalogowanyUzytkownik.wezIdUzytkownika() );
+                Log.d("idOsoby",ZalogowanyUzytkownik.idUzytkownika );
                 WebView web = new WebView(getApplicationContext());
 
                // web.loadUrl(Linki.zwrocDodawaniePsaFolder()+ "dodajPsa.php?" + "par1=" + imiePsa +  "&par2=" + idRasy +
                        // "&par3=" + plecPsa + "&par4=" + wiekPsa + "&par5=" + ZalogowanyUzytkownik.wezIdUzytkownika());
 
-                String[] argumenty= {imiePsa, idRasy, plecPsa, wiekPsa, ZalogowanyUzytkownik.wezIdUzytkownika()};
+                String[] argumenty= {imiePsa, idRasy, plecPsa, wiekPsa, ZalogowanyUzytkownik.idUzytkownika};
 
                 BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
                         new BDKomunikacjaWprowadzanie(DodajPsaOkno.this,  BDKomunikacjaCel.WPROWADZ_PSA,

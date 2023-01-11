@@ -7,10 +7,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class WizytyOkno extends AppCompatActivity {
@@ -23,6 +29,7 @@ public class WizytyOkno extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizyty_okno);
         TextView testWTextView = findViewById(R.id.testWTextView);
+        ListView zadaniaListView = findViewById(R.id.wizytyListView);
         contextOBJ = this;
 
         Powiadomienia powiadomienie = new Powiadomienia(contextOBJ);
@@ -30,7 +37,6 @@ public class WizytyOkno extends AppCompatActivity {
 
         BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie = new BDKomunikacjaWprowadzanie(WizytyOkno.this, BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY, null, null);
         bdKomunikacjaWprowadzanie.start();
-
 
 
         SQLiteDatabase baza=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
@@ -52,45 +58,48 @@ public class WizytyOkno extends AppCompatActivity {
         Wizyta.dataNajblizszejWizyty= wynikPrzyszlaWizyta.getString(0);
 
         powiadomienie.ustawPowiadomienie(Wizyta.dataNajblizszejWizyty);
+
+        try{
+            Cursor idWizyty = baza.rawQuery ("SELECT max(idWizyty) FROM wizyty;",null);
+            idWizyty.moveToFirst();
+            Wizyta.idWizytyMax= idWizyty.getString(0);
+            //dziala tu wszystko
+            //Toast.makeText(getApplicationContext(), Wizyta.idWizytyMax, Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        try{
+            Cursor wizyta = baza.rawQuery ("SELECT * FROM wizyty ORDER BY idWizyty DESC;",null);
+            wizyta.moveToFirst();
+            List<String> listaWizyt= new ArrayList<>();
+            ArrayAdapter<String> wizytyAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_list_item_1, listaWizyt);
+            //getCount dziala
+            //Toast.makeText(getApplicationContext(), " "+ wizyta.getCount(), Toast.LENGTH_LONG).show();
+            for(int i=0; i<wizyta.getCount(); i++)
+            {
+                listaWizyt.add(wizyta.getString(0) + ". " + wizyta.getString(1) +" - " +
+                        wizyta.getString(2));
+                wizyta.moveToNext();
+            }
+
+            zadaniaListView.setAdapter(wizytyAdapter);
+           // Toast.makeText(getApplicationContext(), " "+ wizyta.getCount(), Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+
         baza.close();
 
+    }
 
-        //Toast.makeText(getApplicationContext(), wynikPrzyszlaWizyta.getString(0), Toast.LENGTH_LONG).show();
-        //Toast.makeText(getApplicationContext(), "NAJBLIZSZA "+ Wizyty.dataNajblizszejWizyty, Toast.LENGTH_LONG).show();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        //daty wizyt do ustawienia w calendarview
-
-                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +ZalogowanyUzytkownik.wezIdUzytkownika()+ "')");
-                //nowe wizyty max
-       // SQLiteDatabase bazaDanychWizyty=openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-
-        //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +Wizyty.idWizyty.length+ "')");
-        //bazaDanychWizyty.close();
-               // int idWizytyMax = Integer.parseInt(Wizyty.idWizytyMax);
-               // int idWizytyMaxTemp=0;
-/*
-                for(int i=0; i<Wizyty.idWizyty.length; i++){
-                    idWizytyMaxTemp= Integer.parseInt(Wizyty.idWizyty[i]);
-                    if(idWizytyMaxTemp>idWizytyMax)
-                    {
-                        idWizytyMax=idWizytyMaxTemp;
-                    }
-                }
-
- */
-                //Wizyty.idWizytyMax = String.valueOf(idWizytyMax);
-
-                //idWizytyMaxTemp = Integer.parseInt(jsonObject.getString("idWizyty"));
-
-                //bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +jsonObject.getString("idWizyty")+ "')");
-                // if(idWizytyMax<idWizytyMaxTemp)
-                //{
-                // idWizytyMax = Integer.parseInt(jsonObject.getString("idWizyty"));
-                //}
-                // bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty, imiePsa, celWizyty, dataWizyty) VALUES " +
-                // "('"+ Wizyty.idWizyty[i] + "','" + Wizyty.imiePsa[i]+"','" + Wizyty.celWizyty[i]+ "','" + Wizyty.dataWizyty[i]+ "')");
-                // bazaDanychWizyty.execSQL("INSERT INTO wizyty( imiePsa) VALUES('" +jsonArray.length()+ "')");
-                //int idWizytyMax = Integer.parseInt(Wizyty.idWizytyMax);
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WizytyOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_WIZYTACH, null);
+                bdKomunikacjaPobieranie.start();
 
     }
 }

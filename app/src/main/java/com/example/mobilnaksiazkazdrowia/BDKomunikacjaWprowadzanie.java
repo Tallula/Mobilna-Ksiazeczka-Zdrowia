@@ -3,7 +3,9 @@ package com.example.mobilnaksiazkazdrowia;
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 public class BDKomunikacjaWprowadzanie extends Thread{
 
@@ -26,13 +28,13 @@ public class BDKomunikacjaWprowadzanie extends Thread{
             public void run() {
                 switch(bdKomunikacjaCel){
                     case WPROWADZ_NOWE_WIZYTY:
-                        SQLiteDatabase bazaDanychWizyty=aktywnosc.openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
-                        for(int i = 0; i< Wizyta.idWizyty.length; i++)
-                        {
-                            bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty,imiePsa, celWizyty, dataWizyty) VALUES "
-                                    + "('" + Wizyta.idWizyty[i]+ "','" + Wizyta.imiePsa[i] + "','"+ Wizyta.celWizyty[i]  + "','"+ Wizyta.dataWizyty[i] + "')");
-                        }
-                        bazaDanychWizyty.close();
+                            SQLiteDatabase bazaDanychWizyty=aktywnosc.openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
+                            for(int i = 0; i< Wizyta.idWizyty.length; i++)
+                            {
+                                bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty,imiePsa, celWizyty, dataWizyty) VALUES "
+                                        + "('" + Wizyta.idWizyty[i]+ "','" + Wizyta.imiePsa[i] + "','"+ Wizyta.celWizyty[i]  + "','"+ Wizyta.dataWizyty[i] + "')");
+                            }
+                            bazaDanychWizyty.close();
                     break;
                     case WPROWADZ_ZAPLANOWANA_WIZYTE:
                         phpUruchom.loadUrl(Linki.zwrocDodawanieWizytyFolder()+ "dodajWizyte.php?" + "par1=" + argumenty[0] +  "&par2=" + argumenty[1] +

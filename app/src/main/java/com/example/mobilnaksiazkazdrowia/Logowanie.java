@@ -33,11 +33,13 @@ public class Logowanie extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(ZalogowanyUzytkownik.wezTypUzytkownika().equals("Wlasciciel")){
+                        if(ZalogowanyUzytkownik.typUzytkownika.equals("Wlasciciel")){
+                            //Toast.makeText(getApplicationContext(), "WLA", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
                             startActivity(intent);
                         }
-                        else if(ZalogowanyUzytkownik.wezTypUzytkownika().equals("Weterynarz")){
+                        else if(ZalogowanyUzytkownik.typUzytkownika.equals("Weterynarz")){
+                            Toast.makeText(getApplicationContext(), "WET", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
                             startActivity(intent);
                         }

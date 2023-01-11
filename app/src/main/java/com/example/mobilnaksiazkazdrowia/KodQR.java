@@ -72,6 +72,7 @@ public class KodQR extends AppCompatActivity {
             builder.setTitle("Rezultat");
             builder.setMessage(wynik.getContents());
 
+            //Toast.makeText(getApplicationContext(), wynik.toString(), Toast.LENGTH_LONG).show();
             WeterynarzOkno.badanyPiesInfo = wynik.getContents().split(",");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override

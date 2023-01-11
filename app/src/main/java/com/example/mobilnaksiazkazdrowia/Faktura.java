@@ -1,5 +1,6 @@
 package com.example.mobilnaksiazkazdrowia;
 
+import android.app.Activity;
 import android.content.Context;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -12,6 +13,7 @@ public class Faktura {
 
     WebView fakturaWebView;
     PrintManager printManager;
+    Activity context;
     public Faktura(WebView fakturaWebView, PrintManager printManager){
         this.fakturaWebView = fakturaWebView;
         this.printManager = printManager;
@@ -28,7 +30,7 @@ public class Faktura {
             String encodedHtml = Base64.encodeToString(trescFakturyHTML.getBytes(), Base64.NO_PADDING);
             // webview.loadData(encodedHtml,"text/html","base64");
 
-            fakturaWebView.loadDataWithBaseURL("file:///assets/", trescFakturyHTML, "text/html", "utf-8", null);
+            //fakturaWebView.loadDataWithBaseURL("file:///assets/", trescFakturyHTML, "text/html", "utf-8", null);
 
             fakturaWebView.loadDataWithBaseURL("file:///assets/", trescFakturyHTML, "text/html", "utf-8", null);
             // webview.loadUrl("file:///" + Environment.getExternalStorageDirectory() + "/Download/APLIKACJA/logotest2.jpg");
@@ -48,7 +50,7 @@ public class Faktura {
             printManager.print("test", printAdapter, builder.build());
 
         } catch (Exception e) {
-            //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -9,15 +9,15 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="674dp"
+        android:layout_height="621dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="39dp"
         android:layout_marginTop="21dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="89dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
             tools:ignore="HardcodedText" />
 
         <Spinner
-            android:id="@+id/wybranyPieSpinner"
+            android:id="@+id/wybranyPiesSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
@@ -57,7 +57,7 @@
         <ImageView
             android:id="@+id/qrPsaImageView"
             android:layout_width="match_parent"
-            android:layout_height="268dp"
+            android:layout_height="133dp"
             android:adjustViewBounds="true"
             android:scaleType="center" />
 
