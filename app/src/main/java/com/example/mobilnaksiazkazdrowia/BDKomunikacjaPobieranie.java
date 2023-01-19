@@ -1,6 +1,7 @@
 package com.example.mobilnaksiazkazdrowia;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class BDKomunikacjaPobieranie extends Thread{
             case POBIERZ_JAKI_UZYTKOWNIK:
                 String[] dane = argument.split(",");
                 url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +dane[0] + "&par2=" + dane[1];
+               // Log.d("Jaki UZYT", url);
                 break;
             case POBIERZ_MIASTA:
                 url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
@@ -55,6 +57,7 @@ public class BDKomunikacjaPobieranie extends Thread{
                 break;
             case POBIERZ_DANE_OSOBOWE:
                 url = Linki.zwrocLogowanieFolder() + "czytajDaneOsoby.php?par1="+ argument ;
+                //Log.d("Czytaj dane osoby", url);
                 break;
             case POBIERZ_DANE_O_ZWIERZETACH:
                 url = Linki.zwrocLogowanieFolder() + "czytajDaneZwierzecia.php?par1=" + ZalogowanyUzytkownik.idUzytkownika;

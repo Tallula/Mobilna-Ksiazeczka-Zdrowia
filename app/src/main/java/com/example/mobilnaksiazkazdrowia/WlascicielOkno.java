@@ -26,6 +26,7 @@ public class WlascicielOkno extends AppCompatActivity {
     private Calendar calendar;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+    Spinner wybranyPiesSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,10 @@ public class WlascicielOkno extends AppCompatActivity {
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
         Button wizytyOknoButton = findViewById(R.id.wizytyOknoButton);
         Button test2Button = findViewById(R.id.test2Button);
-        Spinner wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPiesSpinner);
+        wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPiesSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
-
-    SQLiteDatabase bazaDanychWizyty = openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE, null);
+    SQLiteDatabase bazaDanychWizyty = openOrCreateDatabase("wizyty"+ZalogowanyUzytkownik.idUzytkownika+".db", Context.MODE_PRIVATE, null);
     bazaDanychWizyty.execSQL("CREATE TABLE IF NOT EXISTS 'wizyty' (" +
             "idWizyty INTEGER PRIMARY KEY," +
             " imiePsa string," +
@@ -57,22 +57,8 @@ public class WlascicielOkno extends AppCompatActivity {
     }
     bazaDanychWizyty.close();
 
-    new Handler().postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
-            bdKomunikacjaPobieranie.start();
-        }
-    }, 100);
 
-    new Handler().postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
-            wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
-        }
-    }, 150);
-
+    //tutaj koniec na dzis
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -81,11 +67,40 @@ public class WlascicielOkno extends AppCompatActivity {
             }
         }, 250);
 
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+        try {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                                new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
+                                        BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,
+                                        null, null);
+                        bdKomunikacjaWprowadzanie.start();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, 400);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+     }
+    }, 450);
+
     dodajZwierzeButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(), DodajPsaOkno.class);
-            startActivity(intent);
+            try{
+                Intent intent = new Intent(getApplicationContext(), DodajPsaOkno.class);
+                startActivity(intent);
+            }catch(Exception e){
+            }
+
         }
     });
         wygenerujQRPsaButton.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +126,18 @@ public class WlascicielOkno extends AppCompatActivity {
         wizytyOknoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), WizytyOkno.class);
-                startActivity(intent);
+                try{
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                    Intent intent = new Intent(getApplicationContext(), WizytyOkno.class);
+                    startActivity(intent);
+                         }
+                    }, 200);
+
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), Wizyta.idWizytyMax, Toast.LENGTH_LONG).show();
+                }
             }
         });
         test2Button.setOnClickListener(new View.OnClickListener() {
@@ -130,19 +155,44 @@ public class WlascicielOkno extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                try{
-                    BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
-                            new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
-                                    BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,
-                                    null,null);
-                    bdKomunikacjaWprowadzanie.start();
-                }catch (Exception e){
+                BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(WlascicielOkno.this, null, BDKomunikacjaCel.POBIERZ_DANE_O_ZWIERZETACH, null);
+                bdKomunikacjaPobieranie.start();
+            }
+        }, 150);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                BDKomunikacjaWprowadzanie bdKomunikacjaWprowadzanie =
+                                        new BDKomunikacjaWprowadzanie(WlascicielOkno.this,
+                                                BDKomunikacjaCel.WPROWADZ_NOWE_WIZYTY,
+                                                null, null);
+                                bdKomunikacjaWprowadzanie.start();
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }, 400);
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
-
             }
-        }, 400);
+        }, 650);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
+                wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
+            }
+        }, 550);
+
+
 
     }
-
 }

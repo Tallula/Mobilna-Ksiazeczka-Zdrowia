@@ -34,12 +34,14 @@ public class Logowanie extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(ZalogowanyUzytkownik.typUzytkownika.equals("Wlasciciel")){
-                            //Toast.makeText(getApplicationContext(), "WLA", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
-                            startActivity(intent);
+                               // Toast.makeText(getApplicationContext(),"WLA", Toast.LENGTH_LONG).show();
+
+                                Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
+                                startActivity(intent);
+
                         }
                         else if(ZalogowanyUzytkownik.typUzytkownika.equals("Weterynarz")){
-                            Toast.makeText(getApplicationContext(), "WET", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(), "WET", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
                             startActivity(intent);
                         }

@@ -28,7 +28,7 @@ public class BDKomunikacjaWprowadzanie extends Thread{
             public void run() {
                 switch(bdKomunikacjaCel){
                     case WPROWADZ_NOWE_WIZYTY:
-                            SQLiteDatabase bazaDanychWizyty=aktywnosc.openOrCreateDatabase("wizyty.db", Context.MODE_PRIVATE,  null);
+                            SQLiteDatabase bazaDanychWizyty=aktywnosc.openOrCreateDatabase("wizyty"+ZalogowanyUzytkownik.idUzytkownika+".db", Context.MODE_PRIVATE,  null);
                             for(int i = 0; i< Wizyta.idWizyty.length; i++)
                             {
                                 bazaDanychWizyty.execSQL("INSERT INTO wizyty(idWizyty,imiePsa, celWizyty, dataWizyty) VALUES "
