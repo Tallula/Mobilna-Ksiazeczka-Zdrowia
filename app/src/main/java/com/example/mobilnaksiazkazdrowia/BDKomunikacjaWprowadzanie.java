@@ -17,9 +17,9 @@ public class BDKomunikacjaWprowadzanie extends Thread{
     BDKomunikacjaWprowadzanie(Activity aktywnosc, BDKomunikacjaCel bdKomunikacjaCel, WebView phpUruchom, String [] argumenty){
         this.aktywnosc = aktywnosc;
         this.bdKomunikacjaCel=bdKomunikacjaCel;
-
         this.phpUruchom = phpUruchom;
         this.argumenty = argumenty;
+
     }
     @Override
     public void run(){

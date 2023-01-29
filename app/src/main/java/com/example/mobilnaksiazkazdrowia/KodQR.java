@@ -40,6 +40,16 @@ public class KodQR extends AppCompatActivity {
 
         return bitmap;
     }
+    public void zapiszQR(Bitmap bitmap){
+        try{
+            File outFile = new File("/storage/emulated/0/Download/APLIKACJA/","kodQRBadanegoPsa.bmp");
+            FileOutputStream  ouS = new FileOutputStream(outFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,ouS);
+        }catch(Exception e){
+            e.printStackTrace();
+            //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
+        }
+    }
 
     public Bitmap wygenerujQR(String tresc){
         MultiFormatWriter writer = new MultiFormatWriter();
@@ -54,16 +64,7 @@ public class KodQR extends AppCompatActivity {
         return bitmap;
     }
 
-    public void zapiszQR(Bitmap bitmap){
-        try{
-        File outFile = new File("/storage/emulated/0/Download/APLIKACJA/","kodQRBadanegoPsa.bmp");
-        FileOutputStream  ouS = new FileOutputStream(outFile);
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,ouS);
-        }catch(Exception e){
-        e.printStackTrace();
-        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
-        }
-    }
+
 
     public void odczytQR(IntentResult wynik, Activity aktywnosc){
 

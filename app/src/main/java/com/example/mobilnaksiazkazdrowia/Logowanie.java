@@ -29,7 +29,6 @@ public class Logowanie extends AppCompatActivity {
 
                 BDKomunikacjaPobieranie bdKomunikacjaPobieranie = new BDKomunikacjaPobieranie(Logowanie.this,null, BDKomunikacjaCel.POBIERZ_JAKI_UZYTKOWNIK, eMail+","+haslo);
                 bdKomunikacjaPobieranie.start();
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -38,16 +37,19 @@ public class Logowanie extends AppCompatActivity {
 
                                 Intent intent = new Intent(getApplicationContext(),WlascicielOkno.class);
                                 startActivity(intent);
+                           // Toast.makeText(getApplicationContext(), BDKomunikacjaPobieranie.url, Toast.LENGTH_SHORT).show();
 
                         }
                         else if(ZalogowanyUzytkownik.typUzytkownika.equals("Weterynarz")){
                            // Toast.makeText(getApplicationContext(), "WET", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),WeterynarzOkno.class);
                             startActivity(intent);
+                            //Toast.makeText(getApplicationContext(), BDKomunikacjaPobieranie.url, Toast.LENGTH_SHORT).show();
+
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "E-Mail lub haslo bledne. Sprobuj ponownie", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), BDKomunikacjaPobieranie.url, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, 1000);

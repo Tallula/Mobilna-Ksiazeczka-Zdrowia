@@ -27,7 +27,7 @@ public class WizytyOkno extends AppCompatActivity {
     private Object contextOBJ;
     int ileRekordow;
     ListView zadaniaListView;
-    Button odswiezWizytyButton;
+
     TextView testWTextView;
 
     @Override
@@ -36,15 +36,10 @@ public class WizytyOkno extends AppCompatActivity {
         setContentView(R.layout.activity_wizyty_okno);
          testWTextView = findViewById(R.id.testWTextView);
          zadaniaListView = findViewById(R.id.wizytyListView);
-        odswiezWizytyButton = findViewById(R.id.odswiezWizytyButton);
         contextOBJ = this;
 
-        odswiezWizytyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+
 
         //tutaj
 
@@ -90,7 +85,7 @@ public class WizytyOkno extends AppCompatActivity {
                 Powiadomienia powiadomienie = new Powiadomienia(contextOBJ);
                 powiadomienie.stworzKanalPowiadomien();
                 powiadomienie.ustawPowiadomienie(Wizyta.dataNajblizszejWizyty);
-                Toast.makeText(getApplicationContext(), "POWIADOMIENIE USTAWIONE", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "POWIADOMIENIE USTAWIONE", Toast.LENGTH_LONG).show();
             }
 
             Cursor idWizyty = baza.rawQuery ("SELECT max(idWizyty) FROM wizyty;",null);

@@ -144,6 +144,14 @@ public class BDJSONDeserializacja implements Runnable {
                                     Wizyta.idWizyty[i] = jsonObject.getString("idWizyty");
                                 }
                                 break;
+                            case POBIERZ_HISTORIE_LECZENIA:
+                                Wizyta.celeOdbytychWizyt = new String[wynikJSONTab.length()];
+
+                                for (int i = 0; i < wynikJSONTab.length(); i++) {
+                                    JSONObject jsonObject = wynikJSONTab.getJSONObject(i);
+                                    Wizyta.celeOdbytychWizyt[i] = jsonObject.getString("cel");
+                                }
+                                break;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

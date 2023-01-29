@@ -36,7 +36,7 @@ public class WlascicielOkno extends AppCompatActivity {
         Button dodajZwierzeButton = findViewById(R.id.dodajPsaOknoButton);
         Button wygenerujQRPsaButton = findViewById(R.id.wygenerujQRButton);
         Button wizytyOknoButton = findViewById(R.id.wizytyOknoButton);
-        Button test2Button = findViewById(R.id.test2Button);
+
         wybranyPiesSpinner = (Spinner) findViewById(R.id.wybranyPiesSpinner);
         ImageView qrPsaImageView = findViewById(R.id.qrPsaImageView);
 
@@ -140,12 +140,7 @@ public class WlascicielOkno extends AppCompatActivity {
                 }
             }
         });
-        test2Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
 
     @Override
@@ -190,8 +185,7 @@ public class WlascicielOkno extends AppCompatActivity {
                 ArrayAdapter<String> wybranyPiesAdapter = new ArrayAdapter<String>(WlascicielOkno.this.getApplicationContext(), android.R.layout.simple_spinner_item, ZwierzetaWlasciciela.imie);
                 wybranyPiesSpinner.setAdapter(wybranyPiesAdapter);
             }
-        }, 550);
-
+        }, 750);
 
 
     }

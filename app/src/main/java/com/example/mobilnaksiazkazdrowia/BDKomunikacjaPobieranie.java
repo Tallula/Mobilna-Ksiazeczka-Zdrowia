@@ -3,6 +3,7 @@ package com.example.mobilnaksiazkazdrowia;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,7 +20,7 @@ public class BDKomunikacjaPobieranie extends Thread{
     Activity aktywnosc;
     AutoCompleteTextView daneACTextView;
     BDKomunikacjaCel bdKomunikacjaCel;
-    String url ="";
+    public static String url ="";
     static String argument;
     public static String idMiasta;
 
@@ -40,10 +41,13 @@ public class BDKomunikacjaPobieranie extends Thread{
                 String[] dane = argument.split(",");
                 url = Linki.zwrocLogowanieFolder()+ "zalogujUzytkownika.php?par1=" +dane[0] + "&par2=" + dane[1];
                // Log.d("Jaki UZYT", url);
+
+                    //Toast.makeText(aktywnosc.getApplicationContext(), "url", Toast.LENGTH_SHORT).show();
                 break;
             case POBIERZ_MIASTA:
                 url = Linki.zwrocRejestracjaFormularzFolder() + "czytajMiasta.php";
                 break;
+
             case POBIERZ_ULICE:
                 int index=0;
                 for(int i = 0; i< BDJSONDeserializacja.nazwyMiastZczytane.length; i++)
@@ -67,6 +71,9 @@ public class BDKomunikacjaPobieranie extends Thread{
                 break;
             case POBIERZ_DANE_O_WIZYTACH:
                 url = Linki.zwrocPobieranieWizytyFolder() + "czytajWizyty.php?par1=" + ZalogowanyUzytkownik.idUzytkownika + "&par2="+ Wizyta.idWizytyMax ;
+                break;
+            case POBIERZ_HISTORIE_LECZENIA:
+                url = Linki.zwrocPobieranieLeczenieFolder() + "czytajLeczenie.php?par1=" + argument;
                 break;
         }
 
